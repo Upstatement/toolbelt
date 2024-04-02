@@ -9,7 +9,8 @@
   "author": "Upstatement <tech@upstatement.com>",
   "license": "MIT",
   "scripts": {
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "start": "node scripts/start.js"
   },
   "devDependencies": {
     "esbuild": "^0.20.2"

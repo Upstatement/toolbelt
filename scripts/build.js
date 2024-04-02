@@ -7,7 +7,7 @@ async function build(options) {
 // Minified for CDN
 build({
   entryPoints: [`builds/cdn.js`],
-  outfile: `dist/plugin.min.js`,
+  outfile: `dist/cdn.min.js`,
   bundle: true,
   minify: true,
   sourcemap: false,
@@ -17,7 +17,7 @@ build({
 // ES Module
 build({
   entryPoints: [`builds/module.js`],
-  outfile: `dist/plugin.esm.js`,
+  outfile: `dist/module.esm.js`,
   bundle: true,
   platform: "neutral",
   mainFields: ["main", "module"],

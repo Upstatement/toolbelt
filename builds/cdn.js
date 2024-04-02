@@ -1,5 +1,5 @@
-import plugin from '../src/index.js'
+import plugin from "../src/index.js";
 
-document.addEventListener('alpine:init', () => {
-    window.Alpine.plugin(plugin)
-})
+document.addEventListener("alpine:init", () => {
+  window.Alpine.plugin(plugin);
+});

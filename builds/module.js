@@ -1,3 +1,3 @@
-import plugin from '../src/index.js'
+import plugin from "../src/index.js";
 
-export default plugin
+export default plugin;
