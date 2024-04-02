@@ -1,3 +1,5 @@
+import logger from "../logger";
+
 /**
  * "link" plugin is a family of directives that help manage links.
  * The ":current" value sets the aria-current attribute to "page" if the link is the current page.
@@ -19,10 +21,21 @@
  * @param {import('alpinejs').Alpine} Alpine
  */
 export default function (Alpine) {
-  Alpine.directive("link", (el, { value }) => {
-    if (el.tagName !== "A") {
-      console.error("x-link directive can only be used on <a> elements.");
-      return;
+  Alpine.directive("link", (el, { value, modifiers }) => {
+    const isNested = modifiers.includes("nested");
+
+    if (!isNested && el.tagName !== "A") {
+      return logger.error(
+        "x-link directive can only be used on <a> elements, unless nested.",
+        el,
+      );
+    }
+
+    if (!isNested && el.tagName === "A" && !el.href) {
+      return logger.warn(
+        "x-link directive requires an 'href' attribute, unless nested.",
+        el,
+      );
     }
 
     if (value === "current") {
