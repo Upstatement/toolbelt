@@ -1,12 +1,12 @@
 {
-  "name": "@victoryoalli/alpinejs-plugin-blueprint",
+  "name": "@upstatement/toolbelt",
   "version": "1.0.0",
-  "description": "Super alpine.js plugin",
+  "description": "Alpine.js plugin for common accessibility patterns and utilities",
   "main": "dist/plugin.cjs.js",
   "module": "dist/plugin.esm.js",
   "unpkg": "dist/plugin.min.js",
   "keywords": [],
-  "author": "Victor Yoalli",
+  "author": "Upstatement <tech@upstatement.com>",
   "license": "MIT",
   "scripts": {
     "build": "node scripts/build.js"
