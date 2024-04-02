@@ -8,10 +8,10 @@
   "keywords": [],
   "author": "Victor Yoalli",
   "license": "MIT",
-  "dependencies": {
-    "esbuild": "^0.12.22"
-  },
   "scripts": {
     "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.2"
   }
 }
