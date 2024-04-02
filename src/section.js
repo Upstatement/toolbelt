@@ -1,4 +1,12 @@
 /**
+ * "section" plugin relates a <section> to its title
+ * for better screen reader navigation.
+ *
+ * @example
+ * <section x-section>
+ *   <h2 x-section:title>...</h2>
+ * </section>
+ *
  * @param {import('alpinejs').Alpine} Alpine
  */
 export default function(Alpine) {
