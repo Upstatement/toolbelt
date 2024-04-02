@@ -24,24 +24,10 @@ export default function (Alpine) {
   Alpine.directive("link", (el, { value, modifiers }) => {
     const isNested = modifiers.includes("nested");
 
-    if (!isNested && el.tagName !== "A") {
-      return logger.error(
-        "x-link directive can only be used on <a> elements, unless nested.",
-        el,
-      );
-    }
-
-    if (!isNested && el.tagName === "A" && !el.href) {
-      return logger.warn(
-        "x-link directive requires an 'href' attribute, unless nested.",
-        el,
-      );
-    }
-
     if (value === "current") {
-      handleCurrent(el, Alpine);
+      handleCurrent(el, Alpine, isNested);
     } else if (value === "external") {
-      handleExternal(el, Alpine);
+      handleExternal(el, Alpine, isNested);
     }
   });
 }
@@ -49,33 +35,79 @@ export default function (Alpine) {
 /**
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
+ * @param {boolean} isNested
  */
-function handleCurrent(el, Alpine) {
-  Alpine.bind(el, {
-    ":aria-current"() {
-      if (el.href === window.location.href) {
-        return "page";
-      }
-    },
-  });
+function handleCurrent(el, Alpine, isNested) {
+  if (!isNested && el.tagName !== "A") {
+    return logger.error(
+      "x-link directive can only be used on <a> elements, unless nested.",
+      el,
+    );
+  }
+
+  if (!isNested && el.tagName === "A" && !el.href) {
+    return logger.error(
+      "x-link directive requires an 'href' attribute, unless nested.",
+      el,
+    );
+  }
+
+  if (isNested && el.tagName === "A") {
+    Alpine.bind(el, {
+      ":aria-current"() {
+        if (el.href === window.location.href) {
+          return "page";
+        }
+      },
+    });
+  }
+
+  if (isNested) {
+    el.querySelectorAll("a").forEach((el) => {
+      handleCurrent(el, Alpine, isNested);
+    });
+  }
 }
 
 /**
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
+ * @param {boolean} isNested
  */
-function handleExternal(el, Alpine) {
-  Alpine.bind(el, {
-    ":target"() {
-      if (!el.href.startsWith(window.location.origin)) {
-        return "_blank";
-      }
-    },
+function handleExternal(el, Alpine, isNested) {
+  if (!isNested && el.tagName !== "A") {
+    return logger.error(
+      "x-link directive can only be used on <a> elements, unless nested.",
+      el,
+    );
+  }
 
-    ":rel"() {
-      if (!el.href.startsWith(window.location.origin)) {
-        return "noopener noreferrer";
-      }
-    },
-  });
+  if (!isNested && el.tagName === "A" && !el.href) {
+    return logger.error(
+      "x-link directive requires an 'href' attribute, unless nested.",
+      el,
+    );
+  }
+
+  if (isNested && el.tagName === "A") {
+    Alpine.bind(el, {
+      ":target"() {
+        if (!el.href.startsWith(window.location.origin)) {
+          return "_blank";
+        }
+      },
+
+      ":rel"() {
+        if (!el.href.startsWith(window.location.origin)) {
+          return "noopener noreferrer";
+        }
+      },
+    });
+  }
+
+  if (isNested) {
+    el.querySelectorAll("a").forEach((el) => {
+      handleExternal(el, Alpine, isNested);
+    });
+  }
 }

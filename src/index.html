@@ -18,6 +18,15 @@
   <a href="/test" x-link:current x-link:external>Page within the site link</a>
   <a href="https://www.google.com" x-link:current x-link:external>External link</a>
   <div x-link:current x-link:external>Invalid link</div>
+
+  <div x-link:current.nested x-link:external.nested>
+    <h2>Nested links</h2>
+
+    <a href="/">Current page link</a>
+    <a href="/test">Page within the site link</a>
+    <a href="https://www.google.com">External link</a>
+    <div>Invalid link</div>
+  </div>
 </body>
 
 </html>
