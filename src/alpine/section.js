@@ -20,6 +20,9 @@ export default function (Alpine) {
 }
 
 /**
+ * @example
+ * <section x-section>...</section>
+ *
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
  */
@@ -36,6 +39,9 @@ function handleRoot(el, Alpine) {
 }
 
 /**
+ * @example
+ * <section x-section:title>...</section>
+ *
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
  */

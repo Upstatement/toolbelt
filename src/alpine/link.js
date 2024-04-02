@@ -33,6 +33,9 @@ export default function (Alpine) {
 }
 
 /**
+ * @example
+ * <a href="..." x-link:current>...</a>
+ *
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
  * @param {boolean} isNested
@@ -70,6 +73,9 @@ function handleCurrent(el, Alpine, isNested) {
 }
 
 /**
+ * @example
+ * <a href="..." x-link:external>...</a>
+ *
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
  * @param {boolean} isNested
