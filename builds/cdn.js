@@ -1,4 +1,4 @@
-import plugin from "../src/index.js";
+import plugin from "../src/alpine";
 
 document.addEventListener("alpine:init", () => {
   plugin(window.Alpine);
