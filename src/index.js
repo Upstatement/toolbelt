@@ -1,3 +1,8 @@
+import section from "./section";
+
+/**
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 export default function(Alpine) {
-  require("./section")(Alpine);
+  section(Alpine);
 }
