@@ -1,4 +1,4 @@
-const esbuild = require("esbuild");
+import * as esbuild from "esbuild";
 
 async function build(options) {
   return esbuild.build(options).catch(() => process.exit(1));
