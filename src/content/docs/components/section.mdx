@@ -1,0 +1,34 @@
+---
+title: Section
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+import Toolbelt from "@components/Toolbelt.astro";
+
+<Toolbelt />
+
+The `x-section` directive relates a `<section>` to its title for better screen reader navigation.
+
+## Usage
+
+```html
+<section x-section>
+  <h2 x-section:title>This is a section title</h2>
+</section>
+```
+
+## Demo
+
+<Card>
+  <section x-data x-section="">
+    <h2 x-section:title="">This is a section title</h2>
+  </section>
+</Card>
+
+Inspect the section title above. Notice that an `id` is automatically created for the `<h2>` and associated with the `<section>` with `aria-labelledby`.
+
+```html
+<section x-section aria-labelledby="toolbelt-section-title-1">
+  <h2 x-section:title id="toolbelt-section-title-1">This is a section title</h2>
+</section>
+```
