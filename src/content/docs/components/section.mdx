@@ -27,7 +27,7 @@ The `x-section` directive relates a `<section>` to its title for better screen r
 
 Inspect the section title above. Notice that an `id` is automatically created for the `<h2>` and associated with the `<section>` with `aria-labelledby`.
 
-```html
+```html ins="aria-labelledby="toolbelt-section-title-1"" ins="id="toolbelt-section-title-1""
 <section x-section aria-labelledby="toolbelt-section-title-1">
   <h2 x-section:title id="toolbelt-section-title-1">This is a section title</h2>
 </section>
