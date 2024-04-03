@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
+import tailwind from "@astrojs/tailwind";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -12,13 +14,18 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting Started",
-          autogenerate: { directory: "getting-started" },
+          autogenerate: {
+            directory: "getting-started",
+          },
         },
         {
           label: "Components",
-          autogenerate: { directory: "components" },
+          autogenerate: {
+            directory: "components",
+          },
         },
       ],
     }),
+    tailwind(),
   ],
 });
