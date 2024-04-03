@@ -20,7 +20,7 @@ import logger from "../logger";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("link", (el, { value, modifiers }) => {
     const isNested = modifiers.includes("nested");
 

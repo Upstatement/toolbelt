@@ -1,0 +1,28 @@
+---
+title: Link
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+import Toolbelt from "@components/Toolbelt.astro";
+
+<Toolbelt />
+
+The `x-link` set of directives provides
+
+## Usage
+
+```html
+<a x-link:current x-link:external href="#">This is a link</a>
+```
+
+## Demo
+
+<Card>
+  <a x-init="" x-link:current="" href="/components/link">
+    <span>Link to the current page</span>
+  </a>
+
+  <a x-init="" x-link:external="" href="https://upstatement.com">
+    <span>Link to an external site</span>
+  </a>
+</Card>
