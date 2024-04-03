@@ -55,10 +55,17 @@ function handleCurrent(el, Alpine, isNested) {
     );
   }
 
-  if (isNested && el.tagName === "A") {
+  if (el.tagName === "A") {
     Alpine.bind(el, {
       ":aria-current"() {
-        if (el.href === window.location.href) {
+        const url = new URL(el.href);
+        const windowUrl = new URL(window.location.href);
+
+        if (
+          url.origin === windowUrl.origin &&
+          url.pathname.replace(/\/$/, "") ===
+          windowUrl.pathname.replace(/\/$/, "")
+        ) {
           return "page";
         }
       },
@@ -95,16 +102,18 @@ function handleExternal(el, Alpine, isNested) {
     );
   }
 
-  if (isNested && el.tagName === "A") {
+  if (el.tagName === "A") {
+    const isExternal = !el.href.startsWith(window.location.origin);
+
     Alpine.bind(el, {
       ":target"() {
-        if (!el.href.startsWith(window.location.origin)) {
+        if (isExternal) {
           return "_blank";
         }
       },
 
       ":rel"() {
-        if (!el.href.startsWith(window.location.origin)) {
+        if (isExternal) {
           return "noopener noreferrer";
         }
       },
