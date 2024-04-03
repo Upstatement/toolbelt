@@ -8,9 +8,11 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Toolbelt",
+
       social: {
         github: "https://github.com/upstatement/toolbelt",
       },
+
       sidebar: [
         {
           label: "Getting Started",
@@ -25,7 +27,11 @@ export default defineConfig({
           },
         },
       ],
+
+      customCss: ["./src/main.css"],
     }),
-    tailwind(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
   ],
 });
