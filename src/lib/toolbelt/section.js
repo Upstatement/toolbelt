@@ -9,7 +9,7 @@
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("section", (el, { value }) => {
     if (value === "title") {
       handleTitle(el, Alpine);
