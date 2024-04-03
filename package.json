@@ -1,6 +1,7 @@
 {
   "name": "@upstatement/toolbelt",
-  "version": "1.0.0",
+  "type": "module",
+  "version": "0.0.1",
   "description": "Alpine.js plugin for common accessibility patterns and utilities",
   "main": "dist/plugin.cjs.js",
   "module": "dist/plugin.esm.js",
@@ -9,13 +10,17 @@
   "author": "Upstatement <tech@upstatement.com>",
   "license": "MIT",
   "scripts": {
-    "build": "node scripts/build.mjs",
-    "start": "node scripts/start.mjs"
+    "dev": "astro dev --port 3000",
+    "start": "astro dev --port 3000",
+    "build": "astro build"
   },
   "devDependencies": {
     "esbuild": "^0.20.2"
   },
   "dependencies": {
-    "alpinejs": "^3.13.7"
+    "@astrojs/starlight": "^0.21.3",
+    "alpinejs": "^3.13.7",
+    "astro": "^4.5.14",
+    "sharp": "^0.33.3"
   }
 }
