@@ -7,10 +7,10 @@ export default function(Alpine) {
   Alpine.directive("dialog", (el, { value }) => {
     if (value === "trigger") {
       handleTrigger(el, Alpine);
-    } else if (value === "overlay") {
-      handleOverlay(el, Alpine);
     } else if (value === "content") {
       handleContent(el, Alpine);
+    } else if (value === "overlay") {
+      handleOverlay(el, Alpine);
     } else if (value === "title") {
       handleTitle(el, Alpine);
     } else if (value === "description") {
@@ -25,6 +25,13 @@ export default function(Alpine) {
 
 function handleRoot(el, Alpine) {
   Alpine.bind(el, {
+    "x-data"() {
+      return {
+        open: false,
+        __root: true,
+      };
+    },
+
     "x-id"() {
       return [
         "toolbelt-dialog-content",
@@ -32,17 +39,17 @@ function handleRoot(el, Alpine) {
         "toolbelt-dialog-description",
       ];
     },
-
-    "x-data"() {
-      return {
-        open: false,
-      };
-    },
   });
 }
 
 function handleTrigger(el, Alpine) {
   Alpine.bind(el, {
+    "x-init"() {
+      if (!this.__root) {
+        logger.warn("x-dialog:trigger must be placed inside an x-dialog.", el);
+      }
+    },
+
     "@click"() {
       this.open = !this.open;
     },
@@ -59,22 +66,16 @@ function handleTrigger(el, Alpine) {
   });
 }
 
-function handleOverlay(el, Alpine) {
-  Alpine.bind(el, {
-    "x-show"() {
-      return this.open;
-    },
-
-    "@click"() {
-      this.open = false;
-    },
-
-    "aria-hidden": true,
-  });
-}
-
 function handleContent(el, Alpine) {
   Alpine.bind(el, {
+    "x-init"() {
+      if (!this.__root) {
+        logger.warn("x-dialog:content must be placed inside an x-dialog.", el);
+      }
+
+      this.__content = true;
+    },
+
     ":id"() {
       return this.$id("toolbelt-dialog-content");
     },
@@ -107,8 +108,40 @@ function handleContent(el, Alpine) {
   });
 }
 
+function handleOverlay(el, Alpine) {
+  Alpine.bind(el, {
+    "x-init"() {
+      if (!this.__content) {
+        logger.warn(
+          "x-dialog:overlay must be placed inside an x-dialog:content.",
+          el,
+        );
+      }
+    },
+
+    "x-show"() {
+      return this.open;
+    },
+
+    "@click"() {
+      this.open = false;
+    },
+
+    "aria-hidden": true,
+  });
+}
+
 function handleTitle(el, Alpine) {
   Alpine.bind(el, {
+    "x-init"() {
+      if (!this.__content) {
+        logger.warn(
+          "x-dialog:title must be placed inside an x-dialog:content.",
+          el,
+        );
+      }
+    },
+
     ":id"() {
       return this.$id("toolbelt-dialog-title");
     },
@@ -117,6 +150,15 @@ function handleTitle(el, Alpine) {
 
 function handleDescription(el, Alpine) {
   Alpine.bind(el, {
+    "x-init"() {
+      if (!this.__content) {
+        logger.warn(
+          "x-dialog:description must be placed inside an x-dialog:content.",
+          el,
+        );
+      }
+    },
+
     ":id"() {
       return this.$id("toolbelt-dialog-description");
     },
@@ -125,6 +167,15 @@ function handleDescription(el, Alpine) {
 
 function handleClose(el, Alpine) {
   Alpine.bind(el, {
+    "x-init"() {
+      if (!this.__content) {
+        logger.warn(
+          "x-dialog:close must be placed inside an x-dialog:content.",
+          el,
+        );
+      }
+    },
+
     "@click"() {
       this.open = false;
     },
