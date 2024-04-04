@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "astro dev --port 3000",
     "start": "astro dev --port 3000",
-    "build": "astro build"
+    "build": "astro build",
+    "package:build": "node scripts/build.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.20.2"
