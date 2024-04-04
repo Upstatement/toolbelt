@@ -7,21 +7,42 @@ import Toolbelt from "@components/Toolbelt.astro";
 
 <Toolbelt />
 
-## Demo
+The `x-dialog` set of directives creates a window overlaid on top of a page window, rendering the content underneath inert.
 
 <Card>
   <div x-init="" x-dialog="">
-    <button x-dialog:trigger="">Open</button>
+    <button x-dialog:trigger="">Open Dialog</button>
     <template x-teleport="body">
-      <div class="absolute inset-0 z-10" x-dialog:content="">
+      <div
+        class="absolute inset-0 z-10 flex justify-center items-center"
+        x-dialog:content=""
+      >
         <div class="absolute inset-0 bg-black/40" x-dialog:overlay></div>
-        <div class="bg-white relative">
-            <h2 x-dialog:title="">Menu</h2>
-            <p x-dialog:description="">Menu description</p>
-            <button x-dialog:close="">Close menu</button>
+        <div class="bg-white relative rounded-md w-fit p-10 flex flex-col gap-4 min-w-[300px]">
+          <h2 x-dialog:title="">Dialog Title</h2>
+          <p x-dialog:description="">Dialog Description</p>
+          <button class="w-fit" x-dialog:close="">
+            Close
+          </button>
         </div>
       </div>
     </template>
-
   </div>
 </Card>
+
+## Usage
+
+```html
+<div x-dialog>
+  <button x-dialog:trigger></button>
+
+  <template x-teleport="body">
+    <div x-dialog:content>
+      <div x-dialog:overlay></div>
+      <h2 x-dialog:title></h2>
+      <p x-dialog:description></p>
+      <button x-dialog:close></button>
+    </div>
+  </template>
+</div>
+```
