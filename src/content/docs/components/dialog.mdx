@@ -1,0 +1,27 @@
+---
+title: Dialog
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+import Toolbelt from "@components/Toolbelt.astro";
+
+<Toolbelt />
+
+## Demo
+
+<Card>
+  <div x-init="" x-dialog="">
+    <button x-dialog:trigger="">Open</button>
+    <template x-teleport="body">
+      <div class="absolute inset-0 z-10" x-dialog:content="">
+        <div class="absolute inset-0 bg-black/40" x-dialog:overlay></div>
+        <div class="bg-white relative">
+            <h2 x-dialog:title="">Menu</h2>
+            <p x-dialog:description="">Menu description</p>
+            <button x-dialog:close="">Close menu</button>
+        </div>
+      </div>
+    </template>
+
+  </div>
+</Card>
