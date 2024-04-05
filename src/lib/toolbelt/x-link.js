@@ -1,26 +1,12 @@
 import logger from "../logger";
 
 /**
- * "link" plugin is a family of directives that help manage links.
- * The ":current" value sets the aria-current attribute to "page" if the link is the current page.
- * The ":external" value opens the link in a new tab if href is external.
- *
- * @example
- * <a href="..." x-link:current>...</a>
- *
- * @example
- * <a href="..." x-link:external>...</a>
- *
- * To apply the directive to all nested links, use the "nested" modifier.
- *
- * @example
- * <div x-link.nested:current>
- *   <a href="...">...</a>
- * </div>
+ * "x-link" determines whether a link is the current page
+ * or an external link.
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("link", (el, { value, modifiers }) => {
     const isNested = modifiers.includes("nested");
 
@@ -33,9 +19,6 @@ export default function(Alpine) {
 }
 
 /**
- * @example
- * <a href="..." x-link:current>...</a>
- *
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
  * @param {boolean} isNested
@@ -64,7 +47,7 @@ function handleCurrent(el, Alpine, isNested) {
         if (
           url.origin === windowUrl.origin &&
           url.pathname.replace(/\/$/, "") ===
-          windowUrl.pathname.replace(/\/$/, "")
+            windowUrl.pathname.replace(/\/$/, "")
         ) {
           return "page";
         }
@@ -80,9 +63,6 @@ function handleCurrent(el, Alpine, isNested) {
 }
 
 /**
- * @example
- * <a href="..." x-link:external>...</a>
- *
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
  * @param {boolean} isNested

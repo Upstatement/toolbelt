@@ -1,15 +1,10 @@
 /**
- * "section" plugin relates a <section> to its title
+ * "x-section" relates a <section> to its title
  * for better screen reader navigation.
- *
- * @example
- * <section x-section>
- *   <h2 x-section:title>...</h2>
- * </section>
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("section", (el, { value }) => {
     if (value === "title") {
       handleTitle(el, Alpine);
@@ -20,9 +15,6 @@ export default function(Alpine) {
 }
 
 /**
- * @example
- * <section x-section>...</section>
- *
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
  */
@@ -39,9 +31,6 @@ function handleRoot(el, Alpine) {
 }
 
 /**
- * @example
- * <section x-section:title>...</section>
- *
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
  */

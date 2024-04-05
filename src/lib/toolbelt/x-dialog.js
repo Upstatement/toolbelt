@@ -1,9 +1,12 @@
 import logger from "../logger";
 
 /**
+ * `x-dialog` set of directives creates a window overlaid
+ * on top of a page window, rendering the content underneath inert.
+ *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("dialog", (el, { value }) => {
     if (value === "trigger") {
       handleTrigger(el, Alpine);
@@ -23,6 +26,10 @@ export default function(Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleRoot(el, Alpine) {
   Alpine.bind(el, {
     "x-data"() {
@@ -42,6 +49,10 @@ function handleRoot(el, Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleTrigger(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
@@ -66,6 +77,10 @@ function handleTrigger(el, Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleContent(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
@@ -108,6 +123,10 @@ function handleContent(el, Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleOverlay(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
@@ -131,6 +150,10 @@ function handleOverlay(el, Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleTitle(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
@@ -148,6 +171,10 @@ function handleTitle(el, Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleDescription(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
@@ -165,6 +192,10 @@ function handleDescription(el, Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleClose(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
