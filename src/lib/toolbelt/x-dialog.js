@@ -1,4 +1,5 @@
 import logger from "../logger";
+import { isElementTag } from "../utils";
 
 /**
  * `x-dialog` set of directives creates a window overlaid
@@ -6,7 +7,7 @@ import logger from "../logger";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("dialog", (el, { value }) => {
     if (value === "trigger") {
       handleTrigger(el, Alpine);
@@ -58,6 +59,10 @@ function handleTrigger(el, Alpine) {
     "x-init"() {
       if (!this.__root) {
         logger.warn("x-dialog:trigger must be placed inside an x-dialog.", el);
+      }
+
+      if (!isElementTag(el, "button")) {
+        logger.error("x-dialog:trigger must be a <button> element.", el);
       }
     },
 
@@ -204,6 +209,10 @@ function handleClose(el, Alpine) {
           "x-dialog:close must be placed inside an x-dialog:content.",
           el,
         );
+      }
+
+      if (!isElementTag(el, "button")) {
+        logger.error("x-dialog:close must be a <button> element.", el);
       }
     },
 

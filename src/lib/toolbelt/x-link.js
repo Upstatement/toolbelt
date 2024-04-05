@@ -1,4 +1,5 @@
 import logger from "../logger";
+import { isElementTag } from "../utils";
 
 /**
  * "x-link" determines whether a link is the current page
@@ -6,7 +7,7 @@ import logger from "../logger";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("link", (el, { value, modifiers }) => {
     const isNested = modifiers.includes("nested");
 
@@ -24,21 +25,21 @@ export default function (Alpine) {
  * @param {boolean} isNested
  */
 function handleCurrent(el, Alpine, isNested) {
-  if (!isNested && el.tagName !== "A") {
+  if (!isNested && !isElementTag(el, "a")) {
     return logger.error(
       "x-link directive can only be used on <a> elements, unless nested.",
       el,
     );
   }
 
-  if (!isNested && el.tagName === "A" && !el.href) {
+  if (!isNested && isElementTag(el, "a") && !el.href) {
     return logger.error(
       "x-link directive requires an 'href' attribute, unless nested.",
       el,
     );
   }
 
-  if (el.tagName === "A") {
+  if (isElementTag(el, "a")) {
     Alpine.bind(el, {
       ":aria-current"() {
         const url = new URL(el.href);
@@ -47,7 +48,7 @@ function handleCurrent(el, Alpine, isNested) {
         if (
           url.origin === windowUrl.origin &&
           url.pathname.replace(/\/$/, "") ===
-            windowUrl.pathname.replace(/\/$/, "")
+          windowUrl.pathname.replace(/\/$/, "")
         ) {
           return "page";
         }
@@ -68,21 +69,21 @@ function handleCurrent(el, Alpine, isNested) {
  * @param {boolean} isNested
  */
 function handleExternal(el, Alpine, isNested) {
-  if (!isNested && el.tagName !== "A") {
+  if (!isNested && !isElementTag(el, "a")) {
     return logger.error(
       "x-link directive can only be used on <a> elements, unless nested.",
       el,
     );
   }
 
-  if (!isNested && el.tagName === "A" && !el.href) {
+  if (!isNested && isElementTag(el, "a") && !el.href) {
     return logger.error(
       "x-link directive requires an 'href' attribute, unless nested.",
       el,
     );
   }
 
-  if (el.tagName === "A") {
+  if (isElementTag(el, "a")) {
     const isExternal = !el.href.startsWith(window.location.origin);
 
     Alpine.bind(el, {
