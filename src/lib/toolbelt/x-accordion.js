@@ -60,6 +60,36 @@ function handleItem(el, Alpine) {
     "x-id"() {
       return ["toolbelt-accordion-trigger", "toolbelt-accordion-content"];
     },
+
+    "@keydown.up.prevent"() {
+      const previousTrigger = el.previousElementSibling?.querySelector(
+        "[x-accordion\\:trigger]",
+      );
+
+      if (previousTrigger) {
+        previousTrigger.focus();
+      } else {
+        el.closest("[x-accordion]")
+          .querySelector(
+            "[x-accordion\\:item]:last-of-type [x-accordion\\:trigger]",
+          )
+          ?.focus();
+      }
+    },
+
+    "@keydown.down.prevent"() {
+      const nextTrigger = el.nextElementSibling?.querySelector(
+        "[x-accordion\\:trigger]",
+      );
+
+      if (nextTrigger) {
+        nextTrigger.focus();
+      } else {
+        el.closest("[x-accordion]")
+          .querySelector("[x-accordion\\:item] [x-accordion\\:trigger]")
+          ?.focus();
+      }
+    },
   });
 }
 
