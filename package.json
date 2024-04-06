@@ -16,6 +16,7 @@
     "package:build": "node scripts/build.mjs"
   },
   "devDependencies": {
+    "@types/alpinejs": "^3.13.10",
     "esbuild": "^0.20.2",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0"
