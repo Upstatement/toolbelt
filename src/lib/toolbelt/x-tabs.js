@@ -117,6 +117,30 @@ function handleTrigger(el, Alpine, config) {
     "@click"() {
       this.activeTab = this.value;
     },
+
+    "@keydown.left.prevent.stop"() {
+      const previousTrigger = el.previousElementSibling;
+
+      if (previousTrigger) {
+        previousTrigger.focus();
+      } else {
+        el.closest("[x-tabs\\:list]")
+          .querySelector("[x-tabs\\:trigger]:last-of-type")
+          ?.focus();
+      }
+    },
+
+    "@keydown.right.prevent.stop"() {
+      const nextTrigger = el.nextElementSibling;
+
+      if (nextTrigger) {
+        nextTrigger.focus();
+      } else {
+        el.closest("[x-tabs\\:list]")
+          .querySelector("[x-tabs\\:trigger]")
+          ?.focus();
+      }
+    },
   });
 }
 
