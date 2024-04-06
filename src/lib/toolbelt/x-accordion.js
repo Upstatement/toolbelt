@@ -10,7 +10,7 @@ import { isElementTag } from "../utils";
 export default function(Alpine) {
   Alpine.directive("accordion", (el, { value, modifiers }) => {
     if (value === "item") {
-      handleItem(el, Alpine);
+      handleItem(el, Alpine, { open: modifiers.includes("open") });
     } else if (value === "trigger") {
       handleTrigger(el, Alpine);
     } else if (value === "content") {
@@ -57,12 +57,13 @@ function handleRoot(el, Alpine, config) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
+ * @param {{ open: boolean }} config
  */
-function handleItem(el, Alpine) {
+function handleItem(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
-        open: false,
+        open: config.open ?? false,
         __item: true,
       };
     },
