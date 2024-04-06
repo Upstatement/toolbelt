@@ -1,0 +1,59 @@
+---
+title: Accordion
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+import Toolbelt from "@components/Toolbelt.astro";
+
+<Toolbelt />
+
+The `x-accordion` is a vertically stacked set of interactive headings that each reveal an associated section of content.
+
+<Card>
+  <div x-init="" x-accordion="">
+    <div x-accordion:item="">
+      <button x-accordion:trigger="">Is it accessible?</button>
+      <div x-accordion:content="">
+        Yes. It adheres to the WAI-ARIA design pattern.
+      </div>
+    </div>
+    <div x-accordion:item="">
+      <button x-accordion:trigger="">Is it unstyled?</button>
+      <div x-accordion:content="">
+        Yes. It's unstyled by default, giving you freedom over the look and
+        feel.
+      </div>
+    </div>
+    <div x-accordion:item="">
+      <button x-accordion:trigger="">Can it be animated?</button>
+      <div x-accordion:content="">
+        Yes! You can animate the Accordion with CSS or JavaScript.
+      </div>
+    </div>
+  </div>
+</Card>
+
+## Usage
+
+```html
+<div x-accordion>
+  <div x-accordion:item>
+    <button x-accordion:trigger>Is it accessible?</button>
+    <div x-accordion:content>
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </div>
+  </div>
+  <div x-accordion:item>
+    <button x-accordion:trigger>Is it unstyled?</button>
+    <div x-accordion:content>
+      Yes. It's unstyled by default, giving you freedom over the look and feel.
+    </div>
+  </div>
+  <div x-accordion:item>
+    <button x-accordion:trigger>Can it be animated?</button>
+    <div x-accordion:content>
+      Yes! You can animate the Accordion with CSS or JavaScript.
+    </div>
+  </div>
+</div>
+```
