@@ -8,7 +8,7 @@ import { isElementTag } from "../utils";
  * @param {import('alpinejs').Alpine} Alpine
  */
 export default function(Alpine) {
-  Alpine.directive("tabs", (el, { value, expression }) => {
+  Alpine.directive("tabs", (el, { value, modifiers, expression }) => {
     if (value === "list") {
       handleList(el, Alpine);
     } else if (value === "trigger") {
@@ -16,7 +16,10 @@ export default function(Alpine) {
     } else if (value === "content") {
       handleContent(el, Alpine, { value: expression });
     } else {
-      handleRoot(el, Alpine, { default: expression });
+      handleRoot(el, Alpine, {
+        default: expression,
+        automatic: modifiers.includes("automatic"),
+      });
     }
   });
 }
@@ -32,6 +35,7 @@ function handleRoot(el, Alpine, config) {
       return {
         __root: true,
         activeTab: config.default || null,
+        automatic: config.automatic || false,
       };
     },
 
@@ -119,26 +123,32 @@ function handleTrigger(el, Alpine, config) {
     },
 
     "@keydown.left.prevent.stop"() {
-      const previousTrigger = el.previousElementSibling;
+      const previousTrigger =
+        el.previousElementSibling ||
+        el
+          .closest("[x-tabs\\:list]")
+          .querySelector("[x-tabs\\:trigger]:last-of-type");
+
+      if (previousTrigger && this.automatic) {
+        previousTrigger.click();
+      }
 
       if (previousTrigger) {
         previousTrigger.focus();
-      } else {
-        el.closest("[x-tabs\\:list]")
-          .querySelector("[x-tabs\\:trigger]:last-of-type")
-          ?.focus();
       }
     },
 
     "@keydown.right.prevent.stop"() {
-      const nextTrigger = el.nextElementSibling;
+      const nextTrigger =
+        el.nextElementSibling ||
+        el.closest("[x-tabs\\:list]").querySelector("[x-tabs\\:trigger]");
+
+      if (nextTrigger && this.automatic) {
+        nextTrigger.click();
+      }
 
       if (nextTrigger) {
         nextTrigger.focus();
-      } else {
-        el.closest("[x-tabs\\:list]")
-          .querySelector("[x-tabs\\:trigger]")
-          ?.focus();
       }
     },
   });
