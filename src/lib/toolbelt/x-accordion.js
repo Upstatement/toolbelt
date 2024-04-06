@@ -32,6 +32,16 @@ function handleRoot(el, Alpine) {
         __root: true,
       };
     },
+
+    "@keydown.home.prevent.stop"() {
+      el.querySelector("[x-accordion\\:item] [x-accordion\\:trigger]")?.focus();
+    },
+
+    "@keydown.end.prevent.stop"() {
+      el.querySelector(
+        "[x-accordion\\:item]:last-of-type [x-accordion\\:trigger]",
+      )?.focus();
+    },
   });
 }
 
@@ -61,7 +71,7 @@ function handleItem(el, Alpine) {
       return ["toolbelt-accordion-trigger", "toolbelt-accordion-content"];
     },
 
-    "@keydown.up.prevent"() {
+    "@keydown.up.prevent.stop"() {
       const previousTrigger = el.previousElementSibling?.querySelector(
         "[x-accordion\\:trigger]",
       );
@@ -77,7 +87,7 @@ function handleItem(el, Alpine) {
       }
     },
 
-    "@keydown.down.prevent"() {
+    "@keydown.down.prevent.stop"() {
       const nextTrigger = el.nextElementSibling?.querySelector(
         "[x-accordion\\:trigger]",
       );
