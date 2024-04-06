@@ -1,23 +1,4 @@
----
-title: Accordion
----
-
-import { Card, CardGrid } from "@astrojs/starlight/components";
-import Toolbelt from "@components/Toolbelt.astro";
-import AccordionDemo from "@components/demo/AccordionDemo.astro";
-
-<Toolbelt />
-
-The `x-accordion` is a vertically stacked set of interactive headings that each reveal an associated section of content.
-
-<Card>
-  <AccordionDemo />
-</Card>
-
-## Usage
-
-```html
-<div x-accordion>
+<div x-init x-accordion.single>
   <div x-accordion:item>
     <button x-accordion:trigger>Is it accessible?</button>
     <div x-accordion:content>
@@ -37,4 +18,3 @@ The `x-accordion` is a vertically stacked set of interactive headings that each 
     </div>
   </div>
 </div>
-```

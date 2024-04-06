@@ -8,7 +8,7 @@ import { isElementTag } from "../utils";
  * @param {import('alpinejs').Alpine} Alpine
  */
 export default function(Alpine) {
-  Alpine.directive("accordion", (el, { value }) => {
+  Alpine.directive("accordion", (el, { value, modifiers }) => {
     if (value === "item") {
       handleItem(el, Alpine);
     } else if (value === "trigger") {
@@ -16,7 +16,9 @@ export default function(Alpine) {
     } else if (value === "content") {
       handleContent(el, Alpine);
     } else {
-      handleRoot(el, Alpine);
+      handleRoot(el, Alpine, {
+        type: modifiers.includes("single") ? "single" : "multiple",
+      });
     }
   });
 }
@@ -24,13 +26,20 @@ export default function(Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
+ * @param {{ type: 'single' | 'multiple' }} config
  */
-function handleRoot(el, Alpine) {
+function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
+        id: this.$id("toolbelt-accordion"),
+        type: config.type,
         __root: true,
       };
+    },
+
+    "x-id"() {
+      return ["toolbelt-accordion"];
     },
 
     "@keydown.home.prevent.stop"() {
@@ -136,6 +145,22 @@ function handleTrigger(el, Alpine) {
 
     "@click"() {
       this.open = !this.open;
+
+      if (this.type === "single" && this.open) {
+        this.$dispatch("toolbelt-accordion-open", this.id);
+      }
+    },
+
+    "@toolbelt-accordion-open.window"() {
+      const target = this.$event.target;
+
+      if (
+        this.type === "single" &&
+        this.$event.detail === this.id &&
+        el !== target
+      ) {
+        this.open = false;
+      }
     },
   });
 }
