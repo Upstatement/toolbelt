@@ -8,15 +8,15 @@ import { isElementTag } from "../utils";
  * @param {import('alpinejs').Alpine} Alpine
  */
 export default function(Alpine) {
-  Alpine.directive("tabs", (el, { value }) => {
+  Alpine.directive("tabs", (el, { value, expression }) => {
     if (value === "list") {
       handleList(el, Alpine);
     } else if (value === "trigger") {
-      handleTrigger(el, Alpine, { value });
+      handleTrigger(el, Alpine, { value: expression });
     } else if (value === "content") {
-      handleContent(el, Alpine, { value });
+      handleContent(el, Alpine, { value: expression });
     } else {
-      handleRoot(el, Alpine);
+      handleRoot(el, Alpine, { default: expression });
     }
   });
 }
@@ -24,14 +24,14 @@ export default function(Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ defaultTab: string }} config
+ * @param {{ default: string }} config
  */
 function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
         __root: true,
-        activeTab: config.defaultTab || null,
+        activeTab: config.default || null,
       };
     },
 
@@ -76,6 +76,12 @@ function handleTrigger(el, Alpine, config) {
   }
 
   Alpine.bind(el, {
+    "x-data"() {
+      return {
+        value: config.value,
+      };
+    },
+
     "x-init"() {
       if (!this.__list) {
         logger.warn("x-tabs:trigger must be placed inside an x-tabs:list.", el);
@@ -84,12 +90,10 @@ function handleTrigger(el, Alpine, config) {
       if (!isElementTag(el, "button")) {
         logger.warn("x-tabs:trigger must be a <button> element.", el);
       }
-    },
 
-    "x-data"() {
-      return {
-        value: config.value,
-      };
+      if (!this.activeTab && el.previousElementSibling === null) {
+        this.activeTab = this.value;
+      }
     },
 
     ":id"() {
@@ -98,8 +102,8 @@ function handleTrigger(el, Alpine, config) {
 
     role: "tab",
 
-    tabindex() {
-      return this.activeTab === this.value ? 0 : -1;
+    ":tabindex"() {
+      return this.activeTab === this.value ? "0" : -1;
     },
 
     ":aria-selected"() {
@@ -108,6 +112,10 @@ function handleTrigger(el, Alpine, config) {
 
     ":aria-controls"() {
       return `${this.$id("tabs-content")}-${this.value}`;
+    },
+
+    "@click"() {
+      this.activeTab = this.value;
     },
   });
 }

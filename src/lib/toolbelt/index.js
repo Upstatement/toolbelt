@@ -1,6 +1,7 @@
 import accordion from "./x-accordion";
 import dialog from "./x-dialog";
 import section from "./x-section";
+import tabs from "./x-tabs";
 import link from "./x-link";
 
 /**
@@ -11,4 +12,5 @@ export default function(Alpine) {
   section(Alpine);
   link(Alpine);
   dialog(Alpine);
+  tabs(Alpine);
 }
