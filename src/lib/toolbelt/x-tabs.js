@@ -35,7 +35,7 @@ function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
-        __root: true,
+        __root: el,
         activeTab: config.default || null,
         automatic: config.automatic || false,
       };
@@ -56,7 +56,7 @@ function handleList(el, Alpine, config) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__root) {
-        logger.warn("x-tabs:trigger must be placed inside an x-tabs.", el);
+        logger.error("x-tabs:trigger must be placed inside an x-tabs.", el);
       }
     },
 
@@ -92,14 +92,17 @@ function handleTrigger(el, Alpine, config) {
 
     "x-init"() {
       if (!this.__list) {
-        logger.warn("x-tabs:trigger must be placed inside an x-tabs:list.", el);
+        logger.error(
+          "x-tabs:trigger must be placed inside an x-tabs:list.",
+          el,
+        );
       }
 
       if (!isElementTag(el, "button")) {
-        logger.warn("x-tabs:trigger must be a <button> element.", el);
+        logger.error("x-tabs:trigger must be a <button> element.", el);
       }
 
-      if (!this.activeTab && el.previousElementSibling === null) {
+      if (!this.activeTab && el.matches(":first-of-type")) {
         this.activeTab = this.value;
       }
     },
@@ -170,7 +173,7 @@ function handleContent(el, Alpine, config) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__root) {
-        logger.warn("x-tabs:content must be placed inside an x-tabs", el);
+        logger.error("x-tabs:content must be placed inside an x-tabs", el);
       }
     },
 

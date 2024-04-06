@@ -36,7 +36,7 @@ function handleRoot(el, Alpine) {
     "x-data"() {
       return {
         open: false,
-        __root: true,
+        __root: el,
       };
     },
 
@@ -58,7 +58,7 @@ function handleTrigger(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__root) {
-        logger.warn("x-dialog:trigger must be placed inside an x-dialog.", el);
+        logger.error("x-dialog:trigger must be placed inside an x-dialog.", el);
       }
 
       if (!isElementTag(el, "button")) {
@@ -90,10 +90,14 @@ function handleContent(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__root) {
-        logger.warn("x-dialog:content must be placed inside an x-dialog.", el);
+        logger.error("x-dialog:content must be placed inside an x-dialog.", el);
       }
+    },
 
-      this.__content = true;
+    "x-data"() {
+      return {
+        __content: el,
+      };
     },
 
     ":id"() {
@@ -136,7 +140,7 @@ function handleOverlay(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__content) {
-        logger.warn(
+        logger.error(
           "x-dialog:overlay must be placed inside an x-dialog:content.",
           el,
         );
@@ -163,7 +167,7 @@ function handleTitle(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__content) {
-        logger.warn(
+        logger.error(
           "x-dialog:title must be placed inside an x-dialog:content.",
           el,
         );
@@ -184,7 +188,7 @@ function handleDescription(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__content) {
-        logger.warn(
+        logger.error(
           "x-dialog:description must be placed inside an x-dialog:content.",
           el,
         );
@@ -205,7 +209,7 @@ function handleClose(el, Alpine) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__content) {
-        logger.warn(
+        logger.error(
           "x-dialog:close must be placed inside an x-dialog:content.",
           el,
         );

@@ -34,7 +34,7 @@ function handleRoot(el, Alpine, config) {
       return {
         id: this.$id("toolbelt-accordion"),
         type: config.type,
-        __root: true,
+        __root: el,
       };
     },
 
@@ -64,7 +64,7 @@ function handleItem(el, Alpine, config) {
     "x-data"() {
       return {
         open: config.open ?? false,
-        __item: true,
+        __item: el,
       };
     },
 

@@ -4,7 +4,7 @@
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("section", (el, { value }) => {
     if (value === "title") {
       handleTitle(el, Alpine);
@@ -24,6 +24,12 @@ function handleRoot(el, Alpine) {
       return ["toolbelt-section-title"];
     },
 
+    "x-data"() {
+      return {
+        __root: el,
+      };
+    },
+
     ":aria-labelledby"() {
       return this.$id("toolbelt-section-title");
     },
@@ -36,6 +42,12 @@ function handleRoot(el, Alpine) {
  */
 function handleTitle(el, Alpine) {
   Alpine.bind(el, {
+    "x-init"() {
+      if (!this.__root) {
+        console.warn("x-section:title must be placed inside an x-section.", el);
+      }
+    },
+
     ":id"() {
       return this.$id("toolbelt-section-title");
     },
