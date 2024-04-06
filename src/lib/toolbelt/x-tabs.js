@@ -10,7 +10,9 @@ import { isElementTag } from "../utils";
 export default function(Alpine) {
   Alpine.directive("tabs", (el, { value, modifiers, expression }) => {
     if (value === "list") {
-      handleList(el, Alpine);
+      handleList(el, Alpine, {
+        loop: modifiers.includes("loop"),
+      });
     } else if (value === "trigger") {
       handleTrigger(el, Alpine, { value: expression });
     } else if (value === "content") {
@@ -48,8 +50,9 @@ function handleRoot(el, Alpine, config) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
+ * @param {{ loop: boolean }} config
  */
-function handleList(el, Alpine) {
+function handleList(el, Alpine, config) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__root) {
@@ -59,7 +62,8 @@ function handleList(el, Alpine) {
 
     "x-data"() {
       return {
-        __list: true,
+        __list: el,
+        loop: config.loop || false,
       };
     },
 
@@ -125,9 +129,8 @@ function handleTrigger(el, Alpine, config) {
     "@keydown.left.prevent.stop"() {
       const previousTrigger =
         el.previousElementSibling ||
-        el
-          .closest("[x-tabs\\:list]")
-          .querySelector("[x-tabs\\:trigger]:last-of-type");
+        (this.loop &&
+          this.__list.querySelector("[x-tabs\\:trigger]:last-of-type"));
 
       if (previousTrigger && this.automatic) {
         previousTrigger.click();
@@ -141,7 +144,7 @@ function handleTrigger(el, Alpine, config) {
     "@keydown.right.prevent.stop"() {
       const nextTrigger =
         el.nextElementSibling ||
-        el.closest("[x-tabs\\:list]").querySelector("[x-tabs\\:trigger]");
+        (this.loop && this.__list.querySelector("[x-tabs\\:trigger]"));
 
       if (nextTrigger && this.automatic) {
         nextTrigger.click();
