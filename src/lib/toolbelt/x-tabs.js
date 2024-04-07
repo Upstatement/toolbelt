@@ -7,16 +7,16 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("tabs", (el, { value, modifiers, expression }) => {
     if (value === "list") {
       handleList(el, Alpine, {
         loop: modifiers.includes("loop"),
       });
-    } else if (value === "trigger") {
-      handleTrigger(el, Alpine, { value: expression });
-    } else if (value === "content") {
-      handleContent(el, Alpine, { value: expression });
+    } else if (value === "tab") {
+      handleTab(el, Alpine, { value: expression });
+    } else if (value === "panel") {
+      handlePanel(el, Alpine, { value: expression });
     } else {
       handleRoot(el, Alpine, {
         default: expression,
@@ -42,7 +42,7 @@ function handleRoot(el, Alpine, config) {
     },
 
     "x-id"() {
-      return ["tabs-trigger", "tabs-content"];
+      return ["tabs-tab", "tabs-panel"];
     },
   });
 }
@@ -56,7 +56,7 @@ function handleList(el, Alpine, config) {
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__root) {
-        logger.error("x-tabs:trigger must be placed inside an x-tabs.", el);
+        logger.error("x-tabs:tab must be placed inside an x-tabs.", el);
       }
     },
 
@@ -78,9 +78,9 @@ function handleList(el, Alpine, config) {
  * @param {import('alpinejs').Alpine} Alpine
  * @param {{ value: string }} config
  */
-function handleTrigger(el, Alpine, config) {
+function handleTab(el, Alpine, config) {
   if (!config.value) {
-    return logger.error("x-tabs:trigger must have a value.", el);
+    return logger.error("x-tabs:tab must have a value.", el);
   }
 
   Alpine.bind(el, {
@@ -92,14 +92,11 @@ function handleTrigger(el, Alpine, config) {
 
     "x-init"() {
       if (!this.__list) {
-        logger.error(
-          "x-tabs:trigger must be placed inside an x-tabs:list.",
-          el,
-        );
+        logger.error("x-tabs:tab must be placed inside an x-tabs:list.", el);
       }
 
       if (!isElementTag(el, "button")) {
-        logger.error("x-tabs:trigger must be a <button> element.", el);
+        logger.error("x-tabs:tab must be a <button> element.", el);
       }
 
       if (!this.activeTab && el.matches(":first-of-type")) {
@@ -108,7 +105,7 @@ function handleTrigger(el, Alpine, config) {
     },
 
     ":id"() {
-      return `${this.$id("tabs-trigger")}-${this.value}`;
+      return `${this.$id("tabs-tab")}-${this.value}`;
     },
 
     role: "tab",
@@ -122,7 +119,7 @@ function handleTrigger(el, Alpine, config) {
     },
 
     ":aria-controls"() {
-      return `${this.$id("tabs-content")}-${this.value}`;
+      return `${this.$id("tabs-panel")}-${this.value}`;
     },
 
     "@click"() {
@@ -130,31 +127,30 @@ function handleTrigger(el, Alpine, config) {
     },
 
     "@keydown.left.prevent.stop"() {
-      const previousTrigger =
+      const previousTab =
         el.previousElementSibling ||
-        (this.loop &&
-          this.__list.querySelector("[x-tabs\\:trigger]:last-of-type"));
+        (this.loop && this.__list.querySelector("[x-tabs\\:tab]:last-of-type"));
 
-      if (previousTrigger && this.automatic) {
-        previousTrigger.click();
+      if (previousTab && this.automatic) {
+        previousTab.click();
       }
 
-      if (previousTrigger) {
-        previousTrigger.focus();
+      if (previousTab) {
+        previousTab.focus();
       }
     },
 
     "@keydown.right.prevent.stop"() {
-      const nextTrigger =
+      const nextTab =
         el.nextElementSibling ||
-        (this.loop && this.__list.querySelector("[x-tabs\\:trigger]"));
+        (this.loop && this.__list.querySelector("[x-tabs\\:tab]"));
 
-      if (nextTrigger && this.automatic) {
-        nextTrigger.click();
+      if (nextTab && this.automatic) {
+        nextTab.click();
       }
 
-      if (nextTrigger) {
-        nextTrigger.focus();
+      if (nextTab) {
+        nextTab.focus();
       }
     },
   });
@@ -165,15 +161,15 @@ function handleTrigger(el, Alpine, config) {
  * @param {import('alpinejs').Alpine} Alpine
  * @param {{ value: string }} config
  */
-function handleContent(el, Alpine, config) {
+function handlePanel(el, Alpine, config) {
   if (!config.value) {
-    return logger.error("x-tabs:content must have a value.", el);
+    return logger.error("x-tabs:panel must have a value.", el);
   }
 
   Alpine.bind(el, {
     "x-init"() {
       if (!this.__root) {
-        logger.error("x-tabs:content must be placed inside an x-tabs", el);
+        logger.error("x-tabs:panel must be placed inside an x-tabs", el);
       }
     },
 
@@ -184,7 +180,7 @@ function handleContent(el, Alpine, config) {
     },
 
     ":id"() {
-      return `${this.$id("tabs-content")}-${this.value}`;
+      return `${this.$id("tabs-panel")}-${this.value}`;
     },
 
     role: "tabpanel",
@@ -192,7 +188,7 @@ function handleContent(el, Alpine, config) {
     tabindex: 0,
 
     ":aria-labelledby"() {
-      return `${this.$id("tabs-trigger")}-${this.value}`;
+      return `${this.$id("tabs-tab")}-${this.value}`;
     },
 
     "x-show"() {
