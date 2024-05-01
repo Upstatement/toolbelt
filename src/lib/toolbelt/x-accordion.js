@@ -18,6 +18,7 @@ export default function (Alpine) {
     } else {
       handleRoot(el, Alpine, {
         type: modifiers.includes("single") ? "single" : "multiple",
+        loop: modifiers.includes("loop"),
       });
     }
   });
@@ -26,13 +27,14 @@ export default function (Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ type: 'single' | 'multiple' }} config
+ * @param {{ type: 'single' | 'multiple', loop: boolean }} config
  */
 function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
         __root: el,
+        loop: config.loop,
         triggers: [],
         openItems: new Set(),
 
@@ -147,7 +149,8 @@ function handleTrigger(el, Alpine) {
       const index = this.triggers.indexOf(el);
 
       if (index >= 0) {
-        this.triggers.at(index - 1)?.focus();
+        const next = this.loop ? index - 1 : Math.max(index - 1, 0);
+        this.triggers.at(next)?.focus();
       }
     },
 
@@ -155,7 +158,11 @@ function handleTrigger(el, Alpine) {
       const index = this.triggers.indexOf(el);
 
       if (index >= 0) {
-        this.triggers.at((index + 1) % this.triggers.length)?.focus();
+        const previous = this.loop
+          ? (index + 1) % this.triggers.length
+          : Math.min(index + 1, this.triggers.length - 1);
+
+        this.triggers.at(previous)?.focus();
       }
     },
   });
