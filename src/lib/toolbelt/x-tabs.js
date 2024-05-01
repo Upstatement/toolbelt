@@ -36,13 +36,16 @@ function handleRoot(el, Alpine, config) {
     "x-data"() {
       return {
         __root: el,
+
+        tabs: [],
         activeTab: config.default || null,
+
         automatic: config.automatic || false,
       };
     },
 
     "x-id"() {
-      return ["tabs-tab", "tabs-panel"];
+      return ["tb-tabs-tab", "tb-tabs-panel"];
     },
   });
 }
@@ -99,13 +102,16 @@ function handleTab(el, Alpine, config) {
         logger.error("x-tabs:tab must be a <button> element.", el);
       }
 
-      if (!this.activeTab && el.matches(":first-of-type")) {
+      // Assume this tab is the first if there is no active tab.
+      if (!this.activeTab) {
         this.activeTab = this.value;
       }
+
+      this.tabs.push(el);
     },
 
     ":id"() {
-      return `${this.$id("tabs-tab")}-${this.value}`;
+      return `${this.$id("tb-tabs-tab")}-${this.value}`;
     },
 
     role: "tab",
@@ -119,7 +125,7 @@ function handleTab(el, Alpine, config) {
     },
 
     ":aria-controls"() {
-      return `${this.$id("tabs-panel")}-${this.value}`;
+      return `${this.$id("tb-tabs-panel")}-${this.value}`;
     },
 
     "@click"() {
@@ -127,30 +133,39 @@ function handleTab(el, Alpine, config) {
     },
 
     "@keydown.left.prevent.stop"() {
-      const previousTab =
-        el.previousElementSibling ||
-        (this.loop && this.__list.querySelector("[x-tabs\\:tab]:last-of-type"));
+      const index = this.tabs.indexOf(el);
 
-      if (previousTab && this.automatic) {
-        previousTab.click();
-      }
+      if (index >= 0) {
+        const next = this.loop ? index - 1 : Math.max(index - 1, 0);
+        const tab = this.tabs.at(next);
 
-      if (previousTab) {
-        previousTab.focus();
+        if (tab) {
+          tab.focus();
+        }
+
+        if (tab && this.automatic) {
+          tab.click();
+        }
       }
     },
 
     "@keydown.right.prevent.stop"() {
-      const nextTab =
-        el.nextElementSibling ||
-        (this.loop && this.__list.querySelector("[x-tabs\\:tab]"));
+      const index = this.tabs.indexOf(el);
 
-      if (nextTab && this.automatic) {
-        nextTab.click();
-      }
+      if (index >= 0) {
+        const previous = this.loop
+          ? (index + 1) % this.tabs.length
+          : Math.min(index + 1, this.tabs.length - 1);
 
-      if (nextTab) {
-        nextTab.focus();
+        const tab = this.tabs.at(previous);
+
+        if (tab) {
+          tab.focus();
+        }
+
+        if (tab && this.automatic) {
+          tab.click();
+        }
       }
     },
   });
@@ -180,7 +195,7 @@ function handlePanel(el, Alpine, config) {
     },
 
     ":id"() {
-      return `${this.$id("tabs-panel")}-${this.value}`;
+      return `${this.$id("tb-tabs-panel")}-${this.value}`;
     },
 
     role: "tabpanel",
@@ -188,7 +203,7 @@ function handlePanel(el, Alpine, config) {
     tabindex: 0,
 
     ":aria-labelledby"() {
-      return `${this.$id("tabs-tab")}-${this.value}`;
+      return `${this.$id("tb-tabs-tab")}-${this.value}`;
     },
 
     "x-show"() {
