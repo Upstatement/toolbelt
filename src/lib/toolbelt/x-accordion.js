@@ -7,7 +7,7 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("accordion", (el, { value, modifiers }) => {
     if (value === "item") {
       handleItem(el, Alpine, { open: modifiers.includes("open") });
@@ -32,9 +32,25 @@ function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
-        id: this.$id("toolbelt-accordion"),
-        type: config.type,
         __root: el,
+        triggers: [],
+        openItems: new Set(),
+
+        toggleItem(el) {
+          if (config.type === "single" && this.openItems.has(el)) {
+            this.openItems.delete(el);
+          } else if (config.type === "single" && !this.openItems.has(el)) {
+            this.openItems.clear();
+            this.openItems.add(el);
+          } else if (config.type === "multiple" && this.openItems.has(el)) {
+            this.openItems.delete(el);
+          } else if (config.type === "multiple" && !this.openItems.has(el)) {
+            this.openItems.add(el);
+          }
+
+          // Reset openItems to trigger reactivity
+          this.openItems = new Set(this.openItems);
+        },
       };
     },
 
@@ -43,13 +59,11 @@ function handleRoot(el, Alpine, config) {
     },
 
     "@keydown.home.prevent.stop"() {
-      el.querySelector("[x-accordion\\:item] [x-accordion\\:trigger]")?.focus();
+      this.triggers.at(0)?.focus();
     },
 
     "@keydown.end.prevent.stop"() {
-      el.querySelector(
-        "[x-accordion\\:item]:last-of-type [x-accordion\\:trigger]",
-      )?.focus();
+      this.triggers.at(-1)?.focus();
     },
   });
 }
@@ -63,8 +77,9 @@ function handleItem(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
-        open: config.open ?? false,
         __item: el,
+
+        open: config.open ?? false,
       };
     },
 
@@ -75,40 +90,18 @@ function handleItem(el, Alpine, config) {
           el,
         );
       }
+
+      if (config.open) {
+        this.openItems.add(el);
+      }
     },
 
     "x-id"() {
       return ["toolbelt-accordion-trigger", "toolbelt-accordion-content"];
     },
 
-    "@keydown.up.prevent.stop"() {
-      const previousTrigger = el.previousElementSibling?.querySelector(
-        "[x-accordion\\:trigger]",
-      );
-
-      if (previousTrigger) {
-        previousTrigger.focus();
-      } else {
-        el.closest("[x-accordion]")
-          .querySelector(
-            "[x-accordion\\:item]:last-of-type [x-accordion\\:trigger]",
-          )
-          ?.focus();
-      }
-    },
-
-    "@keydown.down.prevent.stop"() {
-      const nextTrigger = el.nextElementSibling?.querySelector(
-        "[x-accordion\\:trigger]",
-      );
-
-      if (nextTrigger) {
-        nextTrigger.focus();
-      } else {
-        el.closest("[x-accordion]")
-          .querySelector("[x-accordion\\:item] [x-accordion\\:trigger]")
-          ?.focus();
-      }
+    "x-effect"() {
+      this.open = this.openItems.has(el);
     },
   });
 }
@@ -130,6 +123,8 @@ function handleTrigger(el, Alpine) {
       if (!isElementTag(el, "button")) {
         logger.error("x-accordion:trigger must be a <button> element", el);
       }
+
+      this.triggers.push(el);
     },
 
     ":id"() {
@@ -145,22 +140,22 @@ function handleTrigger(el, Alpine) {
     },
 
     "@click"() {
-      this.open = !this.open;
+      this.toggleItem(this.__item);
+    },
 
-      if (this.type === "single" && this.open) {
-        this.$dispatch("toolbelt-accordion-open", this.id);
+    "@keydown.up.prevent.stop"() {
+      const index = this.triggers.indexOf(el);
+
+      if (index >= 0) {
+        this.triggers.at(index - 1)?.focus();
       }
     },
 
-    "@toolbelt-accordion-open.window"() {
-      const target = this.$event.target;
+    "@keydown.down.prevent.stop"() {
+      const index = this.triggers.indexOf(el);
 
-      if (
-        this.type === "single" &&
-        this.$event.detail === this.id &&
-        el !== target
-      ) {
-        this.open = false;
+      if (index >= 0) {
+        this.triggers.at((index + 1) % this.triggers.length)?.focus();
       }
     },
   });
