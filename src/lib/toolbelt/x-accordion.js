@@ -55,7 +55,7 @@ function handleRoot(el, Alpine, config) {
     },
 
     "x-id"() {
-      return ["toolbelt-accordion"];
+      return ["tb-accordion"];
     },
 
     "@keydown.home.prevent.stop"() {
@@ -97,7 +97,7 @@ function handleItem(el, Alpine, config) {
     },
 
     "x-id"() {
-      return ["toolbelt-accordion-trigger", "toolbelt-accordion-content"];
+      return ["tb-accordion-trigger", "tb-accordion-content"];
     },
 
     "x-effect"() {
@@ -128,11 +128,11 @@ function handleTrigger(el, Alpine) {
     },
 
     ":id"() {
-      return this.$id("toolbelt-accordion-trigger");
+      return this.$id("tb-accordion-trigger");
     },
 
     ":aria-controls"() {
-      return this.$id("toolbelt-accordion-content");
+      return this.$id("tb-accordion-content");
     },
 
     ":aria-expanded"() {
@@ -177,13 +177,13 @@ function handleContent(el, Alpine) {
     },
 
     ":id"() {
-      return this.$id("toolbelt-accordion-content");
+      return this.$id("tb-accordion-content");
     },
 
     role: "region",
 
     ":aria-labelledby"() {
-      return this.$id("toolbelt-accordion-trigger");
+      return this.$id("tb-accordion-trigger");
     },
 
     "x-show"() {

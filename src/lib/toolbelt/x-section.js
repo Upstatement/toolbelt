@@ -4,7 +4,7 @@
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("section", (el, { value }) => {
     if (value === "title") {
       handleTitle(el, Alpine);
@@ -21,7 +21,7 @@ export default function(Alpine) {
 function handleRoot(el, Alpine) {
   Alpine.bind(el, {
     "x-id"() {
-      return ["toolbelt-section-title"];
+      return ["tb-section-title"];
     },
 
     "x-data"() {
@@ -31,7 +31,7 @@ function handleRoot(el, Alpine) {
     },
 
     ":aria-labelledby"() {
-      return this.$id("toolbelt-section-title");
+      return this.$id("tb-section-title");
     },
   });
 }
@@ -49,7 +49,7 @@ function handleTitle(el, Alpine) {
     },
 
     ":id"() {
-      return this.$id("toolbelt-section-title");
+      return this.$id("tb-section-title");
     },
   });
 }

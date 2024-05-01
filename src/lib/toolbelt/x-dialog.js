@@ -7,7 +7,7 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("dialog", (el, { value }) => {
     if (value === "trigger") {
       handleTrigger(el, Alpine);
@@ -41,11 +41,7 @@ function handleRoot(el, Alpine) {
     },
 
     "x-id"() {
-      return [
-        "toolbelt-dialog-content",
-        "toolbelt-dialog-title",
-        "toolbelt-dialog-description",
-      ];
+      return ["tb-dialog-content", "tb-dialog-title", "tb-dialog-description"];
     },
   });
 }
@@ -77,7 +73,7 @@ function handleTrigger(el, Alpine) {
     "aria-haspopup": "dialog",
 
     ":aria-controls"() {
-      return this.$id("toolbelt-dialog-content");
+      return this.$id("tb-dialog-content");
     },
   });
 }
@@ -101,7 +97,7 @@ function handleContent(el, Alpine) {
     },
 
     ":id"() {
-      return this.$id("toolbelt-dialog-content");
+      return this.$id("tb-dialog-content");
     },
 
     role: "dialog",
@@ -111,11 +107,11 @@ function handleContent(el, Alpine) {
     "aria-modal": true,
 
     ":aria-labelledby"() {
-      return this.$id("toolbelt-dialog-title");
+      return this.$id("tb-dialog-title");
     },
 
     ":aria-describedby"() {
-      return this.$id("toolbelt-dialog-description");
+      return this.$id("tb-dialog-description");
     },
 
     "x-show"() {
@@ -175,7 +171,7 @@ function handleTitle(el, Alpine) {
     },
 
     ":id"() {
-      return this.$id("toolbelt-dialog-title");
+      return this.$id("tb-dialog-title");
     },
   });
 }
@@ -196,7 +192,7 @@ function handleDescription(el, Alpine) {
     },
 
     ":id"() {
-      return this.$id("toolbelt-dialog-description");
+      return this.$id("tb-dialog-description");
     },
   });
 }
