@@ -7,15 +7,17 @@ import { isElementTag } from "../utils";
  * @param {import('alpinejs').Alpine} Alpine
  */
 export default function(Alpine) {
-  Alpine.directive("flyout", (el, { value }) => {
+  Alpine.directive("flyout", (el, { value, modifiers }) => {
     if (value === "trigger") {
       handleTrigger(el, Alpine);
+    } else if (value === "hover") {
+      handleHover(el, Alpine);
     } else if (value === "content") {
       handleContent(el, Alpine);
     } else if (value === "close") {
       handleClose(el, Alpine);
     } else {
-      handleRoot(el, Alpine);
+      handleRoot(el, Alpine, { hover: modifiers.includes("hover") });
     }
   });
 }
@@ -23,8 +25,9 @@ export default function(Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
+ * @param {{ hover: boolean }} config
  */
-function handleRoot(el, Alpine) {
+function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
     "x-data"() {
       return {
@@ -37,6 +40,18 @@ function handleRoot(el, Alpine) {
       return ["tb-flyout-content"];
     },
   });
+
+  if (config.hover) {
+    Alpine.bind(el, {
+      "@mouseenter"() {
+        this.open = true;
+      },
+
+      "@mouseleave"() {
+        this.open = false;
+      },
+    });
+  }
 }
 
 /**
