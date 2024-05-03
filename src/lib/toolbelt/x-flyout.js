@@ -98,6 +98,13 @@ function handleContent(el, Alpine) {
     "x-show"() {
       return this.open;
     },
+
+    "@focusout"(e) {
+      // Close the flyout when focus moves out of content.
+      if (!el.contains(e.relatedTarget)) {
+        this.open = false;
+      }
+    },
   });
 }
 
