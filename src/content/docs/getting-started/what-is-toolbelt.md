@@ -39,7 +39,7 @@ Not all Toolbelt components require each part of the directive. It entirely depe
 
 Here's an example of an accordion that only allows one item to be open at any time, loops keyboard navigation, and opens the first item by default:
 
-```
+```html
 <div x-accordion.single.loop>
   <div x-accordion:item.open>
     <button x-accordion:trigger></button>
