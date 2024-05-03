@@ -16,9 +16,12 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting Started",
-          autogenerate: {
-            directory: "getting-started",
-          },
+          items: [
+            {
+              label: "What is Toolbelt?",
+              link: "/getting-started/what-is-toolbelt",
+            },
+          ],
         },
         {
           label: "Components",
