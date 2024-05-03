@@ -4,10 +4,14 @@ title: Dialog
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
 import Toolbelt from "@components/Toolbelt.astro";
+import Lede from "@components/Lede.astro";
 
 <Toolbelt />
 
-The `x-dialog` set of directives creates a window overlaid on top of a page window, rendering the content underneath inert.
+<Lede>
+  A dialog creates a window overlaid on top of a page window, rendering the
+  content underneath inert.
+</Lede>
 
 <Card>
   <div x-init="" x-dialog="">
