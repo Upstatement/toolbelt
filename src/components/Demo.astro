@@ -1,11 +1,13 @@
 ---
 import { Icon } from "@astrojs/starlight/components";
+import { Code } from "@astrojs/starlight/components";
 
 interface Props {
   features: string[];
+  code: { html: string; title: string };
 }
 
-const { features } = Astro.props;
+const { features, code } = Astro.props;
 ---
 
 <section aria-label="Demo">
@@ -19,6 +21,13 @@ const { features } = Astro.props;
   </div>
 
   <slot name="code" />
+
+  <Code
+    class="mt-0 pt-0"
+    title={`${code.title}.html`}
+    code={code.html}
+    lang="html"
+  />
 
   <div class="not-content flex flex-col gap-2">
     <h3 class="text-lg">Features</h3>

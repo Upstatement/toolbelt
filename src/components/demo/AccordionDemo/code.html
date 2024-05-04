@@ -1,24 +1,3 @@
----
-title: Accordion
----
-
-import { Card, CardGrid } from "@astrojs/starlight/components";
-import Toolbelt from "@components/Toolbelt.astro";
-import AccordionDemo from "@components/demo/AccordionDemo/index.astro";
-import Lede from "@components/Lede.astro";
-
-<Toolbelt />
-
-<Lede>
-  An accordion is a vertical list of headers that reveal or hide content
-  sections when clicked.
-</Lede>
-
-<AccordionDemo />
-
-## Usage
-
-```html
 <div x-accordion>
   <div x-accordion:item>
     <button x-accordion:trigger>Is it accessible?</button>
@@ -39,4 +18,3 @@ import Lede from "@components/Lede.astro";
     </div>
   </div>
 </div>
-```

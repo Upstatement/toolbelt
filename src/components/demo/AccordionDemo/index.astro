@@ -1,6 +1,7 @@
 ---
 import { Icon } from "@astrojs/starlight/components";
 import Demo from "@components/Demo.astro";
+import code from "./code.html?raw";
 
 const items = [
   {
@@ -23,11 +24,15 @@ const items = [
   features={[
     "Full keyboard navigation",
     "Supports vertical orientation",
-    "Expand one or multiple items",
+    "Can expand one or multiple items",
   ]}
+  code={{
+    title: "accordion",
+    html: code,
+  }}
 >
   <div
-    class="flex flex-col w-full divide-y divide-gray-200 rounded-sm overflow-hidden"
+    class="flex flex-col w-full max-w-[500px] divide-y divide-gray-200 rounded-sm overflow-hidden"
     x-init
     x-accordion.loop.single
     slot="demo"
