@@ -6,6 +6,7 @@ import { Card, CardGrid } from "@astrojs/starlight/components";
 import Toolbelt from "@components/Toolbelt.astro";
 import AccordionDemo from "@components/AccordionDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
 
@@ -28,3 +29,40 @@ import Lede from "@components/Lede.astro";
 ```
 
 ## API Reference
+
+<DirectiveReference
+  directive="x-accordion"
+  description="The root element for the accordion."
+>
+  <Fragment slot="modifiers">
+
+| Modifier                 | Description                                                  |
+| ------------------------ | ------------------------------------------------------------ |
+| `.single` \| `.multiple` | Opens one or multiple items at a time. Defaults to multiple. |
+| `.loop`                  | Loops keyboard navigation (e.g. arrow keys)                  |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-accordion:item"
+  description="Each drawer item in the accordion."
+>
+  <Fragment slot="modifiers">
+
+| Modifier | Description              |
+| -------- | ------------------------ |
+| `.open`  | Open the item by default |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-accordion:trigger"
+  description="Trigger button that opens or closes the drawer item."
+/>
+
+<DirectiveReference
+  directive="x-accordion:content"
+  description="The content that will be shown or hidden in the drawer item."
+/>

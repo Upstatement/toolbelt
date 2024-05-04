@@ -1,0 +1,26 @@
+---
+interface Props {
+  directive: string;
+  description: string;
+}
+
+const { directive, description } = Astro.props;
+---
+
+<section class="my-16" aria-label={`Reference for ${directive}`}>
+  <div class="not-content">
+    <h3 class="text-2xl">{directive}</h3>
+  </div>
+
+  <hr />
+
+  <p>{description}</p>
+
+  {
+    Astro.slots.has("modifiers") && (
+      <div class="[&>table]:table [&_thead>tr]:!bg-gray-100 [&_tr]:!bg-transparent [&>table]:w-full [&_th]:text-left">
+        <slot name="modifiers" />
+      </div>
+    )
+  }
+</section>
