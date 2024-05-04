@@ -7,7 +7,7 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("accordion", (el, { value, modifiers }) => {
     if (value === "item") {
       handleItem(el, Alpine, { open: modifiers.includes("open") });
@@ -104,6 +104,10 @@ function handleItem(el, Alpine, config) {
 
     "x-effect"() {
       this.open = this.openItems.has(el);
+    },
+
+    ":data-state"() {
+      return this.open ? "open" : "closed";
     },
   });
 }

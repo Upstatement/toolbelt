@@ -21,34 +21,36 @@ const items = [
 ---
 
 <Demo
+  title="accordion"
   features={[
     "Full keyboard navigation",
     "Supports vertical orientation",
     "Can expand one or multiple items",
   ]}
-  code={{
-    title: "accordion",
-    html: code,
-  }}
+  html={code}
 >
   <div
-    class="flex flex-col w-full max-w-[500px] divide-y divide-gray-200 rounded-sm overflow-hidden"
+    class="flex flex-col w-full max-w-[500px] divide-y divide-gray-200 rounded-md overflow-hidden"
     x-init
     x-accordion.loop.single
     slot="demo"
   >
     {
       items.map((item) => (
-        <div class="text-sm text-black w-full bg-white" x-accordion:item>
+        <div class="group text-sm w-full bg-white" x-accordion:item>
           <button
-            class="w-full bg-transparent flex items-center justify-between cursor-pointer px-4 py-3"
+            class="w-full bg-transparent text-foreground flex items-center justify-between cursor-pointer px-4 py-3 transition-colors hover:bg-gray-50"
             x-accordion:trigger
           >
             <span>{item.title}</span>
-            <Icon class="size-[1.2rem]" name="down-caret" />
+
+            <Icon
+              class="transition-transform size-[1.2rem] group-data-[state='open']:rotate-180"
+              name="down-caret"
+            />
           </button>
 
-          <div class="px-4 py-3" x-accordion:content>
+          <div class="px-4 py-3 text-foreground" x-accordion:content>
             {item.content}
           </div>
         </div>

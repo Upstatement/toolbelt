@@ -1,3 +1,4 @@
+import plugin from "tailwindcss/plugin";
 import starlightPlugin from "@astrojs/starlight-tailwind";
 
 /** @type {import('tailwindcss').Config} */
@@ -6,12 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
+        foreground: "#003575",
+
         accent: {
           200: "#b5c8f3",
           600: "#375fd9",
           900: "#1b2e63",
           950: "#152243",
+          DEFAULT: "#375fd9",
         },
+
         gray: {
           100: "#f1f7ff",
           200: "#e3efff",
@@ -25,5 +30,16 @@ export default {
       },
     },
   },
-  plugins: [starlightPlugin()],
+  plugins: [
+    starlightPlugin(),
+
+    function({ addVariant }) {
+      addVariant("hocus", ["&:hover", "&:focus"]);
+
+      addVariant("group-hocus", [
+        ":merge(.group):hover &",
+        ":merge(.group):focus &",
+      ]);
+    },
+  ],
 };

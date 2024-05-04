@@ -3,11 +3,12 @@ import { Icon } from "@astrojs/starlight/components";
 import { Code } from "@astrojs/starlight/components";
 
 interface Props {
+  title: string;
   features: string[];
-  code: { html: string; title: string };
+  html: string;
 }
 
-const { features, code } = Astro.props;
+const { title, features, html } = Astro.props;
 ---
 
 <section aria-label="Demo">
@@ -22,28 +23,35 @@ const { features, code } = Astro.props;
 
   <slot name="code" />
 
-  <Code
-    class="mt-0 pt-0"
-    title={`${code.title}.html`}
-    code={code.html}
-    lang="html"
-  />
+  <Code class="mt-0 pt-0" title={`${title}.html`} code={html} lang="html" />
 
-  <div class="not-content flex flex-col gap-2">
-    <h3 class="text-lg">Features</h3>
+  <div class="not-content flex justify-between gap-4">
+    <div class="flex flex-col gap-2">
+      <h3 class="text-lg">Features</h3>
 
-    <ul class="list-none pl-0">
-      {
-        features.map((feature) => (
-          <li class="flex gap-2 items-center">
-            <Icon
-              class="size-[1.2rem] text-accent-600"
-              name="approve-check-circle"
-            />
-            <span>{feature}</span>
-          </li>
-        ))
-      }
-    </ul>
+      <ul class="list-none pl-0">
+        {
+          features.map((feature) => (
+            <li class="flex gap-2 items-center">
+              <Icon
+                class="size-[1.2rem] text-accent"
+                name="approve-check-circle"
+              />
+              <span>{feature}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <a
+        class="text-sm no-underline text-foreground transition-colors hover:text-accent flex gap-1 items-center"
+        href={`https://github.com/Upstatement/toolbelt/blob/main/src/lib/toolbelt/x-${title}.js"`}
+      >
+        View Source
+        <Icon class="size-[1rem]" name="external" />
+      </a>
+    </div>
   </div>
 </section>
