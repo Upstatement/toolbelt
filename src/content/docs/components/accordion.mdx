@@ -16,27 +16,13 @@ import Lede from "@components/Lede.astro";
 
 <AccordionDemo />
 
-## Usage
+## Anatomy
 
 ```html
 <div x-accordion>
   <div x-accordion:item>
-    <button x-accordion:trigger>Is it accessible?</button>
-    <div x-accordion:content>
-      Yes. It adheres to the WAI-ARIA design pattern.
-    </div>
-  </div>
-  <div x-accordion:item>
-    <button x-accordion:trigger>Is it unstyled?</button>
-    <div x-accordion:content>
-      Yes. It's unstyled by default, giving you freedom over the look and feel.
-    </div>
-  </div>
-  <div x-accordion:item>
-    <button x-accordion:trigger>Can it be animated?</button>
-    <div x-accordion:content>
-      Yes! You can animate the Accordion with CSS or JavaScript.
-    </div>
+    <button x-accordion:trigger></button>
+    <div x-accordion:content></div>
   </div>
 </div>
 ```

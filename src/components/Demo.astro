@@ -48,8 +48,11 @@ const { title, features, html } = Astro.props;
       <a
         class="text-sm no-underline text-foreground transition-colors hover:text-accent flex gap-1 items-center"
         href={`https://github.com/Upstatement/toolbelt/blob/main/src/lib/toolbelt/x-${title}.js"`}
+        target="_blank"
+        rel="noopener noreferrer"
       >
         View Source
+        <span class="sr-only">(opens in new tab)</span>
         <Icon class="size-[1rem]" name="external" />
       </a>
     </div>
