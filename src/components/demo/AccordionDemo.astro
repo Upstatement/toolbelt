@@ -1,20 +1,53 @@
-<div x-init x-accordion.loop>
-  <div x-accordion:item>
-    <button x-accordion:trigger>Is it accessible?</button>
-    <div x-accordion:content>
-      Yes. It adheres to the WAI-ARIA design pattern.
-    </div>
+---
+import { Icon } from "@astrojs/starlight/components";
+import Demo from "@components/Demo.astro";
+
+const items = [
+  {
+    title: "Is it accessible?",
+    content: "Yes. It adheres to the WAI-ARIA design pattern.",
+  },
+  {
+    title: "Is it unstyled?",
+    content:
+      "Yes. It's unstyled by default, giving you freedom over the look and feel.",
+  },
+  {
+    title: "Can it be animated?",
+    content: "Yes! You can animate the Accordion with CSS or JavaScript.",
+  },
+];
+---
+
+<Demo
+  features={[
+    "Full keyboard navigation",
+    "Supports vertical orientation",
+    "Expand one or multiple items",
+  ]}
+>
+  <div
+    class="flex flex-col w-full divide-y divide-gray-200 rounded-sm overflow-hidden"
+    x-init
+    x-accordion.loop.single
+    slot="demo"
+  >
+    {
+      items.map((item) => (
+        <div class="text-sm text-black w-full bg-white" x-accordion:item>
+          <button
+            class="w-full bg-transparent flex items-center justify-between cursor-pointer px-4 py-3"
+            x-accordion:trigger
+          >
+            <span>{item.title}</span>
+            <Icon class="size-[1.2rem]" name="down-caret" />
+          </button>
+
+          <div class="px-4 py-3" x-accordion:content>
+            {item.content}
+          </div>
+        </div>
+      ))
+    }
   </div>
-  <div x-accordion:item>
-    <button x-accordion:trigger>Is it unstyled?</button>
-    <div x-accordion:content>
-      Yes. It's unstyled by default, giving you freedom over the look and feel.
-    </div>
-  </div>
-  <div x-accordion:item>
-    <button x-accordion:trigger>Can it be animated?</button>
-    <div x-accordion:content>
-      Yes! You can animate the Accordion with CSS or JavaScript.
-    </div>
-  </div>
-</div>
+</Demo>

@@ -1,0 +1,40 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+interface Props {
+  features: string[];
+}
+
+const { features } = Astro.props;
+---
+
+<section aria-label="Demo">
+  <h2 class="sr-only">Demo</h2>
+
+  <div
+    class="bg-gray-100 px-8 py-16 rounded-md flex justify-center items-center not-content"
+    role="presentation"
+  >
+    <slot name="demo" />
+  </div>
+
+  <slot name="code" />
+
+  <div class="not-content flex flex-col gap-2">
+    <h3 class="text-lg">Features</h3>
+
+    <ul class="list-none pl-0">
+      {
+        features.map((feature) => (
+          <li class="flex gap-2 items-center">
+            <Icon
+              class="size-[1.2rem] text-accent-600"
+              name="approve-check-circle"
+            />
+            <span>{feature}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

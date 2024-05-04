@@ -31,6 +31,10 @@ export default defineConfig({
         },
       ],
 
+      expressiveCode: {
+        styleOverrides: { borderRadius: "0.375rem" },
+      },
+
       customCss: ["./src/main.css"],
     }),
     tailwind({
