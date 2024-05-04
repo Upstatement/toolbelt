@@ -3,12 +3,12 @@ import { Icon } from "@astrojs/starlight/components";
 import { Code } from "@astrojs/starlight/components";
 
 interface Props {
-  title: string;
+  name: string;
   features: string[];
   html: string;
 }
 
-const { title, features, html } = Astro.props;
+const { name, features, html } = Astro.props;
 ---
 
 <section aria-label="Demo">
@@ -23,7 +23,7 @@ const { title, features, html } = Astro.props;
 
   <slot name="code" />
 
-  <Code class="mt-0 pt-0" title={`${title}.html`} code={html} lang="html" />
+  <Code class="mt-0 pt-0" title={`${name}.html`} code={html} lang="html" />
 
   <div class="not-content flex justify-between gap-4">
     <div class="flex flex-col gap-2">
@@ -47,7 +47,7 @@ const { title, features, html } = Astro.props;
     <div>
       <a
         class="text-sm no-underline text-foreground transition-colors hover:text-accent flex gap-1 items-center"
-        href={`https://github.com/Upstatement/toolbelt/blob/main/src/lib/toolbelt/x-${title}.js"`}
+        href={`https://github.com/Upstatement/toolbelt/blob/main/src/lib/toolbelt/x-${name}.js"`}
         target="_blank"
         rel="noopener noreferrer"
       >
