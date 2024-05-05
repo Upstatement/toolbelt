@@ -33,3 +33,44 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   </template>
 </div>
 ```
+
+## API Reference
+
+<DirectiveReference
+  directive="x-dialog"
+  description="The root element for the dialog."
+  required
+/>
+
+<DirectiveReference
+  directive="x-dialog:trigger"
+  description="Trigger button that opens or closes the dialog content."
+  required
+/>
+
+<DirectiveReference
+  directive="x-dialog:content"
+  description="The content that will be shown or hidden."
+  required
+/>
+
+<DirectiveReference
+  directive="x-dialog:overlay"
+  description="Overlay for the page content. Closes the dialog when clicked on."
+/>
+
+<DirectiveReference
+  directive="x-dialog:title"
+  description="Dialog title announced to screen readers when opened."
+/>
+
+<DirectiveReference
+  directive="x-dialog:description"
+  description="Dialog description announced to screen readers when opened."
+/>
+
+<DirectiveReference
+  directive="x-dialog:close"
+  description="Button to close the dialog when opened."
+  required
+/>

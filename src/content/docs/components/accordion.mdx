@@ -33,6 +33,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 <DirectiveReference
   directive="x-accordion"
   description="The root element for the accordion."
+  required
 >
   <Fragment slot="modifiers">
 
@@ -47,6 +48,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 <DirectiveReference
   directive="x-accordion:item"
   description="Each drawer item in the accordion."
+  required
 >
   <Fragment slot="modifiers">
 
@@ -60,9 +62,11 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 <DirectiveReference
   directive="x-accordion:trigger"
   description="Trigger button that opens or closes the drawer item."
+  required
 />
 
 <DirectiveReference
   directive="x-accordion:content"
   description="The content that will be shown or hidden in the drawer item."
+  required
 />
