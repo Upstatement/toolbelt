@@ -1,0 +1,20 @@
+<div x-dialog>
+  <button x-dialog:trigger>Open Dialog</button>
+
+  <template x-teleport="body">
+    <div x-dialog:content>
+      <div x-dialog:overlay></div>
+
+      <div>
+        <h2 x-dialog:title>Dialog</h2>
+
+        <p x-dialog:description>
+          The dialog is commonly used for alerts, menus, and interactive
+          prompts.
+        </p>
+
+        <button x-dialog:close>Close</button>
+      </div>
+    </div>
+  </template>
+</div>
