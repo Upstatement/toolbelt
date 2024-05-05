@@ -16,7 +16,7 @@ const { directive, description, required = false } = Astro.props;
 
     {
       required && (
-        <span class="text-2xs w-fit border rounded-md px-1 py-0.5 border-accent uppercase bg-gray-100 text-accent">
+        <span class="text-2xs w-fit border rounded-md font-medium px-1 py-0.5 border-accent uppercase bg-gray-100 text-accent">
           Required
         </span>
       )
@@ -28,8 +28,32 @@ const { directive, description, required = false } = Astro.props;
   <p>{description}</p>
 
   {
+    Astro.slots.has("value") && (
+      <div>
+        <table class="w-full !table">
+          <thead>
+            <tr>
+              <th class="bg-gray-100 text-left w-1/4" scope="row">
+                Value
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="text-left font-normal">
+                <slot name="value" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  {
     Astro.slots.has("modifiers") && (
-      <div class="[&>table]:table [&_thead>tr]:!bg-gray-100 [&_tr]:!bg-transparent [&>table]:w-full [&_th]:text-left">
+      <div class="[&>table]:table [&_thead>tr]:!bg-gray-100 [&_tr]:!bg-transparent [&>table]:w-full [&_th]:text-left [&_td]:align-top first:[&_th]:w-1/4">
         <slot name="modifiers" />
       </div>
     )

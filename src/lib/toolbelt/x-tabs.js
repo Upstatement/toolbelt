@@ -7,11 +7,12 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("tabs", (el, { value, modifiers, expression }) => {
     if (value === "list") {
       handleList(el, Alpine, {
         loop: modifiers.includes("loop"),
+        automatic: modifiers.includes("automatic"),
       });
     } else if (value === "tab") {
       handleTab(el, Alpine, { value: expression });
@@ -20,7 +21,6 @@ export default function (Alpine) {
     } else {
       handleRoot(el, Alpine, {
         default: expression,
-        automatic: modifiers.includes("automatic"),
       });
     }
   });
@@ -39,8 +39,6 @@ function handleRoot(el, Alpine, config) {
 
         tabs: [],
         activeTab: config.default || null,
-
-        automatic: config.automatic || false,
       };
     },
 
@@ -53,7 +51,7 @@ function handleRoot(el, Alpine, config) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ loop: boolean }} config
+ * @param {{ loop: boolean, automatic: boolean }} config
  */
 function handleList(el, Alpine, config) {
   Alpine.bind(el, {
@@ -67,6 +65,7 @@ function handleList(el, Alpine, config) {
       return {
         __list: el,
         loop: config.loop || false,
+        automatic: config.automatic || false,
       };
     },
 
@@ -126,6 +125,10 @@ function handleTab(el, Alpine, config) {
 
     ":aria-controls"() {
       return `${this.$id("tb-tabs-panel")}-${this.value}`;
+    },
+
+    ":data-state"() {
+      return this.activeTab === this.value ? "active" : "inactive";
     },
 
     "@click"() {
@@ -201,6 +204,10 @@ function handlePanel(el, Alpine, config) {
     role: "tabpanel",
 
     tabindex: 0,
+
+    ":data-state"() {
+      return this.activeTab === this.value ? "active" : "inactive";
+    },
 
     ":aria-labelledby"() {
       return `${this.$id("tb-tabs-tab")}-${this.value}`;

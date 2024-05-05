@@ -1,0 +1,21 @@
+<div x-tabs>
+  <div x-tabs:list>
+    <button x-tabs:tab="accordion">Accordion</button>
+    <button x-tabs:tab="dialog">Dialog</button>
+    <button x-tabs:tab="flyout">Flyout</button>
+  </div>
+
+  <div x-tabs:panel="accordion">
+    An accordion is a vertical list of headers that reveal or hide content
+    sections when clicked.
+  </div>
+
+  <div x-tabs:panel="dialog" x-cloak>
+    A dialog creates a window overlaid on top of a page window, rendering the
+    content underneath inert.
+  </div>
+
+  <div x-tabs:panel="flyout" x-cloak>
+    A flyout displays content in an overlay, triggered by a button.
+  </div>
+</div>

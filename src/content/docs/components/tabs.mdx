@@ -1,18 +1,74 @@
 ---
 title: Tabs
+description: Tabs organize content into distinct panels, displayed one at a time.
 ---
 
-import { Card, CardGrid } from "@astrojs/starlight/components";
 import Toolbelt from "@components/Toolbelt.astro";
-import TabsDemo from "@components/demo/TabsDemo.astro";
+import TabsDemo from "@components/TabsDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
 
 <Lede>
-  Tabs organize content into distinct sections, displayed one at a time.
+  Tabs organize content into distinct panels, displayed one at a time.
 </Lede>
 
-<Card>
-  <TabsDemo />
-</Card>
+<TabsDemo />
+
+## Anatomy
+
+```html
+<div x-tabs>
+  <div x-tabs:list>
+    <button x-tabs:tab></button>
+  </div>
+
+  <div x-tabs:panel></div>
+</div>
+```
+
+## Directives
+
+<DirectiveReference
+  directive="x-tabs"
+  description="The root element for tabs."
+  required
+>
+  <Fragment slot="value">
+    The default tab to be displayed. Otherwise, display the first tab.
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-tabs:list"
+  description="List of tabs."
+  required
+>
+  <Fragment slot="modifiers">
+
+| Modifier     | Description                                                              |
+| ------------ | ------------------------------------------------------------------------ |
+| `.loop`      | Loops keyboard navigation (e.g. arrow keys)                              |
+| `.automatic` | Automatically show/hide panel with keyboard navigation (e.g. arrow keys) |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-tabs:tab"
+  description="Trigger button that shows the corresponding panel."
+  required
+>
+  <Fragment slot="value">The value for this tab.</Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-tabs:panel"
+  description="Panel that contains content."
+  required
+>
+  <Fragment slot="value">
+    The value for this panel, which should match the correct tab.
+  </Fragment>
+</DirectiveReference>

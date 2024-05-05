@@ -1,0 +1,69 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+import Demo from "@components/Demo.astro";
+import code from "./code.html?raw";
+---
+
+<Demo
+  name="tabs"
+  features={[
+    "Full keyboard navigation",
+    "Supports horizontal orientation",
+    "Supports manual/automatic activation",
+    "Can set default displayed tab",
+  ]}
+  html={code}
+>
+  <div class="w-[500px] max-w-full" x-init x-tabs>
+    <div
+      class="flex bg-white border-b border-gray-100 rounded-tl-md rounded-tr-md overflow-scroll"
+      x-tabs:list
+    >
+      <button
+        class="px-6 py-3 bg-transparent cursor-pointer border-b-2 border-transparent font-medium hover:data-[state='inactive']:border-gray-300 data-[state='active']:border-accent"
+        x-tabs:tab="accordion"
+      >
+        Accordion
+      </button>
+
+      <button
+        class="px-6 py-3 bg-transparent cursor-pointer border-b-2 border-transparent font-medium hover:data-[state='inactive']:border-gray-300 data-[state='active']:border-accent"
+        x-tabs:tab="dialog"
+      >
+        Dialog
+      </button>
+
+      <button
+        class="px-6 py-3 bg-transparent cursor-pointer border-b-2 border-transparent font-medium hover:data-[state='inactive']:border-gray-300 data-[state='active']:border-accent"
+        x-tabs:tab="flyout"
+      >
+        Flyout
+      </button>
+    </div>
+
+    <div
+      class="p-6 bg-white rounded-bl-md rounded-br-md"
+      x-tabs:panel="accordion"
+    >
+      An accordion is a vertical list of headers that reveal or hide content
+      sections when clicked.
+    </div>
+
+    <div
+      class="p-6 bg-white rounded-bl-md rounded-br-md"
+      x-tabs:panel="dialog"
+      x-cloak
+    >
+      A dialog creates a window overlaid on top of a page window, rendering the
+      content underneath inert.
+    </div>
+
+    <div
+      class="p-6 bg-white rounded-bl-md rounded-br-md"
+      x-tabs:panel="flyout"
+      x-cloak
+    >
+      A flyout displays content in an overlay, triggered by a button.
+    </div>
+  </div>
+</Demo>
