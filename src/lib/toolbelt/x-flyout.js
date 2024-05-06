@@ -6,12 +6,10 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("flyout", (el, { value, modifiers }) => {
     if (value === "trigger") {
       handleTrigger(el, Alpine);
-    } else if (value === "hover") {
-      handleHover(el, Alpine);
     } else if (value === "content") {
       handleContent(el, Alpine);
     } else if (value === "close") {
