@@ -62,6 +62,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   required
 >
   <Fragment slot="value">The value for this tab.</Fragment>
+
+  <Fragment slot="attributes">
+
+| Data Attribute | Values                 |
+| -------------- | ---------------------- |
+| `[date-state]` | `active` \| `inactive` |
+
+  </Fragment>
 </DirectiveReference>
 
 <DirectiveReference
@@ -71,5 +79,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 >
   <Fragment slot="value">
     The value for this panel, which should match the correct tab.
+  </Fragment>
+
+  <Fragment slot="attributes">
+
+| Data Attribute | Values                 |
+| -------------- | ---------------------- |
+| `[date-state]` | `active` \| `inactive` |
+
   </Fragment>
 </DirectiveReference>

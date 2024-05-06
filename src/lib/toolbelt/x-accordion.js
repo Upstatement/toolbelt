@@ -150,6 +150,10 @@ function handleTrigger(el, Alpine) {
       return this.open;
     },
 
+    ":data-state"() {
+      return this.open ? "open" : "closed";
+    },
+
     "@click"() {
       this.toggleItem(this.__item);
     },
@@ -229,6 +233,10 @@ function handleContent(el, Alpine) {
 
     ":aria-labelledby"() {
       return this.$id("tb-accordion-trigger");
+    },
+
+    ":data-state"() {
+      return this.open ? "open" : "closed";
     },
 
     "x-show"() {

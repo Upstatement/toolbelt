@@ -58,16 +58,40 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | `.open`  | Open the item by default |
 
   </Fragment>
+
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[date-state]` | `open` \| `closed` |
+
+  </Fragment>
 </DirectiveReference>
 
 <DirectiveReference
   directive="x-accordion:trigger"
   description="Trigger button that opens or closes the drawer item."
   required
-/>
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[date-state]` | `open` \| `closed` |
+
+  </Fragment>
+</DirectiveReference>
 
 <DirectiveReference
   directive="x-accordion:content"
   description="The content that will be shown or hidden in the drawer item."
   required
-/>
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[date-state]` | `open` \| `closed` |
+
+  </Fragment>
+</DirectiveReference>
