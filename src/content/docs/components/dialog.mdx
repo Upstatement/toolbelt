@@ -46,13 +46,29 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   directive="x-dialog:trigger"
   description="Trigger button that opens or closes the dialog content."
   required
-/>
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[date-state]` | `open` \| `closed` |
+
+  </Fragment>
+</DirectiveReference>
 
 <DirectiveReference
   directive="x-dialog:content"
   description="The content that will be shown or hidden."
   required
-/>
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[date-state]` | `open` \| `closed` |
+
+  </Fragment>
+</DirectiveReference>
 
 <DirectiveReference
   directive="x-dialog:overlay"

@@ -70,6 +70,10 @@ function handleTrigger(el, Alpine) {
       return this.open ? true : false;
     },
 
+    ":data-state"() {
+      return this.open ? "open" : "closed";
+    },
+
     "aria-haspopup": "dialog",
 
     ":aria-controls"() {
@@ -112,6 +116,10 @@ function handleContent(el, Alpine) {
 
     ":aria-describedby"() {
       return this.$id("tb-dialog-description");
+    },
+
+    ":data-state"() {
+      return this.open ? "open" : "closed";
     },
 
     "x-show"() {
