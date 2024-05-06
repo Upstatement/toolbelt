@@ -7,12 +7,13 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("tabs", (el, { value, modifiers, expression }) => {
     if (value === "list") {
       handleList(el, Alpine, {
         loop: modifiers.includes("loop"),
         automatic: modifiers.includes("automatic"),
+        orientation: modifiers.includes("vertical") ? "vertical" : "horizontal",
       });
     } else if (value === "tab") {
       handleTab(el, Alpine, { value: expression });
@@ -51,7 +52,7 @@ function handleRoot(el, Alpine, config) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ loop: boolean, automatic: boolean }} config
+ * @param {{ loop: boolean, automatic: boolean, orientation: 'horizontal' \ 'vertical' }} config
  */
 function handleList(el, Alpine, config) {
   Alpine.bind(el, {
@@ -66,6 +67,7 @@ function handleList(el, Alpine, config) {
         __list: el,
         loop: config.loop || false,
         automatic: config.automatic || false,
+        orientation: config.orientation || "horizontal",
       };
     },
 
@@ -136,38 +138,83 @@ function handleTab(el, Alpine, config) {
     },
 
     "@keydown.left.prevent.stop"() {
-      const index = this.tabs.indexOf(el);
+      if (this.orientation === "horizontal") {
+        const index = this.tabs.indexOf(el);
 
-      if (index >= 0) {
-        const next = this.loop ? index - 1 : Math.max(index - 1, 0);
-        const tab = this.tabs.at(next);
+        if (index >= 0) {
+          const next = this.loop ? index - 1 : Math.max(index - 1, 0);
+          const tab = this.tabs.at(next);
 
-        if (tab) {
-          tab.focus();
-        }
+          if (tab) {
+            tab.focus();
+          }
 
-        if (tab && this.automatic) {
-          tab.click();
+          if (tab && this.automatic) {
+            tab.click();
+          }
         }
       }
     },
 
     "@keydown.right.prevent.stop"() {
-      const index = this.tabs.indexOf(el);
+      if (this.orientation === "horizontal") {
+        const index = this.tabs.indexOf(el);
 
-      if (index >= 0) {
-        const previous = this.loop
-          ? (index + 1) % this.tabs.length
-          : Math.min(index + 1, this.tabs.length - 1);
+        if (index >= 0) {
+          const previous = this.loop
+            ? (index + 1) % this.tabs.length
+            : Math.min(index + 1, this.tabs.length - 1);
 
-        const tab = this.tabs.at(previous);
+          const tab = this.tabs.at(previous);
 
-        if (tab) {
-          tab.focus();
+          if (tab) {
+            tab.focus();
+          }
+
+          if (tab && this.automatic) {
+            tab.click();
+          }
         }
+      }
+    },
 
-        if (tab && this.automatic) {
-          tab.click();
+    "@keydown.up.prevent.stop"() {
+      if (this.orientation === "vertical") {
+        const index = this.tabs.indexOf(el);
+
+        if (index >= 0) {
+          const next = this.loop ? index - 1 : Math.max(index - 1, 0);
+          const tab = this.tabs.at(next);
+
+          if (tab) {
+            tab.focus();
+          }
+
+          if (tab && this.automatic) {
+            tab.click();
+          }
+        }
+      }
+    },
+
+    "@keydown.down.prevent.stop"() {
+      if (this.orientation === "vertical") {
+        const index = this.tabs.indexOf(el);
+
+        if (index >= 0) {
+          const previous = this.loop
+            ? (index + 1) % this.tabs.length
+            : Math.min(index + 1, this.tabs.length - 1);
+
+          const tab = this.tabs.at(previous);
+
+          if (tab) {
+            tab.focus();
+          }
+
+          if (tab && this.automatic) {
+            tab.click();
+          }
         }
       }
     },
