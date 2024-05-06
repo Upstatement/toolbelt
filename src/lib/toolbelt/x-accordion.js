@@ -7,7 +7,7 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("accordion", (el, { value, modifiers }) => {
     if (value === "item") {
       handleItem(el, Alpine, { open: modifiers.includes("open") });
@@ -19,6 +19,9 @@ export default function(Alpine) {
       handleRoot(el, Alpine, {
         type: modifiers.includes("single") ? "single" : "multiple",
         loop: modifiers.includes("loop"),
+        orientation: modifiers.includes("horizontal")
+          ? "horizontal"
+          : "vertical",
       });
     }
   });
@@ -27,7 +30,7 @@ export default function(Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ type: 'single' | 'multiple', loop: boolean }} config
+ * @param {{ type: 'single' | 'multiple', loop: boolean, orientation: 'horizontal' \ 'vertical' }} config
  */
 function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
@@ -35,6 +38,8 @@ function handleRoot(el, Alpine, config) {
       return {
         __root: el,
         loop: config.loop,
+        orientation: config.orientation || "vertical",
+
         triggers: [],
         openItems: new Set(),
 
@@ -150,23 +155,52 @@ function handleTrigger(el, Alpine) {
     },
 
     "@keydown.up.prevent.stop"() {
-      const index = this.triggers.indexOf(el);
+      if (this.orientation === "vertical") {
+        const index = this.triggers.indexOf(el);
 
-      if (index >= 0) {
-        const next = this.loop ? index - 1 : Math.max(index - 1, 0);
-        this.triggers.at(next)?.focus();
+        if (index >= 0) {
+          const next = this.loop ? index - 1 : Math.max(index - 1, 0);
+          this.triggers.at(next)?.focus();
+        }
       }
     },
 
     "@keydown.down.prevent.stop"() {
-      const index = this.triggers.indexOf(el);
+      if (this.orientation === "vertical") {
+        const index = this.triggers.indexOf(el);
 
-      if (index >= 0) {
-        const previous = this.loop
-          ? (index + 1) % this.triggers.length
-          : Math.min(index + 1, this.triggers.length - 1);
+        if (index >= 0) {
+          const previous = this.loop
+            ? (index + 1) % this.triggers.length
+            : Math.min(index + 1, this.triggers.length - 1);
 
-        this.triggers.at(previous)?.focus();
+          this.triggers.at(previous)?.focus();
+        }
+      }
+    },
+
+    "@keydown.left.prevent.stop"() {
+      if (this.orientation === "horizontal") {
+        const index = this.triggers.indexOf(el);
+
+        if (index >= 0) {
+          const next = this.loop ? index - 1 : Math.max(index - 1, 0);
+          this.triggers.at(next)?.focus();
+        }
+      }
+    },
+
+    "@keydown.right.prevent.stop"() {
+      if (this.orientation === "horizontal") {
+        const index = this.triggers.indexOf(el);
+
+        if (index >= 0) {
+          const previous = this.loop
+            ? (index + 1) % this.triggers.length
+            : Math.min(index + 1, this.triggers.length - 1);
+
+          this.triggers.at(previous)?.focus();
+        }
       }
     },
   });
