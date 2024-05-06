@@ -15,7 +15,9 @@ export default function (Alpine) {
     } else if (value === "close") {
       handleClose(el, Alpine);
     } else {
-      handleRoot(el, Alpine, { hover: modifiers.includes("hover") });
+      handleRoot(el, Alpine, {
+        openOnHover: modifiers.includes("open-on-hover"),
+      });
     }
   });
 }
@@ -23,7 +25,7 @@ export default function (Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ hover: boolean }} config
+ * @param {{ openOnHover: boolean }} config
  */
 function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
@@ -37,16 +39,42 @@ function handleRoot(el, Alpine, config) {
     "x-id"() {
       return ["tb-flyout-content"];
     },
+
+    ":data-state"() {
+      return this.open ? "open" : "closed";
+    },
+
+    "@click.outside"() {
+      if (this.open) {
+        this.open = false;
+      }
+    },
   });
 
-  if (config.hover) {
+  if (config.openOnHover) {
     Alpine.bind(el, {
+      "x-data"() {
+        return {
+          closeOnMouseLeaveTimeout: null,
+        };
+      },
+
       "@mouseenter"() {
+        if (this.closeOnMouseLeaveTimeout) {
+          clearTimeout(this.closeOnMouseLeaveTimeout);
+        }
+
         this.open = true;
       },
 
       "@mouseleave"() {
-        this.open = false;
+        if (this.closeOnMouseLeaveTimeout) {
+          clearTimeout(this.closeOnMouseLeaveTimeout);
+        }
+
+        this.closeOnMouseLeaveTimeout = setTimeout(() => {
+          this.open = false;
+        }, 200);
       },
     });
   }
@@ -70,6 +98,10 @@ function handleTrigger(el, Alpine) {
 
     ":aria-expanded"() {
       return this.open;
+    },
+
+    ":data-state"() {
+      return this.open ? "open" : "closed";
     },
 
     "aria-haspopup": "dialog",
@@ -107,6 +139,10 @@ function handleContent(el, Alpine) {
     },
 
     role: "dialog",
+
+    ":data-state"() {
+      return this.open ? "open" : "closed";
+    },
 
     "x-show"() {
       return this.open;

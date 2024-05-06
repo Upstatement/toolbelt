@@ -1,16 +1,79 @@
 ---
 title: Flyout
+description: A flyout displays content in an overlay, triggered by a button.
 ---
 
-import { Card, CardGrid } from "@astrojs/starlight/components";
 import Toolbelt from "@components/Toolbelt.astro";
-import FlyoutDemo from "@components/demo/FlyoutDemo.astro";
+import FlyoutDemo from "@components/FlyoutDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
 
 <Lede>A flyout displays content in an overlay, triggered by a button.</Lede>
 
-<Card>
-  <FlyoutDemo />
-</Card>
+<FlyoutDemo />
+
+## Anatomy
+
+```html
+<div x-flyout>
+  <button x-flyout:trigger></button>
+
+  <div x-flyout:content>
+    <button x-flyout:close></button>
+  </div>
+</div>
+```
+
+## Directives
+
+<DirectiveReference
+  directive="x-flyout"
+  description="The root element for the flyout."
+  required
+>
+  <Fragment slot="modifiers">
+
+| Modifier         | Description                                                                   |
+| ---------------- | ----------------------------------------------------------------------------- |
+| `.open-on-hover` | Opens flyout on hover. Flyout automatically closes when cursor moves outside. |
+
+  </Fragment>
+
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[data-state]` | `open` \| `closed` |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-flyout:trigger"
+  description="Trigger button that opens or closes the flyout content."
+  required
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[data-state]` | `open` \| `closed` |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-flyout:content"
+  description="The content that will be shown or hidden."
+  required
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[data-state]` | `open` \| `closed` |
+
+  </Fragment>
+</DirectiveReference>
