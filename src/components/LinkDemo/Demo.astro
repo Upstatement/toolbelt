@@ -1,0 +1,27 @@
+---
+import Demo from "@components/Demo.astro";
+---
+
+<Demo name="link">
+  <ul x-init class="flex flex-col list-none p-0 m-0">
+    <li class="py-2">
+      <a
+        class="text-foreground transition-colors hover:text-accent-600"
+        href="#"
+        x-link:current
+      >
+        Link to the <strong>current</strong> page
+      </a>
+    </li>
+
+    <li class="py-2">
+      <a
+        class="text-foreground transition-colors hover:text-accent-600"
+        href="https://upstatement.com"
+        x-link:external
+      >
+        Link to an <strong>external</strong> page
+      </a>
+    </li>
+  </ul>
+</Demo>

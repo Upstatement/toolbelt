@@ -4,11 +4,11 @@ import { Code } from "@astrojs/starlight/components";
 
 interface Props {
   name: string;
-  features: string[];
-  html: string;
+  features?: string[];
+  html?: string;
 }
 
-const { name, features, html } = Astro.props;
+const { name, features = [], html } = Astro.props;
 ---
 
 <section aria-label="Demo">
@@ -21,28 +21,34 @@ const { name, features, html } = Astro.props;
     <slot />
   </div>
 
-  <Code class="mt-0 pt-0" title={`${name}.html`} code={html} lang="html" />
+  {
+    html && (
+      <Code class="mt-0 pt-0" title={`${name}.html`} code={html} lang="html" />
+    )
+  }
 
   <div class="not-content max-sm:flex-col flex justify-between gap-4">
-    <div class="flex flex-col gap-2">
-      <h3 class="text-lg">Features</h3>
+    {
+      features.length > 0 && (
+        <div class="flex flex-col gap-2">
+          <h3 class="text-lg">Features</h3>
 
-      <ul class="flex flex-col gap-3 list-none pl-0">
-        {
-          features.map((feature) => (
-            <li class="flex gap-2">
-              <Icon
-                class="size-[1.2rem] text-accent shrink-0 translate-y-[0.1rem]"
-                name="approve-check-circle"
-              />
-              <span class="leading-snug">{feature}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+          <ul class="flex flex-col gap-3 list-none pl-0">
+            {features.map((feature) => (
+              <li class="flex gap-2">
+                <Icon
+                  class="size-[1.2rem] text-accent shrink-0 translate-y-[0.1rem]"
+                  name="approve-check-circle"
+                />
+                <span class="leading-snug">{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
 
-    <div>
+    <div class="ml-auto">
       <a
         class="text-sm no-underline text-foreground transition-colors hover:text-accent flex gap-1 items-center whitespace-nowrap shrink-0"
         href={`https://github.com/Upstatement/toolbelt/blob/main/src/lib/toolbelt/x-${name}.js"`}

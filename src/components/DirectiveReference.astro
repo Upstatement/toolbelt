@@ -25,7 +25,9 @@ const { directive, description, required = false } = Astro.props;
 
   <hr />
 
-  <p>{description}</p>
+  <p>
+    {Astro.slots.has("description") ? <slot name="description" /> : description}
+  </p>
 
   {
     Astro.slots.has("value") && (

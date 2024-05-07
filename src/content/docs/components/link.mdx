@@ -1,42 +1,75 @@
 ---
 title: Link
+description: Directives that handle common accessibility practices for links.
 ---
 
-import { Card, CardGrid } from "@astrojs/starlight/components";
 import Toolbelt from "@components/Toolbelt.astro";
+import LinkDemo from "@components/LinkDemo/Demo.astro";
+import Lede from "@components/Lede.astro";
+import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
 
-## Usage
+<Lede>Directives that handle common accessibility practices for links.</Lede>
+
+<LinkDemo />
+
+## Anatomy
 
 ```html
-<a x-link:current href="/components/link">Link to the current page </a>
-<a x-link:external href="https://upstatement.com">Link to an external site</a>
+<a href="#" x-link:current></a>
+<a href="#" x-link:external></a>
 ```
 
-## Demo
+## Directives
 
-<Card>
-  <div class="flex flex-col">
-      <a x-init="" x-link:current="" href="/components/link">
-        <span>Link to the current page</span>
-      </a>
+The `x-link` family of directives is different from other components. These directives are independent of each other and can be used in isolation.
 
-      <a x-init="" x-link:external="" href="https://upstatement.com">
-        <span>Link to an external site</span>
-      </a>
+<DirectiveReference directive="x-link:current" required>
+  <Fragment slot="description">
+    Checks whether the link points to the current page. This will automatically
+    set `aria-current=page` on the link. By default, this will check that the link's
+    [pathname](https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname) matches that of the current page.
+  </Fragment>
 
-  </div>
-</Card>
+  <Fragment slot="modifiers">
 
-Inspect the links above. Notice that new attributes have been added to the `<a>` tags.
+| Modifier  | Description                                                                    |
+| --------- | ------------------------------------------------------------------------------ |
+| `.nested` | If set, this directive will be applied to all `<a>` nested inside the element. |
 
-```html ins='aria-current="page"' ins='target="_blank" rel="noopener noreferrer"'
-<a x-link:current href="/components/link" aria-current="page">
-  <span>Link to the current page</span>
-</a>
+  </Fragment>
 
-<a x-link:external href="https://upstatement.com" target="_blank" rel="noopener noreferrer">
-  <span>Link to an external site</span>
-</a>
-```
+  <Fragment slot="attributes">
+
+| Data Attribute   | Values            |
+| ---------------- | ----------------- |
+| `[data-current]` | `true` \| `false` |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-link:external"
+  required
+>
+  <Fragment slot="description">
+    Checks whether the link points to an external website. This will automatically set the link to open in a new tab. By default, this will check whether the link shares the same origin as the current site.
+  </Fragment>
+
+  <Fragment slot="attributes">
+
+| Data Attribute    | Values            |
+| ----------------- | ----------------- |
+| `[data-external]` | `true` \| `false` |
+
+  </Fragment>
+
+  <Fragment slot="modifiers">
+
+| Modifier  | Description                                                                    |
+| --------- | ------------------------------------------------------------------------------ |
+| `.nested` | If set, this directive will be applied to all `<a>` nested inside the element. |
+
+  </Fragment>
+</DirectiveReference>

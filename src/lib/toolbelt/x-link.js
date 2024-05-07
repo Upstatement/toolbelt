@@ -40,18 +40,22 @@ function handleCurrent(el, Alpine, config) {
   }
 
   if (isElementTag(el, "a")) {
+    const url = new URL(el.href);
+    const windowUrl = new URL(window.location.href);
+
+    const isExternal =
+      url.origin === windowUrl.origin &&
+      url.pathname.replace(/\/$/, "") === windowUrl.pathname.replace(/\/$/, "");
+
     Alpine.bind(el, {
       ":aria-current"() {
-        const url = new URL(el.href);
-        const windowUrl = new URL(window.location.href);
-
-        if (
-          url.origin === windowUrl.origin &&
-          url.pathname.replace(/\/$/, "") ===
-          windowUrl.pathname.replace(/\/$/, "")
-        ) {
+        if (isExternal) {
           return "page";
         }
+      },
+
+      ":data-current"() {
+        return isExternal;
       },
     });
   }
@@ -97,6 +101,10 @@ function handleExternal(el, Alpine, config) {
         if (isExternal) {
           return "noopener noreferrer";
         }
+      },
+
+      ":data-external"() {
+        return isExternal;
       },
     });
   }
