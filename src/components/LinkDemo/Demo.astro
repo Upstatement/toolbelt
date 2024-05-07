@@ -1,4 +1,5 @@
 ---
+import { Icon } from "@astrojs/starlight/components";
 import Demo from "@components/Demo.astro";
 ---
 
@@ -16,11 +17,16 @@ import Demo from "@components/Demo.astro";
 
     <li class="py-2">
       <a
-        class="text-foreground transition-colors hover:text-accent-600"
+        class="text-foreground transition-colors hover:text-accent-600 flex items-center gap-1 group"
         href="https://upstatement.com"
         x-link:external
       >
-        Link to an <strong>external</strong> page
+        <span>Link to an <strong>external</strong> page</span>
+
+        <Icon
+          class="translate-y-[0.1rem] hidden group-data-[external='true']:inline"
+          name="external"
+        />
       </a>
     </li>
   </ul>
