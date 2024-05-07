@@ -9,12 +9,12 @@ import { isElementTag } from "../utils";
  */
 export default function(Alpine) {
   Alpine.directive("link", (el, { value, modifiers }) => {
-    const isNested = modifiers.includes("nested");
+    const nested = modifiers.includes("nested");
 
     if (value === "current") {
-      handleCurrent(el, Alpine, { isNested });
+      handleCurrent(el, Alpine, { nested });
     } else if (value === "external") {
-      handleExternal(el, Alpine, { isNested });
+      handleExternal(el, Alpine, { nested });
     }
   });
 }
@@ -22,17 +22,17 @@ export default function(Alpine) {
 /**
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ isNested: boolean }} config
+ * @param {{ nested: boolean }} config
  */
 function handleCurrent(el, Alpine, config) {
-  if (!config.isNested && !isElementTag(el, "a")) {
+  if (!config.nested && !isElementTag(el, "a")) {
     return logger.error(
       "x-link directive can only be used on <a> elements, unless nested.",
       el,
     );
   }
 
-  if (!config.isNested && isElementTag(el, "a") && !el.href) {
+  if (!config.nested && isElementTag(el, "a") && !el.href) {
     return logger.error(
       "x-link directive requires an 'href' attribute, unless nested.",
       el,
@@ -60,7 +60,7 @@ function handleCurrent(el, Alpine, config) {
     });
   }
 
-  if (config.isNested) {
+  if (config.nested) {
     el.querySelectorAll("a").forEach((el) => {
       handleCurrent(el, Alpine, config);
     });
@@ -70,17 +70,17 @@ function handleCurrent(el, Alpine, config) {
 /**
  * @param {HTMLAnchorElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ isNested: boolean }} config
+ * @param {{ nested: boolean }} config
  */
 function handleExternal(el, Alpine, config) {
-  if (!config.isNested && !isElementTag(el, "a")) {
+  if (!config.nested && !isElementTag(el, "a")) {
     return logger.error(
       "x-link directive can only be used on <a> elements, unless nested.",
       el,
     );
   }
 
-  if (!config.isNested && isElementTag(el, "a") && !el.href) {
+  if (!config.nested && isElementTag(el, "a") && !el.href) {
     return logger.error(
       "x-link directive requires an 'href' attribute, unless nested.",
       el,
@@ -109,7 +109,7 @@ function handleExternal(el, Alpine, config) {
     });
   }
 
-  if (config.isNested) {
+  if (config.nested) {
     el.querySelectorAll("a").forEach((el) => {
       handleExternal(el, Alpine, config);
     });
