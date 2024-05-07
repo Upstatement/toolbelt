@@ -7,7 +7,7 @@ import { isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function(Alpine) {
+export default function (Alpine) {
   Alpine.directive("link", (el, { value, modifiers }) => {
     const nested = modifiers.includes("nested");
 
@@ -43,19 +43,19 @@ function handleCurrent(el, Alpine, config) {
     const url = new URL(el.href);
     const windowUrl = new URL(window.location.href);
 
-    const isExternal =
+    const isCurrent =
       url.origin === windowUrl.origin &&
       url.pathname.replace(/\/$/, "") === windowUrl.pathname.replace(/\/$/, "");
 
     Alpine.bind(el, {
       ":aria-current"() {
-        if (isExternal) {
+        if (isCurrent) {
           return "page";
         }
       },
 
       ":data-current"() {
-        return isExternal;
+        return isCurrent;
       },
     });
   }
@@ -88,7 +88,7 @@ function handleExternal(el, Alpine, config) {
   }
 
   if (isElementTag(el, "a")) {
-    const isExternal = !el.href.startsWith(window.location.origin);
+    const isExternal = el.origin !== window.location.origin;
 
     Alpine.bind(el, {
       ":target"() {
