@@ -19,7 +19,7 @@ export default defineConfig({
           items: [
             {
               label: "What is Toolbelt?",
-              link: "/getting-started/what-is-toolbelt",
+              link: "/",
             },
           ],
         },
