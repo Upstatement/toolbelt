@@ -87,5 +87,56 @@ describe("x-dialog", () => {
         expect(content).not.toBeVisible();
       });
     });
+
+    test("should close the dialog when overlay is clicked", async () => {
+      const toggle = getByTestId(document.body, "toggle");
+      const overlay = getByTestId(document, "overlay");
+      const content = getByTestId(document, "content");
+
+      fireEvent.click(toggle);
+
+      await waitFor(() => {
+        expect(toggle).toHaveAttribute("aria-expanded", "true");
+        expect(toggle).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+
+      fireEvent.click(overlay);
+
+      await waitFor(() => {
+        expect(toggle).toHaveAttribute("aria-expanded", "false");
+        expect(toggle).toHaveAttribute("data-state", "closed");
+
+        expect(content).toHaveAttribute("data-state", "closed");
+        expect(content).not.toBeVisible();
+      });
+    });
+
+    test("pressing escape should close the dialog", async () => {
+      const toggle = getByTestId(document.body, "toggle");
+      const content = getByTestId(document, "content");
+
+      fireEvent.click(toggle);
+
+      await waitFor(() => {
+        expect(toggle).toHaveAttribute("aria-expanded", "true");
+        expect(toggle).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+
+      fireEvent.keyDown(content, { key: "Escape" });
+
+      await waitFor(() => {
+        expect(toggle).toHaveAttribute("aria-expanded", "false");
+        expect(toggle).toHaveAttribute("data-state", "closed");
+
+        expect(content).toHaveAttribute("data-state", "closed");
+        expect(content).not.toBeVisible();
+      });
+    });
   });
 });
