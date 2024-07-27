@@ -1,5 +1,5 @@
+import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
-import "@testing-library/jest-dom";
 
 import { html, initializeAlpine } from "./utils";
 
