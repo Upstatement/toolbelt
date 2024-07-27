@@ -7,5 +7,6 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/lib/__tests__/setup.js"],
     silent: true,
+    reporters: ["verbose"],
   },
 });
