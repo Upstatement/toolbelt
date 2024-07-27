@@ -161,7 +161,7 @@ describe("x-accordion", () => {
     });
   });
 
-  describe("single tab only configuration", () => {
+  describe("single tab only configuration (x-accordion.single)", () => {
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-data x-accordion.single>
@@ -214,6 +214,50 @@ describe("x-accordion", () => {
           expect(trigger2).toHaveAttribute("data-state", "open");
           expect(trigger2).toHaveAttribute("aria-expanded", "true");
           expect(content2).toHaveAttribute("data-state", "open");
+        });
+      });
+    });
+  });
+
+  describe("loop keyboard navigation configuration (x-accordion.loop)", () => {
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-data x-accordion.loop>
+          <div x-accordion:item data-testid="item-1">
+            <button x-accordion:trigger data-testid="trigger-1"></button>
+            <div x-accordion:content data-testid="content-1"></div>
+          </div>
+
+          <div x-accordion:item data-testid="item-2">
+            <button x-accordion:trigger data-testid="trigger-2"></button>
+            <div x-accordion:content data-testid="content-2"></div>
+          </div>
+        </div>
+      `;
+    });
+
+    describe("keyboard navigation", () => {
+      test("pressing down arrow on the last trigger should loop", async () => {
+        const trigger1 = getByTestId(document, "trigger-1");
+        const trigger2 = getByTestId(document, "trigger-2");
+
+        trigger2.focus();
+        fireEvent.keyDown(trigger2, { key: "ArrowDown" });
+
+        await waitFor(() => {
+          expect(trigger1).toHaveFocus();
+        });
+      });
+
+      test("pressing up arrow on the first trigger should loop", async () => {
+        const trigger1 = getByTestId(document, "trigger-1");
+        const trigger2 = getByTestId(document, "trigger-2");
+
+        trigger1.focus();
+        fireEvent.keyDown(trigger1, { key: "ArrowUp" });
+
+        await waitFor(() => {
+          expect(trigger2).toHaveFocus();
         });
       });
     });
