@@ -1,5 +1,6 @@
-import { Alpine } from "alpinejs";
-import { focus } from "@alpinejs/focus";
+import Alpine from "alpinejs";
+// import focus from "@alpinejs/focus";
+
 import toolbelt from "../toolbelt";
 
 /**
@@ -15,7 +16,12 @@ export function html(doc) {
 }
 
 export function initializeAlpine() {
+  // Directives need the focus plugin but it is incompatible
+  // with jsdom environment. Tests will warn but still work.
+  // We don't need to test the focus trapping.
+  //
   // Alpine.plugin(focus);
+
   Alpine.plugin(toolbelt);
   Alpine.start();
 }
