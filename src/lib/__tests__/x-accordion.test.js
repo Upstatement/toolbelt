@@ -44,37 +44,44 @@ describe("x-accordion", () => {
       expect(content).toHaveAttribute("data-state", "closed");
     });
 
-    describe("opening a tab", () => {
-      test("x-accordion:item should be open", async () => {
+    describe("opening tabs", () => {
+      test("should open a tab when clicked", async () => {
         const item = getByTestId(document, "item-1");
-        const trigger = getByTestId(document, "trigger-1");
-
-        fireEvent.click(trigger);
-
-        await waitFor(() => {
-          expect(item).toHaveAttribute("data-state", "open");
-        });
-      });
-
-      test("x-accordion:trigger should be open", async () => {
-        const trigger = getByTestId(document, "trigger-1");
-
-        fireEvent.click(trigger);
-
-        await waitFor(() => {
-          expect(trigger).toHaveAttribute("data-state", "open");
-          expect(trigger).toHaveAttribute("aria-expanded", "true");
-        });
-      });
-
-      test("x-accordion:content should be open", async () => {
         const trigger = getByTestId(document, "trigger-1");
         const content = getByTestId(document, "content-1");
 
         fireEvent.click(trigger);
 
         await waitFor(() => {
+          expect(item).toHaveAttribute("data-state", "open");
+
+          expect(trigger).toHaveAttribute("data-state", "open");
+          expect(trigger).toHaveAttribute("aria-expanded", "true");
+
           expect(content).toHaveAttribute("data-state", "open");
+        });
+      });
+
+      test("should be able to open multiple tabs", async () => {
+        const item1 = getByTestId(document, "item-1");
+        const trigger1 = getByTestId(document, "trigger-1");
+        const content1 = getByTestId(document, "content-1");
+
+        const item2 = getByTestId(document, "item-2");
+        const trigger2 = getByTestId(document, "trigger-2");
+        const content2 = getByTestId(document, "content-2");
+
+        fireEvent.click(trigger1);
+        fireEvent.click(trigger2);
+
+        await waitFor(() => {
+          expect(item1).toHaveAttribute("data-state", "open");
+          expect(trigger1).toHaveAttribute("data-state", "open");
+          expect(content1).toHaveAttribute("data-state", "open");
+
+          expect(item2).toHaveAttribute("data-state", "open");
+          expect(trigger2).toHaveAttribute("data-state", "open");
+          expect(content2).toHaveAttribute("data-state", "open");
         });
       });
     });
