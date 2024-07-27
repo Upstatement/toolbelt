@@ -219,7 +219,7 @@ describe("x-accordion", () => {
     });
   });
 
-  describe("loop keyboard navigation configuration (x-accordion.loop)", () => {
+  describe("looping keyboard navigation configuration (x-accordion.loop)", () => {
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-data x-accordion.loop>
@@ -258,6 +258,50 @@ describe("x-accordion", () => {
 
         await waitFor(() => {
           expect(trigger2).toHaveFocus();
+        });
+      });
+    });
+  });
+
+  describe("horizontal keyboard navigation configuration (x-accordion.horizontal)", () => {
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-data x-accordion.horizontal>
+          <div x-accordion:item data-testid="item-1">
+            <button x-accordion:trigger data-testid="trigger-1"></button>
+            <div x-accordion:content data-testid="content-1"></div>
+          </div>
+
+          <div x-accordion:item data-testid="item-2">
+            <button x-accordion:trigger data-testid="trigger-2"></button>
+            <div x-accordion:content data-testid="content-2"></div>
+          </div>
+        </div>
+      `;
+    });
+
+    describe("keyboard navigation", () => {
+      test("pressing right arrow should move focus to the next trigger", async () => {
+        const trigger1 = getByTestId(document, "trigger-1");
+        const trigger2 = getByTestId(document, "trigger-2");
+
+        trigger1.focus();
+        fireEvent.keyDown(trigger1, { key: "ArrowRight" });
+
+        await waitFor(() => {
+          expect(trigger2).toHaveFocus();
+        });
+      });
+
+      test("pressing left arrow should move focus to the previous trigger", async () => {
+        const trigger1 = getByTestId(document, "trigger-1");
+        const trigger2 = getByTestId(document, "trigger-2");
+
+        trigger2.focus();
+        fireEvent.keyDown(trigger2, { key: "ArrowLeft" });
+
+        await waitFor(() => {
+          expect(trigger1).toHaveFocus();
         });
       });
     });
