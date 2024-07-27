@@ -18,8 +18,8 @@ describe("x-flyout", () => {
 
     test("correct initial state", () => {
       const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(flyout, "trigger");
-      const content = getByTestId(flyout, "content");
+      const trigger = getByTestId(document.body, "trigger");
+      const content = getByTestId(document.body, "content");
 
       expect(flyout).toHaveAttribute("data-state", "closed");
 
@@ -35,8 +35,8 @@ describe("x-flyout", () => {
 
     test("should open flyout", async () => {
       const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(flyout, "trigger");
-      const content = getByTestId(flyout, "content");
+      const trigger = getByTestId(document.body, "trigger");
+      const content = getByTestId(document.body, "content");
 
       fireEvent.click(trigger);
 
@@ -48,6 +48,36 @@ describe("x-flyout", () => {
 
         expect(content).toHaveAttribute("data-state", "open");
         expect(content).toBeVisible();
+      });
+    });
+
+    test("should close flyout", async () => {
+      const flyout = getByTestId(document.body, "flyout");
+      const trigger = getByTestId(document.body, "trigger");
+      const content = getByTestId(document.body, "content");
+
+      fireEvent.click(trigger);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "open");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "true");
+        expect(trigger).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+
+      fireEvent.click(trigger);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "closed");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "false");
+        expect(trigger).toHaveAttribute("data-state", "closed");
+
+        expect(content).toHaveAttribute("data-state", "closed");
+        expect(content).not.toBeVisible();
       });
     });
   });
