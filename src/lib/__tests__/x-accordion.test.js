@@ -37,6 +37,7 @@ describe("x-accordion", () => {
       expect(content).toHaveAttribute("aria-labelledby", trigger.id);
       expect(content).toHaveAttribute("role", "region");
       expect(content).toHaveAttribute("data-state", "closed");
+      expect(content).not.toBeVisible();
     });
 
     describe("opening tabs", () => {
@@ -54,6 +55,7 @@ describe("x-accordion", () => {
           expect(trigger).toHaveAttribute("aria-expanded", "true");
 
           expect(content).toHaveAttribute("data-state", "open");
+          expect(content).toBeVisible();
         });
       });
 
@@ -74,11 +76,13 @@ describe("x-accordion", () => {
           expect(trigger1).toHaveAttribute("data-state", "open");
           expect(trigger1).toHaveAttribute("aria-expanded", "true");
           expect(content1).toHaveAttribute("data-state", "open");
+          expect(content1).toBeVisible();
 
           expect(item2).toHaveAttribute("data-state", "open");
           expect(trigger2).toHaveAttribute("data-state", "open");
           expect(trigger2).toHaveAttribute("aria-expanded", "true");
           expect(content2).toHaveAttribute("data-state", "open");
+          expect(content2).toBeVisible();
         });
       });
     });
@@ -190,11 +194,13 @@ describe("x-accordion", () => {
           expect(trigger1).toHaveAttribute("data-state", "open");
           expect(trigger1).toHaveAttribute("aria-expanded", "true");
           expect(content1).toHaveAttribute("data-state", "open");
+          expect(content1).toBeVisible();
 
           expect(item2).toHaveAttribute("data-state", "closed");
           expect(trigger2).toHaveAttribute("data-state", "closed");
           expect(trigger2).toHaveAttribute("aria-expanded", "false");
           expect(content2).toHaveAttribute("data-state", "closed");
+          expect(content2).not.toBeVisible();
         });
 
         fireEvent.click(trigger2);
@@ -204,11 +210,13 @@ describe("x-accordion", () => {
           expect(trigger1).toHaveAttribute("data-state", "closed");
           expect(trigger1).toHaveAttribute("aria-expanded", "false");
           expect(content1).toHaveAttribute("data-state", "closed");
+          expect(content1).not.toBeVisible();
 
           expect(item2).toHaveAttribute("data-state", "open");
           expect(trigger2).toHaveAttribute("data-state", "open");
           expect(trigger2).toHaveAttribute("aria-expanded", "true");
           expect(content2).toHaveAttribute("data-state", "open");
+          expect(content2).toBeVisible();
         });
       });
     });

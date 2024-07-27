@@ -25,11 +25,11 @@ describe("x-dialog", () => {
     });
 
     test("correct initial state", () => {
-      const toggle = getByTestId(document.body, "toggle");
-      const content = getByTestId(document.body, "content");
-      const title = getByTestId(document.body, "title");
-      const description = getByTestId(document.body, "description");
-      const close = getByTestId(document.body, "close");
+      const toggle = getByTestId(document, "toggle");
+      const content = getByTestId(document, "content");
+      const title = getByTestId(document, "title");
+      const description = getByTestId(document, "description");
+      const close = getByTestId(document, "close");
 
       expect(toggle).toHaveAttribute("aria-expanded", "false");
       expect(toggle).toHaveAttribute("data-state", "closed");
@@ -42,6 +42,7 @@ describe("x-dialog", () => {
       expect(content).toHaveAttribute("aria-labelledby", title.id);
       expect(content).toHaveAttribute("aria-describedby", description.id);
       expect(content).toHaveAttribute("data-state", "closed");
+      expect(content).not.toBeVisible();
 
       expect(close).toBeInTheDocument();
     });
