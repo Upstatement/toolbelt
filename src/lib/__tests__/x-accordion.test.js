@@ -77,10 +77,12 @@ describe("x-accordion", () => {
         await waitFor(() => {
           expect(item1).toHaveAttribute("data-state", "open");
           expect(trigger1).toHaveAttribute("data-state", "open");
+          expect(trigger1).toHaveAttribute("aria-expanded", "true");
           expect(content1).toHaveAttribute("data-state", "open");
 
           expect(item2).toHaveAttribute("data-state", "open");
           expect(trigger2).toHaveAttribute("data-state", "open");
+          expect(trigger2).toHaveAttribute("aria-expanded", "true");
           expect(content2).toHaveAttribute("data-state", "open");
         });
       });
@@ -154,6 +156,64 @@ describe("x-accordion", () => {
 
         await waitFor(() => {
           expect(trigger2).toHaveFocus();
+        });
+      });
+    });
+  });
+
+  describe("single tab only configuration", () => {
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-data x-accordion.single>
+          <div x-accordion:item data-testid="item-1">
+            <button x-accordion:trigger data-testid="trigger-1"></button>
+            <div x-accordion:content data-testid="content-1"></div>
+          </div>
+
+          <div x-accordion:item data-testid="item-2">
+            <button x-accordion:trigger data-testid="trigger-2"></button>
+            <div x-accordion:content data-testid="content-2"></div>
+          </div>
+        </div>
+      `;
+    });
+
+    describe("opening tabs", () => {
+      test("should only open one tab at a time", async () => {
+        const item1 = getByTestId(document, "item-1");
+        const trigger1 = getByTestId(document, "trigger-1");
+        const content1 = getByTestId(document, "content-1");
+
+        const item2 = getByTestId(document, "item-2");
+        const trigger2 = getByTestId(document, "trigger-2");
+        const content2 = getByTestId(document, "content-2");
+
+        fireEvent.click(trigger1);
+
+        await waitFor(() => {
+          expect(item1).toHaveAttribute("data-state", "open");
+          expect(trigger1).toHaveAttribute("data-state", "open");
+          expect(trigger1).toHaveAttribute("aria-expanded", "true");
+          expect(content1).toHaveAttribute("data-state", "open");
+
+          expect(item2).toHaveAttribute("data-state", "closed");
+          expect(trigger2).toHaveAttribute("data-state", "closed");
+          expect(trigger2).toHaveAttribute("aria-expanded", "false");
+          expect(content2).toHaveAttribute("data-state", "closed");
+        });
+
+        fireEvent.click(trigger2);
+
+        await waitFor(() => {
+          expect(item1).toHaveAttribute("data-state", "closed");
+          expect(trigger1).toHaveAttribute("data-state", "closed");
+          expect(trigger1).toHaveAttribute("aria-expanded", "false");
+          expect(content1).toHaveAttribute("data-state", "closed");
+
+          expect(item2).toHaveAttribute("data-state", "open");
+          expect(trigger2).toHaveAttribute("data-state", "open");
+          expect(trigger2).toHaveAttribute("aria-expanded", "true");
+          expect(content2).toHaveAttribute("data-state", "open");
         });
       });
     });
