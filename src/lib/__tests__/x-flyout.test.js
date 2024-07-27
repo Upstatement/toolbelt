@@ -32,5 +32,23 @@ describe("x-flyout", () => {
       expect(content).toHaveAttribute("data-state", "closed");
       expect(content).not.toBeVisible();
     });
+
+    test("should open flyout", async () => {
+      const flyout = getByTestId(document.body, "flyout");
+      const trigger = getByTestId(flyout, "trigger");
+      const content = getByTestId(flyout, "content");
+
+      fireEvent.click(trigger);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "open");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "true");
+        expect(trigger).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+    });
   });
 });
