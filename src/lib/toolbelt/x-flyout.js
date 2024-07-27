@@ -12,8 +12,6 @@ export default function (Alpine) {
       handleTrigger(el, Alpine);
     } else if (value === "content") {
       handleContent(el, Alpine);
-    } else if (value === "close") {
-      handleClose(el, Alpine);
     } else {
       handleRoot(el, Alpine, {
         openOnHover: modifiers.includes("open-on-hover"),
@@ -153,31 +151,6 @@ function handleContent(el, Alpine) {
       if (!el.contains(e.relatedTarget)) {
         this.open = false;
       }
-    },
-  });
-}
-
-/**
- * @param {HTMLElement} el
- * @param {import('alpinejs').Alpine} Alpine
- */
-function handleClose(el, Alpine) {
-  Alpine.bind(el, {
-    "x-init"() {
-      if (!this.__content) {
-        logger.error(
-          "x-flyout:close must be placed inside an x-flyout:content",
-          el,
-        );
-      }
-
-      if (!isElementTag(el, "button")) {
-        logger.warn("x-flyout:close must be a <button> element", el);
-      }
-    },
-
-    "@click"() {
-      this.open = false;
     },
   });
 }
