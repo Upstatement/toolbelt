@@ -1,4 +1,4 @@
-import { getByTestId } from "@testing-library/dom";
+import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
 import "@testing-library/jest-dom";
 
 import { html, initializeAlpine } from "./utils";
@@ -45,6 +45,47 @@ describe("x-dialog", () => {
       expect(content).not.toBeVisible();
 
       expect(close).toBeInTheDocument();
+    });
+
+    test("should open the dialog", async () => {
+      const toggle = getByTestId(document.body, "toggle");
+      const content = getByTestId(document, "content");
+
+      fireEvent.click(toggle);
+
+      await waitFor(() => {
+        expect(toggle).toHaveAttribute("aria-expanded", "true");
+        expect(toggle).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+    });
+
+    test("should close the dialog", async () => {
+      const toggle = getByTestId(document.body, "toggle");
+      const close = getByTestId(document, "close");
+      const content = getByTestId(document, "content");
+
+      fireEvent.click(toggle);
+
+      await waitFor(() => {
+        expect(toggle).toHaveAttribute("aria-expanded", "true");
+        expect(toggle).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+
+      fireEvent.click(close);
+
+      await waitFor(() => {
+        expect(toggle).toHaveAttribute("aria-expanded", "false");
+        expect(toggle).toHaveAttribute("data-state", "closed");
+
+        expect(content).toHaveAttribute("data-state", "closed");
+        expect(content).not.toBeVisible();
+      });
     });
   });
 });

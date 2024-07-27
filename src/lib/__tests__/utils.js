@@ -15,7 +15,7 @@ export function html(doc) {
 }
 
 export function initializeAlpine() {
-  Alpine.plugin(focus);
+  // Alpine.plugin(focus);
   Alpine.plugin(toolbelt);
   Alpine.start();
 }
