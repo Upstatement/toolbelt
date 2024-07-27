@@ -1,15 +1,10 @@
-import { Alpine } from "alpinejs";
 import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
 import "@testing-library/jest-dom";
 
-import toolbelt from "../toolbelt";
-import { html } from "./utils";
+import { html, initializeAlpine } from "./utils";
 
 describe("x-accordion", () => {
-  beforeAll(() => {
-    Alpine.plugin(toolbelt);
-    Alpine.start();
-  });
+  beforeAll(initializeAlpine);
 
   describe("default configuration", () => {
     beforeEach(() => {
