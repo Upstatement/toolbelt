@@ -25,11 +25,11 @@ describe("x-dialog", () => {
     });
 
     test("correct initial state", () => {
-      const toggle = getByTestId(document, "toggle");
-      const content = getByTestId(document, "content");
-      const title = getByTestId(document, "title");
-      const description = getByTestId(document, "description");
-      const close = getByTestId(document, "close");
+      const toggle = getByTestId(document.body, "toggle");
+      const content = getByTestId(document.body, "content");
+      const title = getByTestId(document.body, "title");
+      const description = getByTestId(document.body, "description");
+      const close = getByTestId(document.body, "close");
 
       expect(toggle).toHaveAttribute("aria-expanded", "false");
       expect(toggle).toHaveAttribute("data-state", "closed");
@@ -49,7 +49,7 @@ describe("x-dialog", () => {
 
     test("should open the dialog", async () => {
       const toggle = getByTestId(document.body, "toggle");
-      const content = getByTestId(document, "content");
+      const content = getByTestId(document.body, "content");
 
       fireEvent.click(toggle);
 
@@ -64,8 +64,8 @@ describe("x-dialog", () => {
 
     test("should close the dialog", async () => {
       const toggle = getByTestId(document.body, "toggle");
-      const close = getByTestId(document, "close");
-      const content = getByTestId(document, "content");
+      const close = getByTestId(document.body, "close");
+      const content = getByTestId(document.body, "content");
 
       fireEvent.click(toggle);
 
@@ -90,8 +90,8 @@ describe("x-dialog", () => {
 
     test("should close the dialog when overlay is clicked", async () => {
       const toggle = getByTestId(document.body, "toggle");
-      const overlay = getByTestId(document, "overlay");
-      const content = getByTestId(document, "content");
+      const overlay = getByTestId(document.body, "overlay");
+      const content = getByTestId(document.body, "content");
 
       fireEvent.click(toggle);
 
@@ -116,7 +116,7 @@ describe("x-dialog", () => {
 
     test("pressing escape should close the dialog", async () => {
       const toggle = getByTestId(document.body, "toggle");
-      const content = getByTestId(document, "content");
+      const content = getByTestId(document.body, "content");
 
       fireEvent.click(toggle);
 
