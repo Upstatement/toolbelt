@@ -80,5 +80,35 @@ describe("x-flyout", () => {
         expect(content).not.toBeVisible();
       });
     });
+
+    test("focusing out of flyout should close it", async () => {
+      const flyout = getByTestId(document.body, "flyout");
+      const trigger = getByTestId(document.body, "trigger");
+      const content = getByTestId(document.body, "content");
+
+      fireEvent.click(trigger);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "open");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "true");
+        expect(trigger).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+
+      fireEvent.focusOut(content);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "closed");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "false");
+        expect(trigger).toHaveAttribute("data-state", "closed");
+
+        expect(content).toHaveAttribute("data-state", "closed");
+        expect(content).not.toBeVisible();
+      });
+    });
   });
 });
