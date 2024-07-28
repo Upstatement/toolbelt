@@ -250,7 +250,9 @@ function handlePanel(el, Alpine, config) {
 
     role: "tabpanel",
 
-    tabindex: 0,
+    ":tabindex"() {
+      return this.activeTab === this.value ? "0" : -1;
+    },
 
     ":data-state"() {
       return this.activeTab === this.value ? "active" : "inactive";

@@ -52,5 +52,33 @@ describe("x-tabs", () => {
       expect(tab2).toHaveAttribute("aria-selected", "false");
       expect(tab2).toHaveAttribute("data-state", "inactive");
     });
+
+    test("should open a tab", async () => {
+      fireEvent.click(tab2);
+
+      await waitFor(() => {
+        expectTabToBeSelected({ tab: tab1, panel: panel1 }, false);
+        expectTabToBeSelected({ tab: tab2, panel: panel2 }, true);
+      });
+    });
   });
 });
+
+/**
+ * @param {{ tab: HTMLElement, panel: HTMLElement }} elements
+ * @param {boolean} isSelected
+ */
+function expectTabToBeSelected(elements, isSelected) {
+  const { tab, panel } = elements;
+
+  expect(tab).toHaveAttribute("tabindex", isSelected ? "0" : "-1");
+  expect(tab).toHaveAttribute("aria-selected", isSelected ? "true" : "false");
+  expect(tab).toHaveAttribute("data-state", isSelected ? "active" : "inactive");
+
+  expect(panel).toHaveAttribute("tabindex", isSelected ? "0" : "-1");
+  expect(panel).toHaveAttribute(
+    "data-state",
+    isSelected ? "active" : "inactive",
+  );
+  expect(panel).toBeVisible();
+}
