@@ -1,4 +1,5 @@
 import accordion from "./x-accordion";
+import checkbox from "./x-checkbox";
 import dialog from "./x-dialog";
 import flyout from "./x-flyout";
 import section from "./x-section";
@@ -11,6 +12,7 @@ import link from "./x-link";
  */
 export default function (Alpine) {
   accordion(Alpine);
+  checkbox(Alpine);
   dialog(Alpine);
   flyout(Alpine);
   section(Alpine);
