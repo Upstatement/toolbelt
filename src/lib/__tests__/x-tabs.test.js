@@ -41,6 +41,12 @@ describe("x-tabs", () => {
 
       expect(tab2).toHaveAttribute("role", "tab");
       expect(tab2).toHaveAttribute("aria-controls", panel2.id);
+
+      expect(panel1).toHaveAttribute("role", "tabpanel");
+      expect(panel1).toHaveAttribute("aria-labelledby", tab1.id);
+
+      expect(panel2).toHaveAttribute("role", "tabpanel");
+      expect(panel2).toHaveAttribute("aria-labelledby", tab2.id);
     });
 
     test("first tab should be selected", () => {
@@ -51,6 +57,14 @@ describe("x-tabs", () => {
       expect(tab2).toHaveAttribute("tabindex", "-1");
       expect(tab2).toHaveAttribute("aria-selected", "false");
       expect(tab2).toHaveAttribute("data-state", "inactive");
+
+      expect(panel1).toHaveAttribute("tabindex", "0");
+      expect(panel1).toHaveAttribute("data-state", "active");
+      expect(panel1).toBeVisible();
+
+      expect(panel2).toHaveAttribute("tabindex", "-1");
+      expect(panel2).toHaveAttribute("data-state", "inactive");
+      expect(panel2).not.toBeVisible();
     });
 
     test("should open a tab", async () => {
