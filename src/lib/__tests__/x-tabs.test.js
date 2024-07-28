@@ -167,6 +167,108 @@ describe("x-tabs", () => {
       });
     });
   });
+
+  describe("automatic tab selection configuration (x-tabs:list.automatic)", () => {
+    let tab1, tab2, panel1, panel2;
+
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-tabs data-testid="tabs">
+          <div x-tabs:list.automatic data-testid="list">
+            <button x-tabs:tab="tab1" data-testid="tab1"></button>
+            <button x-tabs:tab="tab2" data-testid="tab2"></button>
+          </div>
+
+          <div x-tabs:panel="tab1" data-testid="panel1"></div>
+          <div x-tabs:panel="tab2" data-testid="panel2"></div>
+        </div>
+      `;
+
+      tab1 = getByTestId(document.body, "tab1");
+      tab2 = getByTestId(document.body, "tab2");
+      panel1 = getByTestId(document.body, "panel1");
+      panel2 = getByTestId(document.body, "panel2");
+    });
+
+    describe("keyboard navigation", () => {
+      test("pressing right arrow should automatically open the next tab", async () => {
+        fireEvent.keyDown(tab1, { key: "ArrowRight" });
+
+        await waitFor(() => {
+          expectTabToBeSelected({ tab: tab1, panel: panel1 }, false);
+          expectTabToBeSelected({ tab: tab2, panel: panel2 }, true);
+        });
+      });
+
+      test("pressing left arrow should automatically open the previous tab", async () => {
+        fireEvent.keyDown(tab2, { key: "ArrowLeft" });
+
+        await waitFor(() => {
+          expectTabToBeSelected({ tab: tab1, panel: panel1 }, true);
+          expectTabToBeSelected({ tab: tab2, panel: panel2 }, false);
+        });
+      });
+
+      test("pressing home should automatically open the first tab", async () => {
+        fireEvent.keyDown(tab2, { key: "Home" });
+
+        await waitFor(() => {
+          expectTabToBeSelected({ tab: tab1, panel: panel1 }, true);
+          expectTabToBeSelected({ tab: tab2, panel: panel2 }, false);
+        });
+      });
+
+      test("pressing end should automatically open the last tab", async () => {
+        fireEvent.keyDown(tab1, { key: "End" });
+
+        await waitFor(() => {
+          expectTabToBeSelected({ tab: tab1, panel: panel1 }, false);
+          expectTabToBeSelected({ tab: tab2, panel: panel2 }, true);
+        });
+      });
+    });
+  });
+
+  describe("vertical keyboard navigation configuration (x-tabs:list.vertical)", () => {
+    let tab1, tab2, panel1, panel2;
+
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-tabs data-testid="tabs">
+          <div x-tabs:list.vertical data-testid="list">
+            <button x-tabs:tab="tab1" data-testid="tab1"></button>
+            <button x-tabs:tab="tab2" data-testid="tab2"></button>
+          </div>
+
+          <div x-tabs:panel="tab1" data-testid="panel1"></div>
+          <div x-tabs:panel="tab2" data-testid="panel2"></div>
+        </div>
+      `;
+
+      tab1 = getByTestId(document.body, "tab1");
+      tab2 = getByTestId(document.body, "tab2");
+      panel1 = getByTestId(document.body, "panel1");
+      panel2 = getByTestId(document.body, "panel2");
+    });
+
+    describe("keyboard navigation", () => {
+      test("pressing down arrow should move focus to the next tab", async () => {
+        fireEvent.keyDown(tab1, { key: "ArrowDown" });
+
+        await waitFor(() => {
+          expect(tab2).toHaveFocus();
+        });
+      });
+
+      test("pressing up arrow should move focus to the previous tab", async () => {
+        fireEvent.keyDown(tab2, { key: "ArrowUp" });
+
+        await waitFor(() => {
+          expect(tab1).toHaveFocus();
+        });
+      });
+    });
+  });
 });
 
 /**
@@ -185,5 +287,10 @@ function expectTabToBeSelected(elements, isSelected) {
     "data-state",
     isSelected ? "active" : "inactive",
   );
-  expect(panel).toBeVisible();
+
+  if (isSelected) {
+    expect(panel).toBeVisible();
+  } else {
+    expect(panel).not.toBeVisible();
+  }
 }
