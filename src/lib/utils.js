@@ -1,5 +1,5 @@
 /**
- * @typedef {('a'|'button')} ElementTag
+ * @typedef {('a'|'button'|'label')} ElementTag
  */
 
 /**
