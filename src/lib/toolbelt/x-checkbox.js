@@ -72,6 +72,10 @@ function handleIndicator(el, Alpine) {
     ":data-state"() {
       return this.checked ? "checked" : "unchecked";
     },
+
+    "@click"() {
+      this.checked = !this.checked;
+    },
   });
 }
 

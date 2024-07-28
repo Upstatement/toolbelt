@@ -32,5 +32,63 @@ describe("x-checkbox", () => {
 
       expect(label).toHaveAttribute("for", indicator.id);
     });
+
+    test("clicking indicator should toggle on checkbox", async () => {
+      fireEvent.click(indicator);
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ indicator, label }, true);
+      });
+    });
+
+    test("clicking indicator should toggle off checkbox", async () => {
+      fireEvent.click(indicator);
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ indicator }, true);
+      });
+
+      fireEvent.click(indicator);
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ indicator }, false);
+      });
+    });
+
+    test("clicking label should toggle on checkbox", async () => {
+      fireEvent.click(label);
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ indicator, label }, true);
+      });
+    });
+
+    test("clicking label should toggle off checkbox", async () => {
+      fireEvent.click(label);
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ indicator, label }, true);
+      });
+
+      fireEvent.click(label);
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ indicator, label }, false);
+      });
+    });
   });
 });
+
+/**
+ * @param {{ indicator: HTMLElement }} elements
+ * @param {boolean} checked
+ */
+function expectCheckboxToBeChecked(elements, checked) {
+  const { indicator } = elements;
+
+  expect(indicator).toHaveAttribute("aria-checked", checked ? "true" : "false");
+  expect(indicator).toHaveAttribute(
+    "data-state",
+    checked ? "checked" : "unchecked",
+  );
+}
