@@ -7,6 +7,8 @@ describe("x-flyout", () => {
   beforeAll(initializeAlpine);
 
   describe("default configuration", () => {
+    let flyout, trigger, content;
+
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-flyout data-testid="flyout">
@@ -14,13 +16,13 @@ describe("x-flyout", () => {
           <div x-flyout:content data-testid="content"></div>
         </div>
       `;
+
+      flyout = getByTestId(document.body, "flyout");
+      trigger = getByTestId(document.body, "trigger");
+      content = getByTestId(document.body, "content");
     });
 
     test("correct initial state", () => {
-      const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(document.body, "trigger");
-      const content = getByTestId(document.body, "content");
-
       expect(flyout).toHaveAttribute("data-state", "closed");
 
       expect(trigger).toHaveAttribute("aria-expanded", "false");
@@ -34,10 +36,6 @@ describe("x-flyout", () => {
     });
 
     test("should open flyout", async () => {
-      const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(document.body, "trigger");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.click(trigger);
 
       await waitFor(() => {
@@ -52,10 +50,6 @@ describe("x-flyout", () => {
     });
 
     test("should close flyout", async () => {
-      const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(document.body, "trigger");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.click(trigger);
 
       await waitFor(() => {
@@ -82,10 +76,6 @@ describe("x-flyout", () => {
     });
 
     test("focusing out of flyout should close it", async () => {
-      const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(document.body, "trigger");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.click(trigger);
 
       await waitFor(() => {
@@ -113,6 +103,8 @@ describe("x-flyout", () => {
   });
 
   describe("open on hover configuration (x-flyout:hoverable)", () => {
+    let flyout, trigger, content;
+
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-flyout.hoverable data-testid="flyout">
@@ -120,13 +112,13 @@ describe("x-flyout", () => {
           <div x-flyout:content data-testid="content"></div>
         </div>
       `;
+
+      flyout = getByTestId(document.body, "flyout");
+      trigger = getByTestId(document.body, "trigger");
+      content = getByTestId(document.body, "content");
     });
 
     test("should open flyout on mouse enter", async () => {
-      const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(document.body, "trigger");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.mouseEnter(flyout);
 
       await waitFor(() => {
@@ -141,10 +133,6 @@ describe("x-flyout", () => {
     });
 
     test("should close flyout on mouse leave", async () => {
-      const flyout = getByTestId(document.body, "flyout");
-      const trigger = getByTestId(document.body, "trigger");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.mouseEnter(flyout);
 
       await waitFor(() => {

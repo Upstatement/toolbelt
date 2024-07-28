@@ -8,5 +8,6 @@ export default defineConfig({
     setupFiles: ["./src/lib/__tests__/setup.js"],
     silent: true,
     reporters: ["verbose"],
+    allowOnly: true,
   },
 });
