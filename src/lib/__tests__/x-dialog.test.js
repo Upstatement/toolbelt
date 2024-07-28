@@ -7,7 +7,9 @@ describe("x-dialog", () => {
   beforeAll(initializeAlpine);
 
   describe("default configuration", () => {
-    beforeEach(() => {
+    let toggle, content, overlay, title, description, close;
+
+    beforeEach(async () => {
       document.body.innerHTML = html`
         <div x-dialog>
           <button x-dialog:trigger data-testid="toggle"></button>
@@ -22,15 +24,18 @@ describe("x-dialog", () => {
           </template>
         </div>
       `;
+
+      await waitFor(() => {
+        toggle = getByTestId(document.body, "toggle");
+        content = getByTestId(document.body, "content");
+        overlay = getByTestId(document.body, "overlay");
+        title = getByTestId(document.body, "title");
+        description = getByTestId(document.body, "description");
+        close = getByTestId(document.body, "close");
+      });
     });
 
     test("correct initial state", () => {
-      const toggle = getByTestId(document.body, "toggle");
-      const content = getByTestId(document.body, "content");
-      const title = getByTestId(document.body, "title");
-      const description = getByTestId(document.body, "description");
-      const close = getByTestId(document.body, "close");
-
       expect(toggle).toHaveAttribute("aria-expanded", "false");
       expect(toggle).toHaveAttribute("data-state", "closed");
       expect(toggle).toHaveAttribute("aria-haspopup", "dialog");
@@ -48,95 +53,72 @@ describe("x-dialog", () => {
     });
 
     test("should open the dialog", async () => {
-      const toggle = getByTestId(document.body, "toggle");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.click(toggle);
 
       await waitFor(() => {
-        expect(toggle).toHaveAttribute("aria-expanded", "true");
-        expect(toggle).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectDialogToBeOpen({ toggle, content }, true);
       });
     });
 
     test("should close the dialog", async () => {
-      const toggle = getByTestId(document.body, "toggle");
-      const close = getByTestId(document.body, "close");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.click(toggle);
 
       await waitFor(() => {
-        expect(toggle).toHaveAttribute("aria-expanded", "true");
-        expect(toggle).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectDialogToBeOpen({ toggle, content }, true);
       });
 
       fireEvent.click(close);
 
       await waitFor(() => {
-        expect(toggle).toHaveAttribute("aria-expanded", "false");
-        expect(toggle).toHaveAttribute("data-state", "closed");
-
-        expect(content).toHaveAttribute("data-state", "closed");
-        expect(content).not.toBeVisible();
+        expectDialogToBeOpen({ toggle, content }, false);
       });
     });
 
     test("should close the dialog when overlay is clicked", async () => {
-      const toggle = getByTestId(document.body, "toggle");
-      const overlay = getByTestId(document.body, "overlay");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.click(toggle);
 
       await waitFor(() => {
-        expect(toggle).toHaveAttribute("aria-expanded", "true");
-        expect(toggle).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectDialogToBeOpen({ toggle, content }, true);
       });
 
       fireEvent.click(overlay);
 
       await waitFor(() => {
-        expect(toggle).toHaveAttribute("aria-expanded", "false");
-        expect(toggle).toHaveAttribute("data-state", "closed");
-
-        expect(content).toHaveAttribute("data-state", "closed");
-        expect(content).not.toBeVisible();
+        expectDialogToBeOpen({ toggle, content }, false);
       });
     });
 
     test("pressing escape should close the dialog", async () => {
-      const toggle = getByTestId(document.body, "toggle");
-      const content = getByTestId(document.body, "content");
-
       fireEvent.click(toggle);
 
       await waitFor(() => {
-        expect(toggle).toHaveAttribute("aria-expanded", "true");
-        expect(toggle).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectDialogToBeOpen({ toggle, content }, true);
       });
 
       fireEvent.keyDown(content, { key: "Escape" });
 
       await waitFor(() => {
-        expect(toggle).toHaveAttribute("aria-expanded", "false");
-        expect(toggle).toHaveAttribute("data-state", "closed");
-
-        expect(content).toHaveAttribute("data-state", "closed");
-        expect(content).not.toBeVisible();
+        expectDialogToBeOpen({ toggle, content }, false);
       });
     });
   });
 });
+
+/**
+ * @param {{ toggle: HTMLElement, content: HTMLElement }} elements
+ * @param {boolean} isOpen
+ */
+function expectDialogToBeOpen(elements, isOpen) {
+  const { toggle, content } = elements;
+
+  expect(toggle).toHaveAttribute("aria-expanded", isOpen ? "true" : "false");
+  expect(toggle).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+
+  expect(content).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+
+  if (isOpen) {
+    expect(content).toBeVisible();
+  } else {
+    expect(content).not.toBeVisible();
+  }
+}

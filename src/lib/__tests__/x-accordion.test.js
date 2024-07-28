@@ -49,13 +49,7 @@ describe("x-accordion", () => {
         fireEvent.click(trigger);
 
         await waitFor(() => {
-          expect(item).toHaveAttribute("data-state", "open");
-
-          expect(trigger).toHaveAttribute("data-state", "open");
-          expect(trigger).toHaveAttribute("aria-expanded", "true");
-
-          expect(content).toHaveAttribute("data-state", "open");
-          expect(content).toBeVisible();
+          expectItemToBeOpen({ item, trigger, content }, true);
         });
       });
 
@@ -72,26 +66,28 @@ describe("x-accordion", () => {
         fireEvent.click(trigger2);
 
         await waitFor(() => {
-          expect(item1).toHaveAttribute("data-state", "open");
-          expect(trigger1).toHaveAttribute("data-state", "open");
-          expect(trigger1).toHaveAttribute("aria-expanded", "true");
-          expect(content1).toHaveAttribute("data-state", "open");
-          expect(content1).toBeVisible();
+          expectItemToBeOpen(
+            { item: item1, trigger: trigger1, content: content1 },
+            true,
+          );
 
-          expect(item2).toHaveAttribute("data-state", "open");
-          expect(trigger2).toHaveAttribute("data-state", "open");
-          expect(trigger2).toHaveAttribute("aria-expanded", "true");
-          expect(content2).toHaveAttribute("data-state", "open");
-          expect(content2).toBeVisible();
+          expectItemToBeOpen(
+            { item: item2, trigger: trigger2, content: content2 },
+            true,
+          );
         });
       });
     });
 
     describe("keyboard navigation", () => {
-      test("pressing down arrow should move focus to the next trigger", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
+      let trigger1, trigger2;
 
+      beforeEach(() => {
+        trigger1 = getByTestId(document.body, "trigger-1");
+        trigger2 = getByTestId(document.body, "trigger-2");
+      });
+
+      test("pressing down arrow should move focus to the next trigger", async () => {
         trigger1.focus();
         fireEvent.keyDown(trigger1, { key: "ArrowDown" });
 
@@ -101,8 +97,6 @@ describe("x-accordion", () => {
       });
 
       test("pressing down arrow on the last trigger should not loop", async () => {
-        const trigger2 = getByTestId(document.body, "trigger-2");
-
         trigger2.focus();
         fireEvent.keyDown(trigger2, { key: "ArrowDown" });
 
@@ -112,9 +106,6 @@ describe("x-accordion", () => {
       });
 
       test("pressing up arrow should move focus to the previous trigger", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
-
         trigger2.focus();
         fireEvent.keyDown(trigger2, { key: "ArrowUp" });
 
@@ -124,8 +115,6 @@ describe("x-accordion", () => {
       });
 
       test("pressing up arrow on the first trigger should not loop", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-
         trigger1.focus();
         fireEvent.keyDown(trigger1, { key: "ArrowUp" });
 
@@ -135,9 +124,6 @@ describe("x-accordion", () => {
       });
 
       test("pressing home should move focus to the first trigger", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
-
         trigger2.focus();
         fireEvent.keyDown(trigger2, { key: "Home" });
 
@@ -147,9 +133,6 @@ describe("x-accordion", () => {
       });
 
       test("pressing end should move focus to the last trigger", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
-
         trigger1.focus();
         fireEvent.keyDown(trigger1, { key: "End" });
 
@@ -190,33 +173,29 @@ describe("x-accordion", () => {
         fireEvent.click(trigger1);
 
         await waitFor(() => {
-          expect(item1).toHaveAttribute("data-state", "open");
-          expect(trigger1).toHaveAttribute("data-state", "open");
-          expect(trigger1).toHaveAttribute("aria-expanded", "true");
-          expect(content1).toHaveAttribute("data-state", "open");
-          expect(content1).toBeVisible();
+          expectItemToBeOpen(
+            { item: item1, trigger: trigger1, content: content1 },
+            true,
+          );
 
-          expect(item2).toHaveAttribute("data-state", "closed");
-          expect(trigger2).toHaveAttribute("data-state", "closed");
-          expect(trigger2).toHaveAttribute("aria-expanded", "false");
-          expect(content2).toHaveAttribute("data-state", "closed");
-          expect(content2).not.toBeVisible();
+          expectItemToBeOpen(
+            { item: item2, trigger: trigger2, content: content2 },
+            false,
+          );
         });
 
         fireEvent.click(trigger2);
 
         await waitFor(() => {
-          expect(item1).toHaveAttribute("data-state", "closed");
-          expect(trigger1).toHaveAttribute("data-state", "closed");
-          expect(trigger1).toHaveAttribute("aria-expanded", "false");
-          expect(content1).toHaveAttribute("data-state", "closed");
-          expect(content1).not.toBeVisible();
+          expectItemToBeOpen(
+            { item: item1, trigger: trigger1, content: content1 },
+            false,
+          );
 
-          expect(item2).toHaveAttribute("data-state", "open");
-          expect(trigger2).toHaveAttribute("data-state", "open");
-          expect(trigger2).toHaveAttribute("aria-expanded", "true");
-          expect(content2).toHaveAttribute("data-state", "open");
-          expect(content2).toBeVisible();
+          expectItemToBeOpen(
+            { item: item2, trigger: trigger2, content: content2 },
+            true,
+          );
         });
       });
     });
@@ -240,10 +219,14 @@ describe("x-accordion", () => {
     });
 
     describe("keyboard navigation", () => {
-      test("pressing down arrow on the last trigger should loop", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
+      let trigger1, trigger2;
 
+      beforeEach(() => {
+        trigger1 = getByTestId(document.body, "trigger-1");
+        trigger2 = getByTestId(document.body, "trigger-2");
+      });
+
+      test("pressing down arrow on the last trigger should loop", async () => {
         trigger2.focus();
         fireEvent.keyDown(trigger2, { key: "ArrowDown" });
 
@@ -253,9 +236,6 @@ describe("x-accordion", () => {
       });
 
       test("pressing up arrow on the first trigger should loop", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
-
         trigger1.focus();
         fireEvent.keyDown(trigger1, { key: "ArrowUp" });
 
@@ -284,10 +264,14 @@ describe("x-accordion", () => {
     });
 
     describe("keyboard navigation", () => {
-      test("pressing right arrow should move focus to the next trigger", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
+      let trigger1, trigger2;
 
+      beforeEach(() => {
+        trigger1 = getByTestId(document.body, "trigger-1");
+        trigger2 = getByTestId(document.body, "trigger-2");
+      });
+
+      test("pressing right arrow should move focus to the next trigger", async () => {
         trigger1.focus();
         fireEvent.keyDown(trigger1, { key: "ArrowRight" });
 
@@ -297,9 +281,6 @@ describe("x-accordion", () => {
       });
 
       test("pressing left arrow should move focus to the previous trigger", async () => {
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const trigger2 = getByTestId(document.body, "trigger-2");
-
         trigger2.focus();
         fireEvent.keyDown(trigger2, { key: "ArrowLeft" });
 
@@ -310,3 +291,24 @@ describe("x-accordion", () => {
     });
   });
 });
+
+/**
+ * @param {{ item: HTMLElement, trigger: HTMLElement, content: HTMLElement }} elements
+ * @param {boolean} isOpen
+ */
+function expectItemToBeOpen(elements, isOpen) {
+  const { item, trigger, content } = elements;
+
+  expect(item).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+
+  expect(trigger).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+  expect(trigger).toHaveAttribute("aria-expanded", isOpen ? "true" : "false");
+
+  expect(content).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+
+  if (isOpen) {
+    expect(content).toBeVisible();
+  } else {
+    expect(content).not.toBeVisible();
+  }
+}
