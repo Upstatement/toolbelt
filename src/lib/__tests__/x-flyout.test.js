@@ -111,4 +111,63 @@ describe("x-flyout", () => {
       });
     });
   });
+
+  describe("open on hover configuration (x-flyout:open-on-hover)", () => {
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-flyout.open-on-hover data-testid="flyout">
+          <button x-flyout:trigger data-testid="trigger"></button>
+          <div x-flyout:content data-testid="content"></div>
+        </div>
+      `;
+    });
+
+    test("should open flyout on mouse enter", async () => {
+      const flyout = getByTestId(document.body, "flyout");
+      const trigger = getByTestId(document.body, "trigger");
+      const content = getByTestId(document.body, "content");
+
+      fireEvent.mouseEnter(flyout);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "open");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "true");
+        expect(trigger).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+    });
+
+    test("should close flyout on mouse leave", async () => {
+      const flyout = getByTestId(document.body, "flyout");
+      const trigger = getByTestId(document.body, "trigger");
+      const content = getByTestId(document.body, "content");
+
+      fireEvent.mouseEnter(flyout);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "open");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "true");
+        expect(trigger).toHaveAttribute("data-state", "open");
+
+        expect(content).toHaveAttribute("data-state", "open");
+        expect(content).toBeVisible();
+      });
+
+      fireEvent.mouseLeave(flyout);
+
+      await waitFor(() => {
+        expect(flyout).toHaveAttribute("data-state", "closed");
+
+        expect(trigger).toHaveAttribute("aria-expanded", "false");
+        expect(trigger).toHaveAttribute("data-state", "closed");
+
+        expect(content).toHaveAttribute("data-state", "closed");
+        expect(content).not.toBeVisible();
+      });
+    });
+  });
 });
