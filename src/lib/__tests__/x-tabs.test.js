@@ -49,78 +49,125 @@ describe("x-tabs", () => {
       expect(panel2).toHaveAttribute("aria-labelledby", tab2.id);
     });
 
-    test("first tab should be selected", () => {
-      expect(tab1).toHaveAttribute("tabindex", "0");
-      expect(tab1).toHaveAttribute("aria-selected", "true");
-      expect(tab1).toHaveAttribute("data-state", "active");
+    describe("opening tabs", () => {
+      test("first tab should be selected by default", () => {
+        expect(tab1).toHaveAttribute("tabindex", "0");
+        expect(tab1).toHaveAttribute("aria-selected", "true");
+        expect(tab1).toHaveAttribute("data-state", "active");
 
-      expect(tab2).toHaveAttribute("tabindex", "-1");
-      expect(tab2).toHaveAttribute("aria-selected", "false");
-      expect(tab2).toHaveAttribute("data-state", "inactive");
+        expect(tab2).toHaveAttribute("tabindex", "-1");
+        expect(tab2).toHaveAttribute("aria-selected", "false");
+        expect(tab2).toHaveAttribute("data-state", "inactive");
 
-      expect(panel1).toHaveAttribute("tabindex", "0");
-      expect(panel1).toHaveAttribute("data-state", "active");
-      expect(panel1).toBeVisible();
+        expect(panel1).toHaveAttribute("tabindex", "0");
+        expect(panel1).toHaveAttribute("data-state", "active");
+        expect(panel1).toBeVisible();
 
-      expect(panel2).toHaveAttribute("tabindex", "-1");
-      expect(panel2).toHaveAttribute("data-state", "inactive");
-      expect(panel2).not.toBeVisible();
-    });
+        expect(panel2).toHaveAttribute("tabindex", "-1");
+        expect(panel2).toHaveAttribute("data-state", "inactive");
+        expect(panel2).not.toBeVisible();
+      });
 
-    test("should open a tab", async () => {
-      fireEvent.click(tab2);
+      test("should open a tab", async () => {
+        fireEvent.click(tab2);
 
-      await waitFor(() => {
-        expectTabToBeSelected({ tab: tab1, panel: panel1 }, false);
-        expectTabToBeSelected({ tab: tab2, panel: panel2 }, true);
+        await waitFor(() => {
+          expectTabToBeSelected({ tab: tab1, panel: panel1 }, false);
+          expectTabToBeSelected({ tab: tab2, panel: panel2 }, true);
+        });
       });
     });
 
-    test("pressing right arrow should move focus to the next tab", async () => {
-      fireEvent.keyDown(tab1, { key: "ArrowRight" });
+    describe("keyboard navigation", () => {
+      test("pressing right arrow should move focus to the next tab", async () => {
+        fireEvent.keyDown(tab1, { key: "ArrowRight" });
 
-      await waitFor(() => {
-        expect(tab2).toHaveFocus();
+        await waitFor(() => {
+          expect(tab2).toHaveFocus();
+        });
+      });
+
+      test("pressing right arrow on the last tab should not loop", async () => {
+        fireEvent.keyDown(tab2, { key: "ArrowRight" });
+
+        await waitFor(() => {
+          expect(tab2).toHaveFocus();
+        });
+      });
+
+      test("pressing left arrow should move focus to the previous tab", async () => {
+        fireEvent.keyDown(tab2, { key: "ArrowLeft" });
+
+        await waitFor(() => {
+          expect(tab1).toHaveFocus();
+        });
+      });
+
+      test("pressing left arrow on the first tab should not loop", async () => {
+        fireEvent.keyDown(tab1, { key: "ArrowLeft" });
+
+        await waitFor(() => {
+          expect(tab1).toHaveFocus();
+        });
+      });
+
+      test("pressing home should move focus to the first tab", async () => {
+        fireEvent.keyDown(tab2, { key: "Home" });
+
+        await waitFor(() => {
+          expect(tab1).toHaveFocus();
+        });
+      });
+
+      test("pressing end should move focus to the last tab", async () => {
+        fireEvent.keyDown(tab1, { key: "End" });
+
+        await waitFor(() => {
+          expect(tab2).toHaveFocus();
+        });
       });
     });
+  });
 
-    test("pressing right arrow on the last tab should not loop", async () => {
-      fireEvent.keyDown(tab2, { key: "ArrowRight" });
+  describe("looping keyboard navigation configuration (x-tabs:list.loop)", () => {
+    let tabs, list, tab1, tab2, panel1, panel2;
 
-      await waitFor(() => {
-        expect(tab2).toHaveFocus();
-      });
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-tabs data-testid="tabs">
+          <div x-tabs:list.loop data-testid="list">
+            <button x-tabs:tab="tab1" data-testid="tab1"></button>
+            <button x-tabs:tab="tab2" data-testid="tab2"></button>
+          </div>
+
+          <div x-tabs:panel="tab1" data-testid="panel1"></div>
+          <div x-tabs:panel="tab2" data-testid="panel2"></div>
+        </div>
+      `;
+
+      tabs = getByTestId(document.body, "tabs");
+      list = getByTestId(document.body, "list");
+      tab1 = getByTestId(document.body, "tab1");
+      tab2 = getByTestId(document.body, "tab2");
+      panel1 = getByTestId(document.body, "panel1");
+      panel2 = getByTestId(document.body, "panel2");
     });
 
-    test("pressing left arrow should move focus to the previous tab", async () => {
-      fireEvent.keyDown(tab2, { key: "ArrowLeft" });
+    describe("keyboard navigation", () => {
+      test("pressing right arrow on the last tab should loop", async () => {
+        fireEvent.keyDown(tab2, { key: "ArrowRight" });
 
-      await waitFor(() => {
-        expect(tab1).toHaveFocus();
+        await waitFor(() => {
+          expect(tab1).toHaveFocus();
+        });
       });
-    });
 
-    test("pressing left arrow on the first tab should not loop", async () => {
-      fireEvent.keyDown(tab1, { key: "ArrowLeft" });
+      test("pressing left arrow on the first tab should loop", async () => {
+        fireEvent.keyDown(tab1, { key: "ArrowLeft" });
 
-      await waitFor(() => {
-        expect(tab1).toHaveFocus();
-      });
-    });
-
-    test("pressing home should move focus to the first tab", async () => {
-      fireEvent.keyDown(tab2, { key: "Home" });
-
-      await waitFor(() => {
-        expect(tab1).toHaveFocus();
-      });
-    });
-
-    test("pressing end should move focus to the last tab", async () => {
-      fireEvent.keyDown(tab1, { key: "End" });
-
-      await waitFor(() => {
-        expect(tab2).toHaveFocus();
+        await waitFor(() => {
+          expect(tab2).toHaveFocus();
+        });
       });
     });
   });
