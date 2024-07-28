@@ -112,10 +112,10 @@ describe("x-flyout", () => {
     });
   });
 
-  describe("open on hover configuration (x-flyout:open-on-hover)", () => {
+  describe("open on hover configuration (x-flyout:hoverable)", () => {
     beforeEach(() => {
       document.body.innerHTML = html`
-        <div x-flyout.open-on-hover data-testid="flyout">
+        <div x-flyout.hoverable data-testid="flyout">
           <button x-flyout:trigger data-testid="trigger"></button>
           <div x-flyout:content data-testid="content"></div>
         </div>

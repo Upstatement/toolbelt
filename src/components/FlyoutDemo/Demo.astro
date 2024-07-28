@@ -5,7 +5,7 @@ import code from "./code.html?raw";
 ---
 
 <Demo name="flyout" features={["Can open flyout on hover"]} html={code}>
-  <div class="relative" x-init x-flyout>
+  <div class="relative" x-init x-flyout.hoverable>
     <button
       class="bg-white px-3 py-1 rounded-md cursor-pointer shadow-sm transition-colors hover:bg-gray-50"
       x-flyout:trigger

@@ -14,7 +14,7 @@ export default function (Alpine) {
       handleContent(el, Alpine);
     } else {
       handleRoot(el, Alpine, {
-        openOnHover: modifiers.includes("open-on-hover"),
+        hoverable: modifiers.includes("hoverable"),
       });
     }
   });
@@ -23,7 +23,7 @@ export default function (Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ openOnHover: boolean }} config
+ * @param {{ hoverable: boolean }} config
  */
 function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
@@ -49,7 +49,7 @@ function handleRoot(el, Alpine, config) {
     },
   });
 
-  if (config.openOnHover) {
+  if (config.hoverable) {
     Alpine.bind(el, {
       "x-data"() {
         return {
