@@ -39,13 +39,7 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "open");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "true");
-        expect(trigger).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
       });
     });
 
@@ -53,25 +47,13 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "open");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "true");
-        expect(trigger).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
       });
 
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "closed");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "false");
-        expect(trigger).toHaveAttribute("data-state", "closed");
-
-        expect(content).toHaveAttribute("data-state", "closed");
-        expect(content).not.toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, false);
       });
     });
 
@@ -79,25 +61,13 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "open");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "true");
-        expect(trigger).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
       });
 
       fireEvent.focusOut(content);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "closed");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "false");
-        expect(trigger).toHaveAttribute("data-state", "closed");
-
-        expect(content).toHaveAttribute("data-state", "closed");
-        expect(content).not.toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, false);
       });
     });
 
@@ -110,25 +80,13 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "open");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "true");
-        expect(trigger).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
       });
 
       fireEvent.click(document.body);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "closed");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "false");
-        expect(trigger).toHaveAttribute("data-state", "closed");
-
-        expect(content).toHaveAttribute("data-state", "closed");
-        expect(content).not.toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, false);
       });
     });
   });
@@ -153,13 +111,7 @@ describe("x-flyout", () => {
       fireEvent.mouseEnter(flyout);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "open");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "true");
-        expect(trigger).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
       });
     });
 
@@ -167,26 +119,35 @@ describe("x-flyout", () => {
       fireEvent.mouseEnter(flyout);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "open");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "true");
-        expect(trigger).toHaveAttribute("data-state", "open");
-
-        expect(content).toHaveAttribute("data-state", "open");
-        expect(content).toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
       });
 
       fireEvent.mouseLeave(flyout);
 
       await waitFor(() => {
-        expect(flyout).toHaveAttribute("data-state", "closed");
-
-        expect(trigger).toHaveAttribute("aria-expanded", "false");
-        expect(trigger).toHaveAttribute("data-state", "closed");
-
-        expect(content).toHaveAttribute("data-state", "closed");
-        expect(content).not.toBeVisible();
+        expectFlyoutToBeOpen({ flyout, trigger, content }, false);
       });
     });
   });
 });
+
+/**
+ * @param {{ flyout: HTMLElement, trigger: HTMLElement, content: HTMLElement }} elements
+ * @param {boolean} isOpen
+ */
+function expectFlyoutToBeOpen(elements, isOpen) {
+  const { flyout, trigger, content } = elements;
+
+  expect(flyout).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+
+  expect(trigger).toHaveAttribute("aria-expanded", isOpen ? "true" : "false");
+  expect(trigger).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+
+  expect(content).toHaveAttribute("data-state", isOpen ? "open" : "closed");
+
+  if (isOpen) {
+    expect(content).toBeVisible();
+  } else {
+    expect(content).not.toBeVisible();
+  }
+}
