@@ -137,6 +137,30 @@ function handleTab(el, Alpine, config) {
       this.activeTab = this.value;
     },
 
+    "@keydown.home.prevent.stop"() {
+      const tab = this.tabs.at(0);
+
+      if (tab) {
+        tab.focus();
+      }
+
+      if (tab && this.automatic) {
+        tab.click();
+      }
+    },
+
+    "@keydown.end.prevent.stop"() {
+      const tab = this.tabs.at(-1);
+
+      if (tab) {
+        tab.focus();
+      }
+
+      if (tab && this.automatic) {
+        tab.click();
+      }
+    },
+
     "@keydown.left.prevent.stop"() {
       if (this.orientation === "horizontal") {
         const index = this.tabs.indexOf(el);

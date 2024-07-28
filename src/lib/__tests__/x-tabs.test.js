@@ -75,6 +75,54 @@ describe("x-tabs", () => {
         expectTabToBeSelected({ tab: tab2, panel: panel2 }, true);
       });
     });
+
+    test("pressing right arrow should move focus to the next tab", async () => {
+      fireEvent.keyDown(tab1, { key: "ArrowRight" });
+
+      await waitFor(() => {
+        expect(tab2).toHaveFocus();
+      });
+    });
+
+    test("pressing right arrow on the last tab should not loop", async () => {
+      fireEvent.keyDown(tab2, { key: "ArrowRight" });
+
+      await waitFor(() => {
+        expect(tab2).toHaveFocus();
+      });
+    });
+
+    test("pressing left arrow should move focus to the previous tab", async () => {
+      fireEvent.keyDown(tab2, { key: "ArrowLeft" });
+
+      await waitFor(() => {
+        expect(tab1).toHaveFocus();
+      });
+    });
+
+    test("pressing left arrow on the first tab should not loop", async () => {
+      fireEvent.keyDown(tab1, { key: "ArrowLeft" });
+
+      await waitFor(() => {
+        expect(tab1).toHaveFocus();
+      });
+    });
+
+    test("pressing home should move focus to the first tab", async () => {
+      fireEvent.keyDown(tab2, { key: "Home" });
+
+      await waitFor(() => {
+        expect(tab1).toHaveFocus();
+      });
+    });
+
+    test("pressing end should move focus to the last tab", async () => {
+      fireEvent.keyDown(tab1, { key: "End" });
+
+      await waitFor(() => {
+        expect(tab2).toHaveFocus();
+      });
+    });
   });
 });
 
