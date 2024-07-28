@@ -130,7 +130,7 @@ describe("x-tabs", () => {
   });
 
   describe("looping keyboard navigation configuration (x-tabs:list.loop)", () => {
-    let tabs, list, tab1, tab2, panel1, panel2;
+    let tab1, tab2;
 
     beforeEach(() => {
       document.body.innerHTML = html`
@@ -145,12 +145,8 @@ describe("x-tabs", () => {
         </div>
       `;
 
-      tabs = getByTestId(document.body, "tabs");
-      list = getByTestId(document.body, "list");
       tab1 = getByTestId(document.body, "tab1");
       tab2 = getByTestId(document.body, "tab2");
-      panel1 = getByTestId(document.body, "panel1");
-      panel2 = getByTestId(document.body, "panel2");
     });
 
     describe("keyboard navigation", () => {
