@@ -129,7 +129,7 @@ describe("x-tabs", () => {
     });
   });
 
-  describe("looping keyboard navigation configuration (x-tabs:list.loop)", () => {
+  describe("(x-tabs:list.loop) looping keyboard navigation configuration", () => {
     let tab1, tab2;
 
     beforeEach(() => {
@@ -168,7 +168,7 @@ describe("x-tabs", () => {
     });
   });
 
-  describe("automatic tab selection configuration (x-tabs:list.automatic)", () => {
+  describe("(x-tabs:list.automatic) automatic tab selection configuration", () => {
     let tab1, tab2, panel1, panel2;
 
     beforeEach(() => {
@@ -229,7 +229,7 @@ describe("x-tabs", () => {
     });
   });
 
-  describe("vertical keyboard navigation configuration (x-tabs:list.vertical)", () => {
+  describe("(x-tabs:list.vertical) vertical keyboard navigation configuration", () => {
     let tab1, tab2, panel1, panel2;
 
     beforeEach(() => {

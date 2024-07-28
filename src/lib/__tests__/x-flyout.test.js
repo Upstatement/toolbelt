@@ -91,7 +91,7 @@ describe("x-flyout", () => {
     });
   });
 
-  describe("open on hover configuration (x-flyout:hoverable)", () => {
+  describe("(x-flyout:hoverable) open on hover configuration", () => {
     let flyout, trigger, content;
 
     beforeEach(() => {

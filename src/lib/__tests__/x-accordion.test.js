@@ -143,7 +143,7 @@ describe("x-accordion", () => {
     });
   });
 
-  describe("single tab only configuration (x-accordion.single)", () => {
+  describe("(x-accordion.single) single tab only configuration", () => {
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-data x-accordion.single>
@@ -201,7 +201,7 @@ describe("x-accordion", () => {
     });
   });
 
-  describe("looping keyboard navigation configuration (x-accordion.loop)", () => {
+  describe("(x-accordion.loop) looping keyboard navigation configuration", () => {
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-data x-accordion.loop>
@@ -246,7 +246,7 @@ describe("x-accordion", () => {
     });
   });
 
-  describe("horizontal keyboard navigation configuration (x-accordion.horizontal)", () => {
+  describe("(x-accordion.horizontal) horizontal keyboard navigation configuration", () => {
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-data x-accordion.horizontal>
