@@ -1,5 +1,5 @@
 import logger from "../logger";
-import { isElementTag } from "../utils";
+import { SR_ONLY_STYLE, isElementTag } from "../utils";
 
 /**
  * "x-checkbox" is a control that allows the user to toggle between checked and not checked.
@@ -87,11 +87,17 @@ function handleIndicator(el, Alpine) {
   });
 }
 
+/**
+ * @param {HTMLElement} el
+ * @param {import('alpinejs').Alpine} Alpine
+ */
 function handleInput(el, Alpine) {
   Alpine.bind(el, {
     type: "checkbox",
 
     "aria-hidden": "true",
+
+    style: SR_ONLY_STYLE,
 
     tabIndex: "-1",
 

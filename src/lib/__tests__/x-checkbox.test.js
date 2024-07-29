@@ -49,6 +49,7 @@ describe("x-checkbox", () => {
       expect(input).toHaveAttribute("aria-hidden", "true");
       expect(input).toHaveAttribute("tabindex", "-1");
       expect(input).toHaveAttribute("value", "on");
+      expect(input).toBeScreenReaderOnly();
 
       expect(label).toHaveAttribute("for", indicator.id);
       expectCheckboxToBeChecked({ indicator, input }, false);
