@@ -1,0 +1,62 @@
+---
+title: Checkbox
+description: A control that allows the user to toggle between checked and not checked.
+---
+
+import Toolbelt from "@components/Toolbelt.astro";
+import CheckboxDemo from "@components/CheckboxDemo/Demo.astro";
+import Lede from "@components/Lede.astro";
+import DirectiveReference from "@components/DirectiveReference.astro";
+
+<Toolbelt />
+
+<Lede>
+  A control that allows the user to toggle between checked and not checked.
+</Lede>
+
+<CheckboxDemo />
+
+## Anatomy
+
+```html
+<div x-checkbox>
+  <button x-checkbox:indicator></button>
+  <label x-checkbox:label></label>
+</div>
+```
+
+## Directives
+
+<DirectiveReference
+  directive="x-checkbox"
+  description="The root element for the checkbox."
+  required
+>
+  <Fragment slot="modifiers">
+
+| Modifier   | Description                    |
+| ---------- | ------------------------------ |
+| `.checked` | Checks the checkbox by default |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-checkbox:indicator"
+  description="Visual indicator for the checkbox."
+  required
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values                   |
+| -------------- | ------------------------ |
+| `[data-state]` | `checked` \| `unchecked` |
+
+  </Fragment>
+</DirectiveReference>
+
+<DirectiveReference
+  directive="x-checkbox:label"
+  description="Text label for the checkbox."
+  required
+/>
