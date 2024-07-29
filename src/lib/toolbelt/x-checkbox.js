@@ -39,6 +39,10 @@ function handleRoot(el, Alpine, config) {
     "x-id"() {
       return ["tb-checkbox-indicator"];
     },
+
+    ":data-state"() {
+      return this.checked ? "checked" : "unchecked";
+    },
   });
 }
 

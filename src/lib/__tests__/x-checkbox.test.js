@@ -2,23 +2,22 @@ import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
-import { custom } from "astro/zod";
 
 describe("x-checkbox", () => {
   beforeAll(initializeAlpine);
 
   describe("default configuration", () => {
-    let checkbox, indicator, input, label;
+    let root, indicator, input, label;
 
     beforeEach(async () => {
       document.body.innerHTML = html`
-        <div x-checkbox data-testid="checkbox">
+        <div x-checkbox data-testid="root">
           <button x-checkbox:indicator data-testid="indicator"></button>
           <label x-checkbox:label data-testid="label"></label>
         </div>
       `;
 
-      checkbox = screen.getByTestId("checkbox");
+      root = screen.getByTestId("root");
       indicator = screen.getByTestId("indicator");
       label = screen.getByTestId("label");
 
@@ -40,7 +39,7 @@ describe("x-checkbox", () => {
     });
 
     test("correct initial state", () => {
-      expect(checkbox).toBeInTheDocument();
+      expect(root).toBeInTheDocument();
 
       expect(indicator).toHaveAttribute("role", "checkbox");
       expect(indicator).toHaveAttribute("value", "on");
@@ -53,14 +52,14 @@ describe("x-checkbox", () => {
       expect(input).toBeScreenReaderOnly();
 
       expect(label).toHaveAttribute("for", indicator.id);
-      expectCheckboxToBeChecked({ indicator, input, label }, false);
+      expectCheckboxToBeChecked({ root, indicator, input, label }, false);
     });
 
     test("clicking indicator should toggle on checkbox", async () => {
       fireEvent.click(indicator);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input, label }, true);
+        expectCheckboxToBeChecked({ root, indicator, input, label }, true);
       });
     });
 
@@ -68,13 +67,13 @@ describe("x-checkbox", () => {
       fireEvent.click(indicator);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input, label }, true);
+        expectCheckboxToBeChecked({ root, indicator, input, label }, true);
       });
 
       fireEvent.click(indicator);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input, label }, false);
+        expectCheckboxToBeChecked({ root, indicator, input, label }, false);
       });
     });
 
@@ -82,7 +81,7 @@ describe("x-checkbox", () => {
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input, label }, true);
+        expectCheckboxToBeChecked({ root, indicator, input, label }, true);
       });
     });
 
@@ -90,30 +89,30 @@ describe("x-checkbox", () => {
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input, label }, true);
+        expectCheckboxToBeChecked({ root, indicator, input, label }, true);
       });
 
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input, label }, false);
+        expectCheckboxToBeChecked({ root, indicator, input, label }, false);
       });
     });
   });
 
   describe("(x-checkbox='custom-value') custom value configuration", () => {
     const customValue = "custom-value";
-    let checkbox, indicator, input, label;
+    let root, indicator, input, label;
 
     beforeEach(async () => {
       document.body.innerHTML = `
-        <div x-checkbox="${customValue}" data-testid="checkbox">
+        <div x-checkbox="${customValue}" data-testid="root">
           <button x-checkbox:indicator data-testid="indicator"></button>
           <label x-checkbox:label data-testid="label"></label>
         </div>
       `;
 
-      checkbox = screen.getByTestId("checkbox");
+      root = screen.getByTestId("root");
       indicator = screen.getByTestId("indicator");
       label = screen.getByTestId("label");
 
@@ -133,17 +132,17 @@ describe("x-checkbox", () => {
   });
 
   describe("(x-checkbox.checked) checked by default configuration", () => {
-    let checkbox, indicator, input, label;
+    let root, indicator, input, label;
 
     beforeEach(async () => {
       document.body.innerHTML = html`
-        <div x-checkbox.checked data-testid="checkbox">
+        <div x-checkbox.checked data-testid="root">
           <button x-checkbox:indicator data-testid="indicator"></button>
           <label x-checkbox:label data-testid="label"></label>
         </div>
       `;
 
-      checkbox = screen.getByTestId("checkbox");
+      root = screen.getByTestId("root");
       indicator = screen.getByTestId("indicator");
       label = screen.getByTestId("label");
 
@@ -157,7 +156,7 @@ describe("x-checkbox", () => {
     });
 
     test("should be initially checked", () => {
-      expectCheckboxToBeChecked({ indicator, input, label }, true);
+      expectCheckboxToBeChecked({ root, indicator, input, label }, true);
     });
   });
 });
@@ -167,7 +166,12 @@ describe("x-checkbox", () => {
  * @param {boolean} isChecked
  */
 function expectCheckboxToBeChecked(elements, isChecked) {
-  const { indicator, input, label } = elements;
+  const { root, indicator, input, label } = elements;
+
+  expect(root).toHaveAttribute(
+    "data-state",
+    isChecked ? "checked" : "unchecked",
+  );
 
   expect(indicator).toHaveAttribute(
     "aria-checked",
