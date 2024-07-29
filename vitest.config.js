@@ -6,7 +6,7 @@ export default defineConfig({
     include: ["./src/lib/__tests__/**/*.test.js"],
     environment: "jsdom",
     setupFiles: ["./src/lib/__tests__/setup.js"],
-    silent: true,
+    silent: false,
     reporters: ["verbose"],
     allowOnly: true,
   },

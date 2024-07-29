@@ -55,6 +55,14 @@ function handleIndicator(el, Alpine) {
       if (!isElementTag(el, "button")) {
         logger.error("x-checkbox:indicator must be a <button> element", el);
       }
+
+      /**
+       * Create an input element to handle the checkbox state
+       * for a form.
+       */
+      const input = document.createElement("input");
+      el.insertAdjacentElement("afterend", input);
+      handleInput(input, Alpine);
     },
 
     ":id"() {
@@ -75,6 +83,22 @@ function handleIndicator(el, Alpine) {
 
     "@click"() {
       this.checked = !this.checked;
+    },
+  });
+}
+
+function handleInput(el, Alpine) {
+  Alpine.bind(el, {
+    type: "checkbox",
+
+    "aria-hidden": "true",
+
+    tabIndex: "-1",
+
+    value: "on",
+
+    ":checked"() {
+      return this.checked;
     },
   });
 }
