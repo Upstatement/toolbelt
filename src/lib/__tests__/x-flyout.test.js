@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
-import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
+import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
 
@@ -17,9 +17,9 @@ describe("x-flyout", () => {
         </div>
       `;
 
-      flyout = getByTestId(document.body, "flyout");
-      trigger = getByTestId(document.body, "trigger");
-      content = getByTestId(document.body, "content");
+      flyout = screen.getByTestId("flyout");
+      trigger = screen.getByTestId("trigger");
+      content = screen.getByTestId("content");
     });
 
     test("correct initial state", () => {
@@ -102,9 +102,9 @@ describe("x-flyout", () => {
         </div>
       `;
 
-      flyout = getByTestId(document.body, "flyout");
-      trigger = getByTestId(document.body, "trigger");
-      content = getByTestId(document.body, "content");
+      flyout = screen.getByTestId("flyout");
+      trigger = screen.getByTestId("trigger");
+      content = screen.getByTestId("content");
     });
 
     test("should open flyout on mouse enter", async () => {

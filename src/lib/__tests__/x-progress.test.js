@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
-import { getByTestId } from "@testing-library/dom";
+import { screen } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
 
@@ -23,8 +23,8 @@ describe("x-progress", () => {
         </div>
       `;
 
-      progress = getByTestId(document.body, "progress");
-      indicator = getByTestId(document.body, "indicator");
+      progress = screen.getByTestId("progress");
+      indicator = screen.getByTestId("indicator");
     });
 
     test("correct initial state", () => {

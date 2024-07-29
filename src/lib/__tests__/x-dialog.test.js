@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
-import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
+import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
 
@@ -26,12 +26,12 @@ describe("x-dialog", () => {
       `;
 
       await waitFor(() => {
-        toggle = getByTestId(document.body, "toggle");
-        content = getByTestId(document.body, "content");
-        overlay = getByTestId(document.body, "overlay");
-        title = getByTestId(document.body, "title");
-        description = getByTestId(document.body, "description");
-        close = getByTestId(document.body, "close");
+        toggle = screen.getByTestId("toggle");
+        content = screen.getByTestId("content");
+        overlay = screen.getByTestId("overlay");
+        title = screen.getByTestId("title");
+        description = screen.getByTestId("description");
+        close = screen.getByTestId("close");
       });
     });
 

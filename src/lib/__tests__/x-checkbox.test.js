@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
-import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
+import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
 
@@ -17,9 +17,9 @@ describe("x-checkbox", () => {
         </div>
       `;
 
-      checkbox = getByTestId(document.body, "checkbox");
-      indicator = getByTestId(document.body, "indicator");
-      label = getByTestId(document.body, "label");
+      checkbox = screen.getByTestId("checkbox");
+      indicator = screen.getByTestId("indicator");
+      label = screen.getByTestId("label");
     });
 
     test("correct initial state", () => {
@@ -88,9 +88,9 @@ describe("x-checkbox", () => {
         </div>
       `;
 
-      checkbox = getByTestId(document.body, "checkbox");
-      indicator = getByTestId(document.body, "indicator");
-      label = getByTestId(document.body, "label");
+      checkbox = screen.getByTestId("checkbox");
+      indicator = screen.getByTestId("indicator");
+      label = screen.getByTestId("label");
     });
 
     test("should be initially checked", () => {

@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
-import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
+import { screen } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
 
@@ -16,8 +16,8 @@ describe("x-section", () => {
         </section>
       `;
 
-      section = getByTestId(document.body, "section");
-      title = getByTestId(document.body, "title");
+      section = screen.getByTestId("section");
+      title = screen.getByTestId("title");
     });
 
     test("should label section with title", () => {

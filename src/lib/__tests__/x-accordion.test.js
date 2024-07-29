@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
-import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
+import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
 
@@ -24,9 +24,9 @@ describe("x-accordion", () => {
     });
 
     test("correct initial state", () => {
-      const item = getByTestId(document.body, "item-1");
-      const trigger = getByTestId(document.body, "trigger-1");
-      const content = getByTestId(document.body, "content-1");
+      const item = screen.getByTestId("item-1");
+      const trigger = screen.getByTestId("trigger-1");
+      const content = screen.getByTestId("content-1");
 
       expect(item).toHaveAttribute("data-state", "closed");
 
@@ -42,9 +42,9 @@ describe("x-accordion", () => {
 
     describe("opening tabs", () => {
       test("should open a tab when clicked", async () => {
-        const item = getByTestId(document.body, "item-1");
-        const trigger = getByTestId(document.body, "trigger-1");
-        const content = getByTestId(document.body, "content-1");
+        const item = screen.getByTestId("item-1");
+        const trigger = screen.getByTestId("trigger-1");
+        const content = screen.getByTestId("content-1");
 
         fireEvent.click(trigger);
 
@@ -54,13 +54,13 @@ describe("x-accordion", () => {
       });
 
       test("should be able to open multiple tabs", async () => {
-        const item1 = getByTestId(document.body, "item-1");
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const content1 = getByTestId(document.body, "content-1");
+        const item1 = screen.getByTestId("item-1");
+        const trigger1 = screen.getByTestId("trigger-1");
+        const content1 = screen.getByTestId("content-1");
 
-        const item2 = getByTestId(document.body, "item-2");
-        const trigger2 = getByTestId(document.body, "trigger-2");
-        const content2 = getByTestId(document.body, "content-2");
+        const item2 = screen.getByTestId("item-2");
+        const trigger2 = screen.getByTestId("trigger-2");
+        const content2 = screen.getByTestId("content-2");
 
         fireEvent.click(trigger1);
         fireEvent.click(trigger2);
@@ -83,8 +83,8 @@ describe("x-accordion", () => {
       let trigger1, trigger2;
 
       beforeEach(() => {
-        trigger1 = getByTestId(document.body, "trigger-1");
-        trigger2 = getByTestId(document.body, "trigger-2");
+        trigger1 = screen.getByTestId("trigger-1");
+        trigger2 = screen.getByTestId("trigger-2");
       });
 
       test("pressing down arrow should move focus to the next trigger", async () => {
@@ -162,13 +162,13 @@ describe("x-accordion", () => {
 
     describe("opening tabs", () => {
       test("should only open one tab at a time", async () => {
-        const item1 = getByTestId(document.body, "item-1");
-        const trigger1 = getByTestId(document.body, "trigger-1");
-        const content1 = getByTestId(document.body, "content-1");
+        const item1 = screen.getByTestId("item-1");
+        const trigger1 = screen.getByTestId("trigger-1");
+        const content1 = screen.getByTestId("content-1");
 
-        const item2 = getByTestId(document.body, "item-2");
-        const trigger2 = getByTestId(document.body, "trigger-2");
-        const content2 = getByTestId(document.body, "content-2");
+        const item2 = screen.getByTestId("item-2");
+        const trigger2 = screen.getByTestId("trigger-2");
+        const content2 = screen.getByTestId("content-2");
 
         fireEvent.click(trigger1);
 
@@ -222,8 +222,8 @@ describe("x-accordion", () => {
       let trigger1, trigger2;
 
       beforeEach(() => {
-        trigger1 = getByTestId(document.body, "trigger-1");
-        trigger2 = getByTestId(document.body, "trigger-2");
+        trigger1 = screen.getByTestId("trigger-1");
+        trigger2 = screen.getByTestId("trigger-2");
       });
 
       test("pressing down arrow on the last trigger should loop", async () => {
@@ -267,8 +267,8 @@ describe("x-accordion", () => {
       let trigger1, trigger2;
 
       beforeEach(() => {
-        trigger1 = getByTestId(document.body, "trigger-1");
-        trigger2 = getByTestId(document.body, "trigger-2");
+        trigger1 = screen.getByTestId("trigger-1");
+        trigger2 = screen.getByTestId("trigger-2");
       });
 
       test("pressing right arrow should move focus to the next trigger", async () => {

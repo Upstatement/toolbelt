@@ -1,5 +1,5 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
-import { fireEvent, getByTestId, waitFor } from "@testing-library/dom";
+import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
 
@@ -22,12 +22,12 @@ describe("x-tabs", () => {
         </div>
       `;
 
-      tabs = getByTestId(document.body, "tabs");
-      list = getByTestId(document.body, "list");
-      tab1 = getByTestId(document.body, "tab1");
-      tab2 = getByTestId(document.body, "tab2");
-      panel1 = getByTestId(document.body, "panel1");
-      panel2 = getByTestId(document.body, "panel2");
+      tabs = screen.getByTestId("tabs");
+      list = screen.getByTestId("list");
+      tab1 = screen.getByTestId("tab1");
+      tab2 = screen.getByTestId("tab2");
+      panel1 = screen.getByTestId("panel1");
+      panel2 = screen.getByTestId("panel2");
     });
 
     test("correct initial state", () => {
@@ -145,8 +145,8 @@ describe("x-tabs", () => {
         </div>
       `;
 
-      tab1 = getByTestId(document.body, "tab1");
-      tab2 = getByTestId(document.body, "tab2");
+      tab1 = screen.getByTestId("tab1");
+      tab2 = screen.getByTestId("tab2");
     });
 
     describe("keyboard navigation", () => {
@@ -184,10 +184,10 @@ describe("x-tabs", () => {
         </div>
       `;
 
-      tab1 = getByTestId(document.body, "tab1");
-      tab2 = getByTestId(document.body, "tab2");
-      panel1 = getByTestId(document.body, "panel1");
-      panel2 = getByTestId(document.body, "panel2");
+      tab1 = screen.getByTestId("tab1");
+      tab2 = screen.getByTestId("tab2");
+      panel1 = screen.getByTestId("panel1");
+      panel2 = screen.getByTestId("panel2");
     });
 
     describe("keyboard navigation", () => {
@@ -245,10 +245,10 @@ describe("x-tabs", () => {
         </div>
       `;
 
-      tab1 = getByTestId(document.body, "tab1");
-      tab2 = getByTestId(document.body, "tab2");
-      panel1 = getByTestId(document.body, "panel1");
-      panel2 = getByTestId(document.body, "panel2");
+      tab1 = screen.getByTestId("tab1");
+      tab2 = screen.getByTestId("tab2");
+      panel1 = screen.getByTestId("panel1");
+      panel2 = screen.getByTestId("panel2");
     });
 
     describe("keyboard navigation", () => {
