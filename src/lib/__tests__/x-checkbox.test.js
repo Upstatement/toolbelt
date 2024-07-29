@@ -55,15 +55,7 @@ describe("x-checkbox", () => {
       expectCheckboxToBeChecked({ root, indicator, input, label }, false);
     });
 
-    test("clicking indicator should toggle on checkbox", async () => {
-      fireEvent.click(indicator);
-
-      await waitFor(() => {
-        expectCheckboxToBeChecked({ root, indicator, input, label }, true);
-      });
-    });
-
-    test("clicking indicator should toggle off checkbox", async () => {
+    test("clicking indicator should toggle checkbox", async () => {
       fireEvent.click(indicator);
 
       await waitFor(() => {
@@ -77,15 +69,7 @@ describe("x-checkbox", () => {
       });
     });
 
-    test("clicking label should toggle on checkbox", async () => {
-      fireEvent.click(label);
-
-      await waitFor(() => {
-        expectCheckboxToBeChecked({ root, indicator, input, label }, true);
-      });
-    });
-
-    test("clicking label should toggle off checkbox", async () => {
+    test("clicking label should toggle checkbox", async () => {
       fireEvent.click(label);
 
       await waitFor(() => {
@@ -99,11 +83,17 @@ describe("x-checkbox", () => {
       });
     });
 
-    test("pressing space should toggle on checkbox", async () => {
+    test("pressing space should toggle checkbox", async () => {
       fireEvent.keyDown(indicator, { key: " " });
 
       await waitFor(() => {
         expectCheckboxToBeChecked({ root, indicator, input, label }, true);
+      });
+
+      fireEvent.keyDown(indicator, { key: " " });
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ root, indicator, input, label }, false);
       });
     });
   });
