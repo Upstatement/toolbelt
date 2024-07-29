@@ -7,13 +7,16 @@ import { SR_ONLY_STYLE, isElementTag } from "../utils";
  * @param {import('alpinejs').Alpine} Alpine
  */
 export default function (Alpine) {
-  Alpine.directive("checkbox", (el, { value, modifiers }) => {
+  Alpine.directive("checkbox", (el, { value, modifiers, expression }) => {
     if (value === "indicator") {
       handleIndicator(el, Alpine);
     } else if (value === "label") {
       handleLabel(el, Alpine);
     } else {
-      handleRoot(el, Alpine, { checked: modifiers.includes("checked") });
+      handleRoot(el, Alpine, {
+        checked: modifiers.includes("checked"),
+        value: expression,
+      });
     }
   });
 }
@@ -21,7 +24,7 @@ export default function (Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ checked: boolean }} config
+ * @param {{ checked: boolean, value?: string }} config
  */
 function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {
@@ -29,6 +32,7 @@ function handleRoot(el, Alpine, config) {
       return {
         __root: el,
         checked: config.checked,
+        value: config.value || "on",
       };
     },
 
@@ -75,7 +79,9 @@ function handleIndicator(el, Alpine) {
       return this.checked;
     },
 
-    value: "on",
+    ":value"() {
+      return this.value;
+    },
 
     ":data-state"() {
       return this.checked ? "checked" : "unchecked";
@@ -101,7 +107,9 @@ function handleInput(el, Alpine) {
 
     tabIndex: "-1",
 
-    value: "on",
+    ":value"() {
+      return this.value;
+    },
 
     ":checked"() {
       return this.checked;

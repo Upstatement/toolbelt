@@ -2,6 +2,7 @@ import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
 import { html, initializeAlpine } from "./utils";
+import { custom } from "astro/zod";
 
 describe("x-checkbox", () => {
   beforeAll(initializeAlpine);
@@ -100,7 +101,38 @@ describe("x-checkbox", () => {
     });
   });
 
-  describe("checked by default configuration", () => {
+  describe("(x-checkbox='custom-value') custom value configuration", () => {
+    const customValue = "custom-value";
+    let checkbox, indicator, input, label;
+
+    beforeEach(async () => {
+      document.body.innerHTML = `
+        <div x-checkbox="${customValue}" data-testid="checkbox">
+          <button x-checkbox:indicator data-testid="indicator"></button>
+          <label x-checkbox:label data-testid="label"></label>
+        </div>
+      `;
+
+      checkbox = screen.getByTestId("checkbox");
+      indicator = screen.getByTestId("indicator");
+      label = screen.getByTestId("label");
+
+      await waitFor(() => {
+        input = document.querySelector("input");
+
+        if (!input) {
+          throw new Error();
+        }
+      });
+    });
+
+    test("should use custom value", () => {
+      expect(indicator).toHaveAttribute("value", customValue);
+      expect(input).toHaveAttribute("value", customValue);
+    });
+  });
+
+  describe("(x-checkbox.checked) checked by default configuration", () => {
     let checkbox, indicator, input, label;
 
     beforeEach(async () => {
