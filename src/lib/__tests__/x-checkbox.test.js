@@ -26,18 +26,17 @@ describe("x-checkbox", () => {
       expect(checkbox).toBeInTheDocument();
 
       expect(indicator).toHaveAttribute("role", "checkbox");
-      expect(indicator).toHaveAttribute("aria-checked", "false");
-      expect(indicator).toHaveAttribute("data-state", "unchecked");
       expect(indicator).toHaveAttribute("value", "on");
 
       expect(label).toHaveAttribute("for", indicator.id);
+      expectCheckboxToBeChecked({ indicator }, false);
     });
 
     test("clicking indicator should toggle on checkbox", async () => {
       fireEvent.click(indicator);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, label }, true);
+        expectCheckboxToBeChecked({ indicator }, true);
       });
     });
 
@@ -59,7 +58,7 @@ describe("x-checkbox", () => {
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, label }, true);
+        expectCheckboxToBeChecked({ indicator }, true);
       });
     });
 
@@ -67,14 +66,35 @@ describe("x-checkbox", () => {
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, label }, true);
+        expectCheckboxToBeChecked({ indicator }, true);
       });
 
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, label }, false);
+        expectCheckboxToBeChecked({ indicator }, false);
       });
+    });
+  });
+
+  describe("checked by default configuration", () => {
+    let checkbox, indicator, label;
+
+    beforeEach(() => {
+      document.body.innerHTML = html`
+        <div x-checkbox.checked data-testid="checkbox">
+          <button x-checkbox:indicator data-testid="indicator"></button>
+          <label x-checkbox:label data-testid="label"></label>
+        </div>
+      `;
+
+      checkbox = getByTestId(document.body, "checkbox");
+      indicator = getByTestId(document.body, "indicator");
+      label = getByTestId(document.body, "label");
+    });
+
+    test("should be initially checked", () => {
+      expectCheckboxToBeChecked({ indicator }, true);
     });
   });
 });
