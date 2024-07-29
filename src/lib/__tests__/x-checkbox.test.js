@@ -98,6 +98,14 @@ describe("x-checkbox", () => {
         expectCheckboxToBeChecked({ root, indicator, input, label }, false);
       });
     });
+
+    test("pressing space should toggle on checkbox", async () => {
+      fireEvent.keyDown(indicator, { key: " " });
+
+      await waitFor(() => {
+        expectCheckboxToBeChecked({ root, indicator, input, label }, true);
+      });
+    });
   });
 
   describe("(x-checkbox='custom-value') custom value configuration", () => {

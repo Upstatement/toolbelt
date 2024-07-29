@@ -91,6 +91,10 @@ function handleIndicator(el, Alpine) {
       return this.checked ? "checked" : "unchecked";
     },
 
+    "@keydown.space.prevent.stop"() {
+      this.checked = !this.checked;
+    },
+
     "@click"() {
       this.checked = !this.checked;
     },
