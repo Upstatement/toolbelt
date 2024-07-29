@@ -59,4 +59,12 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   directive="x-checkbox:label"
   description="Text label for the checkbox."
   required
-/>
+>
+  <Fragment slot="attributes">
+
+| Data Attribute | Values                   |
+| -------------- | ------------------------ |
+| `[data-state]` | `checked` \| `unchecked` |
+
+  </Fragment>
+</DirectiveReference>

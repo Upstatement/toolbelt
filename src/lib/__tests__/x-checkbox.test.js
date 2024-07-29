@@ -53,14 +53,14 @@ describe("x-checkbox", () => {
       expect(input).toBeScreenReaderOnly();
 
       expect(label).toHaveAttribute("for", indicator.id);
-      expectCheckboxToBeChecked({ indicator, input }, false);
+      expectCheckboxToBeChecked({ indicator, input, label }, false);
     });
 
     test("clicking indicator should toggle on checkbox", async () => {
       fireEvent.click(indicator);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input }, true);
+        expectCheckboxToBeChecked({ indicator, input, label }, true);
       });
     });
 
@@ -68,13 +68,13 @@ describe("x-checkbox", () => {
       fireEvent.click(indicator);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input }, true);
+        expectCheckboxToBeChecked({ indicator, input, label }, true);
       });
 
       fireEvent.click(indicator);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input }, false);
+        expectCheckboxToBeChecked({ indicator, input, label }, false);
       });
     });
 
@@ -82,7 +82,7 @@ describe("x-checkbox", () => {
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input }, true);
+        expectCheckboxToBeChecked({ indicator, input, label }, true);
       });
     });
 
@@ -90,13 +90,13 @@ describe("x-checkbox", () => {
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input }, true);
+        expectCheckboxToBeChecked({ indicator, input, label }, true);
       });
 
       fireEvent.click(label);
 
       await waitFor(() => {
-        expectCheckboxToBeChecked({ indicator, input }, false);
+        expectCheckboxToBeChecked({ indicator, input, label }, false);
       });
     });
   });
@@ -157,7 +157,7 @@ describe("x-checkbox", () => {
     });
 
     test("should be initially checked", () => {
-      expectCheckboxToBeChecked({ indicator, input }, true);
+      expectCheckboxToBeChecked({ indicator, input, label }, true);
     });
   });
 });
@@ -167,7 +167,7 @@ describe("x-checkbox", () => {
  * @param {boolean} isChecked
  */
 function expectCheckboxToBeChecked(elements, isChecked) {
-  const { indicator, input } = elements;
+  const { indicator, input, label } = elements;
 
   expect(indicator).toHaveAttribute(
     "aria-checked",
@@ -180,4 +180,9 @@ function expectCheckboxToBeChecked(elements, isChecked) {
   );
 
   expect(input.checked).toBe(isChecked);
+
+  expect(label).toHaveAttribute(
+    "data-state",
+    isChecked ? "checked" : "unchecked",
+  );
 }

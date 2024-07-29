@@ -6,7 +6,7 @@ import { SR_ONLY_STYLE, isElementTag } from "../utils";
  *
  * @param {import('alpinejs').Alpine} Alpine
  */
-export default function (Alpine) {
+export default function(Alpine) {
   Alpine.directive("checkbox", (el, { value, modifiers, expression }) => {
     if (value === "indicator") {
       handleIndicator(el, Alpine);
@@ -138,6 +138,10 @@ function handleLabel(el, Alpine) {
 
     ":for"() {
       return this.$id("tb-checkbox-indicator");
+    },
+
+    ":data-state"() {
+      return this.checked ? "checked" : "unchecked";
     },
   });
 }
