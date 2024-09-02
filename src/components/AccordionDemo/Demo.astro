@@ -15,7 +15,8 @@ const items = [
   },
   {
     title: "Can it be animated?",
-    content: "Yes! You can animate the Accordion with CSS or JavaScript.",
+    content: "Yes! You can animate the Accordion with CSS and x-transition.",
+    animate: true,
   },
 ];
 ---
@@ -27,6 +28,7 @@ const items = [
     "Supports vertical or horizontal orientation",
     "Can expand one or multiple items",
     "Can set default state per item",
+    "Can animate the expansion of items",
   ]}
   html={code}
 >
@@ -50,8 +52,18 @@ const items = [
             />
           </button>
 
-          <div class="px-4 py-3 text-foreground" x-accordion:content x-cloak>
-            {item.content}
+          <div
+            class:list={[item.animate && "transition-all", "grid"]}
+            x-accordion:content
+            x-transition:enter-start="grid-rows-[0fr]"
+            x-transition:enter-end="grid-rows-[1fr]"
+            x-transition:leave-start="grid-rows-[1fr]"
+            x-transition:leave-end="grid-rows-[0fr]"
+            x-cloak
+          >
+            <div class="overflow-hidden">
+              <div class="px-4 py-3 text-foreground">{item.content}</div>
+            </div>
           </div>
         </div>
       ))

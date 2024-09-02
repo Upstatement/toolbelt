@@ -84,9 +84,12 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 <DirectiveReference
   directive="x-accordion:content"
-  description="The content that will be shown or hidden in the drawer item."
   required
 >
+  <Fragment slot="description">
+  The content that will be shown or hidden in the drawer item. Item can be animated with Alpine's [x-transition](https://alpinejs.dev/directives/transition#applying-css-classes) helper.
+  </Fragment>
+
   <Fragment slot="attributes">
 
 | Data Attribute | Values             |
