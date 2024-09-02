@@ -89,7 +89,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   directive="x-accordion:content"
   required
 >
-  The content that will be shown or hidden in the drawer item. Item can be animated with Alpine's [x-transition](https://alpinejs.dev/directives/transition#applying-css-classes) helper.
+  The content that will be shown or hidden in the drawer item.
 
   <Table>
 
@@ -98,4 +98,21 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | `[data-state]` | `open` \| `closed` |
 
   </Table>
+
+Toolbelt uses Alpine's [x-show](https://alpinejs.dev/directives/show) directive to show or hide the item.
+The item's shown or hidden state can be animated using CSS and the [x-transition](https://alpinejs.dev/directives/transition#applying-css-classes) directive. Here's an example for how to animate an accordion item's height with a CSS grid trick:
+
+```html
+<div
+  class="grid transition-all"
+  x-accordion:content
+  x-transition:enter-start="grid-rows-[0fr]"
+  x-transition:enter-end="grid-rows-[1fr]"
+  x-transition:leave-start="grid-rows-[1fr]"
+  x-transition:leave-end="grid-rows-[0fr]"
+>
+  <div class="overflow-hidden">...</div>
+</div>
+```
+
 </DirectiveReference>
