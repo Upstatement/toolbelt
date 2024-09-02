@@ -33,9 +33,10 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 <DirectiveReference
   directive="x-tabs"
-  description="The root element for tabs."
   required
 >
+  The root element for tabs.
+
   <Table>
 
 | Value                                                              |
@@ -47,9 +48,10 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 <DirectiveReference
   directive="x-tabs:list"
-  description="List of tabs."
   required
 >
+  List of tabs.
+
   <Table>
 
 | Modifier                     | Description                                                                      |
@@ -63,10 +65,17 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 <DirectiveReference
   directive="x-tabs:tab"
-  description="Trigger button that shows the corresponding panel."
   required
 >
-  <Fragment slot="value">The value for this tab.</Fragment>
+  Trigger button that shows the corresponding panel.
+
+  <Table>
+
+| Value                  |
+| ---------------------- |
+| The value for this tab |
+
+  </Table>
 
   <Table>
 
@@ -79,9 +88,10 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 <DirectiveReference
   directive="x-tabs:panel"
-  description="Panel that contains content."
   required
 >
+  Panel that contains content.
+
   <Table>
 
 | Value                                                         |

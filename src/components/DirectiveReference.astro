@@ -1,11 +1,10 @@
 ---
 interface Props {
   directive: string;
-  description: string;
   required?: boolean;
 }
 
-const { directive, description, required = false } = Astro.props;
+const { directive, required = false } = Astro.props;
 ---
 
 <section class="my-16" aria-label={`Reference for ${directive}`}>
@@ -24,10 +23,6 @@ const { directive, description, required = false } = Astro.props;
   </div>
 
   <hr />
-
-  <p>
-    {Astro.slots.has("description") ? <slot name="description" /> : description}
-  </p>
 
   <slot />
 </section>
