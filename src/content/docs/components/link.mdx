@@ -6,6 +6,7 @@ description: Directives that handle common accessibility practices for links.
 import Toolbelt from "@components/Toolbelt.astro";
 import LinkDemo from "@components/LinkDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import Table from "@components/Table.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -26,50 +27,50 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 The `x-link` family of directives is different from other components. These directives are independent of each other and can be used in isolation.
 
 <DirectiveReference directive="x-link:current" required>
-  <Fragment slot="description">
+  <Table>
     Checks whether the link points to the current page. This will automatically
     set `aria-current=page` on the link. By default, this will check that the link's
     [pathname](https://developer.mozilla.org/en-US/docs/Web/API/URL/pathname) matches that of the current page.
-  </Fragment>
+  </Table>
 
-  <Fragment slot="modifiers">
+  <Table>
 
 | Modifier  | Description                                                                    |
 | --------- | ------------------------------------------------------------------------------ |
 | `.nested` | If set, this directive will be applied to all `<a>` nested inside the element. |
 
-  </Fragment>
+  </Table>
 
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute   | Values            |
 | ---------------- | ----------------- |
 | `[data-current]` | `true` \| `false` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
   directive="x-link:external"
   required
 >
-  <Fragment slot="description">
+  <Table>
     Checks whether the link points to an external website. This will automatically set the link to open in a new tab. By default, this will check whether the link shares the same origin as the current site.
-  </Fragment>
+  </Table>
 
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute    | Values            |
 | ----------------- | ----------------- |
 | `[data-external]` | `true` \| `false` |
 
-  </Fragment>
+  </Table>
 
-  <Fragment slot="modifiers">
+  <Table>
 
 | Modifier  | Description                                                                    |
 | --------- | ------------------------------------------------------------------------------ |
 | `.nested` | If set, this directive will be applied to all `<a>` nested inside the element. |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>

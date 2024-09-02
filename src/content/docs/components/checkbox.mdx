@@ -6,6 +6,7 @@ description: A control that allows the user to toggle between checked and not ch
 import Toolbelt from "@components/Toolbelt.astro";
 import CheckboxDemo from "@components/CheckboxDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import Table from "@components/Table.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -32,21 +33,21 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="The root element for the checkbox."
   required
 >
-  <Fragment slot="modifiers">
+  <Table>
 
 | Modifier   | Description                    |
 | ---------- | ------------------------------ |
 | `.checked` | Checks the checkbox by default |
 
-  </Fragment>
+  </Table>
 
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values                   |
 | -------------- | ------------------------ |
 | `[data-state]` | `checked` \| `unchecked` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -54,13 +55,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="Visual indicator for the checkbox."
   required
 >
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values                   |
 | -------------- | ------------------------ |
 | `[data-state]` | `checked` \| `unchecked` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -68,11 +69,11 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="Text label for the checkbox."
   required
 >
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values                   |
 | -------------- | ------------------------ |
 | `[data-state]` | `checked` \| `unchecked` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>

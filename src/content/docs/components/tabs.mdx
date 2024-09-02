@@ -6,6 +6,7 @@ description: Tabs organize content into distinct panels, displayed one at a time
 import Toolbelt from "@components/Toolbelt.astro";
 import TabsDemo from "@components/TabsDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import Table from "@components/Table.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -35,9 +36,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="The root element for tabs."
   required
 >
-  <Fragment slot="value">
-    The default tab to be displayed. Otherwise, display the first tab.
-  </Fragment>
+  <Table>
+
+| Value                                                              |
+| ------------------------------------------------------------------ |
+| The default tab to be displayed. Otherwise, display the first tab. |
+
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -45,7 +50,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="List of tabs."
   required
 >
-  <Fragment slot="modifiers">
+  <Table>
 
 | Modifier                     | Description                                                                      |
 | ---------------------------- | -------------------------------------------------------------------------------- |
@@ -53,7 +58,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | `.automatic`                 | Automatically show/hide panel with keyboard navigation (e.g. arrow keys)         |
 | `.vertical` \| `.horizontal` | Orientation of the accordion for keyboard navigation. Defaults to `.horizontal`. |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -63,13 +68,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 >
   <Fragment slot="value">The value for this tab.</Fragment>
 
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values                 |
 | -------------- | ---------------------- |
 | `[data-state]` | `active` \| `inactive` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -77,15 +82,19 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="Panel that contains content."
   required
 >
-  <Fragment slot="value">
-    The value for this panel, which should match the correct tab.
-  </Fragment>
+  <Table>
 
-  <Fragment slot="attributes">
+| Value                                                         |
+| ------------------------------------------------------------- |
+| The value for this panel, which should match the correct tab. |
+
+  </Table>
+
+  <Table>
 
 | Data Attribute | Values                 |
 | -------------- | ---------------------- |
 | `[data-state]` | `active` \| `inactive` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>

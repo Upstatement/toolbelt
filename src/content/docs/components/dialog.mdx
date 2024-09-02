@@ -6,6 +6,7 @@ description: A dialog creates a window overlaid on top of a page window, renderi
 import Toolbelt from "@components/Toolbelt.astro";
 import DialogDemo from "@components/DialogDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import Table from "@components/Table.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -47,13 +48,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="Trigger button that opens or closes the dialog content."
   required
 >
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -61,13 +62,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="The content that will be shown or hidden."
   required
 >
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference

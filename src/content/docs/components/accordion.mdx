@@ -6,6 +6,7 @@ description: An accordion is a vertical list of headers that reveal or hide cont
 import Toolbelt from "@components/Toolbelt.astro";
 import AccordionDemo from "@components/AccordionDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import Table from "@components/Table.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -35,7 +36,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="The root element for the accordion."
   required
 >
-  <Fragment slot="modifiers">
+  <Table>
 
 | Modifier                     | Description                                                                    |
 | ---------------------------- | ------------------------------------------------------------------------------ |
@@ -43,7 +44,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | `.loop`                      | Loops keyboard navigation (e.g. arrow keys)                                    |
 | `.vertical` \| `.horizontal` | Orientation of the accordion for keyboard navigation. Defaults to `.vertical`. |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -51,21 +52,21 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="Each drawer item in the accordion."
   required
 >
-  <Fragment slot="modifiers">
+  <Table>
 
 | Modifier | Description              |
 | -------- | ------------------------ |
 | `.open`  | Open the item by default |
 
-  </Fragment>
+  </Table>
 
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -73,28 +74,26 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="Trigger button that opens or closes the drawer item."
   required
 >
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
   directive="x-accordion:content"
   required
 >
-  <Fragment slot="description">
   The content that will be shown or hidden in the drawer item. Item can be animated with Alpine's [x-transition](https://alpinejs.dev/directives/transition#applying-css-classes) helper.
-  </Fragment>
 
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>

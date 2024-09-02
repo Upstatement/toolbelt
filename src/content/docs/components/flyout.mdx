@@ -6,6 +6,7 @@ description: A flyout displays content in an overlay, triggered by a button.
 import Toolbelt from "@components/Toolbelt.astro";
 import FlyoutDemo from "@components/FlyoutDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
+import Table from "@components/Table.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -30,21 +31,21 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="The root element for the flyout."
   required
 >
-  <Fragment slot="modifiers">
+  <Table>
 
 | Modifier     | Description                                                                   |
 | ------------ | ----------------------------------------------------------------------------- |
 | `.hoverable` | Opens flyout on hover. Flyout automatically closes when cursor moves outside. |
 
-  </Fragment>
+  </Table>
 
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -52,13 +53,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="Trigger button that opens or closes the flyout content."
   required
 >
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -66,11 +67,11 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   description="The content that will be shown or hidden."
   required
 >
-  <Fragment slot="attributes">
+  <Table>
 
 | Data Attribute | Values             |
 | -------------- | ------------------ |
 | `[data-state]` | `open` \| `closed` |
 
-  </Fragment>
+  </Table>
 </DirectiveReference>
