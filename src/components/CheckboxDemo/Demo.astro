@@ -7,11 +7,11 @@ import code from "./code.html?raw";
 <Demo name="checkbox" features={["Full keyboard navigation."]} html={code}>
   <div class="flex items-center gap-3" x-init x-checkbox.checked>
     <button
-      class="transition-colors bg-white aspect-square size-[1.6rem] rounded-md flex justify-center items-center group data-[state='checked']:bg-accent cursor-pointer"
+      class="transition-colors duration-100 bg-white aspect-square size-[1.6rem] rounded-md flex justify-center items-center group data-[state='checked']:bg-accent cursor-pointer"
       x-checkbox:indicator
     >
       <Icon
-        class="transition text-gray-200 shrink-0 opacity-100 group-data-[state='unchecked']:opacity-0"
+        class="transition-opacity duration-100 text-gray-200 shrink-0 opacity-100 group-data-[state='unchecked']:opacity-0"
         name="approve-check"
       />
     </button>
