@@ -1,5 +1,5 @@
 import logger from "../logger";
-import { SR_ONLY_STYLE, isElementTag } from "../utils";
+import { SR_ONLY_STYLE, dispatch, isElementTag } from "../utils";
 
 /**
  * "x-checkbox" is a control that allows the user to toggle between checked and not checked.
@@ -42,6 +42,12 @@ function handleRoot(el, Alpine, config) {
 
     ":data-state"() {
       return this.checked ? "checked" : "unchecked";
+    },
+
+    "x-effect"() {
+      dispatch(el, "x-checkbox:change", {
+        checked: this.checked,
+      });
     },
   });
 }
@@ -99,6 +105,12 @@ function handleIndicator(el, Alpine) {
 
     "@click"() {
       this.checked = !this.checked;
+    },
+
+    "x-effect"() {
+      dispatch(el, "x-checkbox:change", {
+        checked: this.checked,
+      });
     },
   });
 }

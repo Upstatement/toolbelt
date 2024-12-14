@@ -1,7 +1,7 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { html, initializeAlpine } from "./utils";
+import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
 
 describe("x-checkbox", () => {
   beforeAll(initializeAlpine);
@@ -94,6 +94,45 @@ describe("x-checkbox", () => {
 
       await waitFor(() => {
         expectCheckboxToBeChecked({ root, indicator, input, label }, false);
+      });
+    });
+
+    describe("custom events", () => {
+      test("should indicate checkbox is open", async () => {
+        const root = screen.getByTestId("root");
+        const indicator = screen.getByTestId("indicator");
+        const listener = createMockCustomEventListener();
+
+        root.addEventListener("x-checkbox:change", listener);
+        indicator.addEventListener("x-checkbox:change", listener);
+
+        fireEvent.click(indicator);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(2);
+          expect(listener).toHaveReturnedWith([root, { checked: true }]);
+          expect(listener).toHaveReturnedWith([indicator, { checked: true }]);
+        });
+      });
+      test("should indicate checkbox is closed", async () => {
+        const root = screen.getByTestId("root");
+        const indicator = screen.getByTestId("indicator");
+
+        fireEvent.click(indicator);
+        await waitFor(() => {});
+
+        const listener = createMockCustomEventListener();
+
+        root.addEventListener("x-checkbox:change", listener);
+        indicator.addEventListener("x-checkbox:change", listener);
+
+        fireEvent.click(indicator);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(2);
+          expect(listener).toHaveReturnedWith([root, { checked: false }]);
+          expect(listener).toHaveReturnedWith([indicator, { checked: false }]);
+        });
       });
     });
   });
