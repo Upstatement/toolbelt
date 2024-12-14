@@ -40,8 +40,8 @@ describe("x-accordion", () => {
       expect(content).not.toBeVisible();
     });
 
-    describe("opening items", () => {
-      test("should open and close a item when clicked", async () => {
+    describe("toggling items", () => {
+      test("should open and close an item when clicked", async () => {
         const item = screen.getByTestId("item-1");
         const trigger = screen.getByTestId("trigger-1");
         const content = screen.getByTestId("content-1");
@@ -50,6 +50,12 @@ describe("x-accordion", () => {
 
         await waitFor(() => {
           expectItemToBeOpen({ item, trigger, content }, true);
+        });
+
+        fireEvent.click(trigger);
+
+        await waitFor(() => {
+          expectItemToBeOpen({ item, trigger, content }, false);
         });
       });
 
@@ -110,7 +116,7 @@ describe("x-accordion", () => {
       });
     });
 
-    describe("keybord navigation", () => {
+    describe("keyboard navigation", () => {
       let trigger1, trigger2;
 
       beforeEach(() => {
