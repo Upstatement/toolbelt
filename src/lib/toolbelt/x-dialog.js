@@ -1,5 +1,5 @@
 import logger from "../logger";
-import { isElementTag } from "../utils";
+import { dispatch, isElementTag } from "../utils";
 
 /**
  * `x-dialog` set of directives creates a window overlaid
@@ -43,6 +43,10 @@ function handleRoot(el, Alpine) {
     "x-id"() {
       return ["tb-dialog-content", "tb-dialog-title", "tb-dialog-description"];
     },
+
+    "x-effect"() {
+      dispatch(el, "x-dialog:change", { open: this.open });
+    },
   });
 }
 
@@ -78,6 +82,10 @@ function handleTrigger(el, Alpine) {
 
     ":aria-controls"() {
       return this.$id("tb-dialog-content");
+    },
+
+    "x-effect"() {
+      dispatch(el, "x-dialog:change", { open: this.open });
     },
   });
 }
@@ -132,6 +140,10 @@ function handleContent(el, Alpine) {
 
     "@keydown.escape.prevent.stop"() {
       this.open = false;
+    },
+
+    "x-effect"() {
+      dispatch(el, "x-dialog:change", { open: this.open });
     },
   });
 }

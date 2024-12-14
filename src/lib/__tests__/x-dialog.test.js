@@ -1,17 +1,17 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { html, initializeAlpine } from "./utils";
+import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
 
 describe("x-dialog", () => {
   beforeAll(initializeAlpine);
 
   describe("default configuration", () => {
-    let trigger, content, overlay, title, description, close;
+    let root, trigger, content, overlay, title, description, close;
 
     beforeEach(async () => {
       document.body.innerHTML = html`
-        <div x-dialog>
+        <div x-dialog data-testid="root">
           <button x-dialog:trigger data-testid="trigger"></button>
 
           <template x-teleport="body">
@@ -26,6 +26,7 @@ describe("x-dialog", () => {
       `;
 
       await waitFor(() => {
+        root = screen.getByTestId("root");
         trigger = screen.getByTestId("trigger");
         content = screen.getByTestId("content");
         overlay = screen.getByTestId("overlay");
@@ -113,6 +114,45 @@ describe("x-dialog", () => {
 
       await waitFor(() => {
         expectDialogToBeOpen({ trigger, content }, false);
+      });
+    });
+
+    describe("custom events", () => {
+      test("should indicate dialog is open", async () => {
+        const listener = createMockCustomEventListener();
+
+        root.addEventListener("x-dialog:change", listener);
+        trigger.addEventListener("x-dialog:change", listener);
+        content.addEventListener("x-dialog:change", listener);
+
+        fireEvent.click(trigger);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(3);
+          expect(listener).toHaveReturnedWith([root, { open: true }]);
+          expect(listener).toHaveReturnedWith([trigger, { open: true }]);
+          expect(listener).toHaveReturnedWith([content, { open: true }]);
+        });
+      });
+
+      test("should indicate dialog is closed", async () => {
+        fireEvent.click(trigger);
+        await waitFor(() => {});
+
+        const listener = createMockCustomEventListener();
+
+        root.addEventListener("x-dialog:change", listener);
+        trigger.addEventListener("x-dialog:change", listener);
+        content.addEventListener("x-dialog:change", listener);
+
+        fireEvent.click(trigger);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(3);
+          expect(listener).toHaveReturnedWith([root, { open: false }]);
+          expect(listener).toHaveReturnedWith([trigger, { open: false }]);
+          expect(listener).toHaveReturnedWith([content, { open: false }]);
+        });
       });
     });
   });
