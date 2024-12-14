@@ -7,23 +7,23 @@ describe("x-flyout", () => {
   beforeAll(initializeAlpine);
 
   describe("default configuration", () => {
-    let flyout, trigger, content;
+    let root, trigger, content;
 
     beforeEach(() => {
       document.body.innerHTML = html`
-        <div x-flyout data-testid="flyout">
+        <div x-flyout data-testid="root">
           <button x-flyout:trigger data-testid="trigger"></button>
           <div x-flyout:content data-testid="content"></div>
         </div>
       `;
 
-      flyout = screen.getByTestId("flyout");
+      root = screen.getByTestId("root");
       trigger = screen.getByTestId("trigger");
       content = screen.getByTestId("content");
     });
 
     test("correct initial state", () => {
-      expect(flyout).toHaveAttribute("data-state", "closed");
+      expect(root).toHaveAttribute("data-state", "closed");
 
       expect(trigger).toHaveAttribute("aria-expanded", "false");
       expect(trigger).toHaveAttribute("data-state", "closed");
@@ -39,7 +39,7 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
+        expectFlyoutToBeOpen({ flyout: root, trigger, content }, true);
       });
     });
 
@@ -47,13 +47,13 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
+        expectFlyoutToBeOpen({ flyout: root, trigger, content }, true);
       });
 
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectFlyoutToBeOpen({ flyout, trigger, content }, false);
+        expectFlyoutToBeOpen({ flyout: root, trigger, content }, false);
       });
     });
 
@@ -61,13 +61,13 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
+        expectFlyoutToBeOpen({ flyout: root, trigger, content }, true);
       });
 
       fireEvent.focusOut(content);
 
       await waitFor(() => {
-        expectFlyoutToBeOpen({ flyout, trigger, content }, false);
+        expectFlyoutToBeOpen({ flyout: root, trigger, content }, false);
       });
     });
 
@@ -80,13 +80,13 @@ describe("x-flyout", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectFlyoutToBeOpen({ flyout, trigger, content }, true);
+        expectFlyoutToBeOpen({ flyout: root, trigger, content }, true);
       });
 
       fireEvent.click(document.body);
 
       await waitFor(() => {
-        expectFlyoutToBeOpen({ flyout, trigger, content }, false);
+        expectFlyoutToBeOpen({ flyout: root, trigger, content }, false);
       });
     });
   });
