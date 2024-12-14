@@ -32,6 +32,6 @@ export function initializeAlpine() {
  *
  * @return {import('vitest').Mock}
  */
-export function createCustomEventListener() {
+export function createMockCustomEventListener() {
   return vi.fn((e) => [e.target, e.detail]);
 }

@@ -108,11 +108,16 @@ function handleItem(el, Alpine, config) {
     },
 
     "x-effect"() {
-      this.open = this.openItems.has(el);
+      const shouldOpen = this.openItems.has(el);
 
-      dispatch(el, "accordion:change", {
-        open: this.open,
-      });
+      // Only dispatch if the state has changed
+      if (shouldOpen !== this.open) {
+        dispatch(el, "accordion:change", {
+          open: shouldOpen,
+        });
+      }
+
+      this.open = shouldOpen;
     },
 
     ":data-state"() {

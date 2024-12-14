@@ -1,7 +1,7 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { createCustomEventListener, html, initializeAlpine } from "./utils";
+import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
 
 describe("x-accordion", () => {
   beforeAll(initializeAlpine);
@@ -83,13 +83,15 @@ describe("x-accordion", () => {
           );
         });
       });
+    });
 
-      test("should trigger custom events", async () => {
+    describe("custom events", () => {
+      test("should indicate item is open", async () => {
         const item = screen.getByTestId("item-1");
         const trigger = screen.getByTestId("trigger-1");
         const content = screen.getByTestId("content-1");
 
-        const listener = createCustomEventListener();
+        const listener = createMockCustomEventListener();
 
         item.addEventListener("accordion:change", listener);
         trigger.addEventListener("accordion:change", listener);
@@ -103,8 +105,22 @@ describe("x-accordion", () => {
           expect(listener).toHaveReturnedWith([trigger, { open: true }]);
           expect(listener).toHaveReturnedWith([content, { open: true }]);
         });
+      });
 
-        listener.mockClear();
+      test("should indicate item is closed", async () => {
+        const item = screen.getByTestId("item-1");
+        const trigger = screen.getByTestId("trigger-1");
+        const content = screen.getByTestId("content-1");
+
+        const listener = createMockCustomEventListener();
+
+        fireEvent.click(trigger);
+        await waitFor(() => {});
+
+        item.addEventListener("accordion:change", listener);
+        trigger.addEventListener("accordion:change", listener);
+        content.addEventListener("accordion:change", listener);
+
         fireEvent.click(trigger);
 
         await waitFor(() => {
@@ -233,6 +249,46 @@ describe("x-accordion", () => {
             { item: item2, trigger: trigger2, content: content2 },
             true,
           );
+        });
+      });
+    });
+
+    describe("custom events", () => {
+      test("should trigger separate events for opened and closed items.", async () => {
+        const item1 = screen.getByTestId("item-1");
+        const trigger1 = screen.getByTestId("trigger-1");
+        const content1 = screen.getByTestId("content-1");
+
+        const item2 = screen.getByTestId("item-2");
+        const trigger2 = screen.getByTestId("trigger-2");
+        const content2 = screen.getByTestId("content-2");
+
+        fireEvent.click(trigger1);
+
+        await waitFor(() => {});
+
+        const listener = createMockCustomEventListener();
+
+        item1.addEventListener("accordion:change", listener);
+        trigger1.addEventListener("accordion:change", listener);
+        content1.addEventListener("accordion:change", listener);
+
+        item2.addEventListener("accordion:change", listener);
+        trigger2.addEventListener("accordion:change", listener);
+        content2.addEventListener("accordion:change", listener);
+
+        fireEvent.click(trigger2);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(6);
+
+          expect(listener).toHaveReturnedWith([item1, { open: false }]);
+          expect(listener).toHaveReturnedWith([trigger1, { open: false }]);
+          expect(listener).toHaveReturnedWith([content1, { open: false }]);
+
+          expect(listener).toHaveReturnedWith([item2, { open: true }]);
+          expect(listener).toHaveReturnedWith([trigger2, { open: true }]);
+          expect(listener).toHaveReturnedWith([content2, { open: true }]);
         });
       });
     });
