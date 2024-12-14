@@ -112,7 +112,7 @@ function handleItem(el, Alpine, config) {
 
       // Only dispatch if the state has changed
       if (shouldOpen !== this.open) {
-        dispatch(el, "accordion:change", {
+        dispatch(el, "x-accordion:change", {
           open: shouldOpen,
         });
       }
@@ -218,7 +218,7 @@ function handleTrigger(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "accordion:change", {
+      dispatch(el, "x-accordion:change", {
         open: this.open,
       });
     },
@@ -259,7 +259,7 @@ function handleContent(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "accordion:change", {
+      dispatch(el, "x-accordion:change", {
         open: this.open,
       });
     },
