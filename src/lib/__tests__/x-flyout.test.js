@@ -1,7 +1,7 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { html, initializeAlpine } from "./utils";
+import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
 
 describe("x-flyout", () => {
   beforeAll(initializeAlpine);
@@ -87,6 +87,47 @@ describe("x-flyout", () => {
 
       await waitFor(() => {
         expectFlyoutToBeOpen({ flyout: root, trigger, content }, false);
+      });
+    });
+
+    describe("custom events", () => {
+      test("should indicate flyout is open", async () => {
+        const listener = createMockCustomEventListener();
+
+        root.addEventListener("x-flyout:change", listener);
+        trigger.addEventListener("x-flyout:change", listener);
+        content.addEventListener("x-flyout:change", listener);
+
+        fireEvent.click(trigger);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(3);
+
+          expect(listener).toHaveReturnedWith([root, { open: true }]);
+          expect(listener).toHaveReturnedWith([trigger, { open: true }]);
+          expect(listener).toHaveReturnedWith([content, { open: true }]);
+        });
+      });
+
+      test("should indicate flyout is closed", async () => {
+        fireEvent.click(trigger);
+        await waitFor(() => {});
+
+        const listener = createMockCustomEventListener();
+
+        root.addEventListener("x-flyout:change", listener);
+        trigger.addEventListener("x-flyout:change", listener);
+        content.addEventListener("x-flyout:change", listener);
+
+        fireEvent.click(trigger);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(3);
+
+          expect(listener).toHaveReturnedWith([root, { open: false }]);
+          expect(listener).toHaveReturnedWith([trigger, { open: false }]);
+          expect(listener).toHaveReturnedWith([content, { open: false }]);
+        });
       });
     });
   });

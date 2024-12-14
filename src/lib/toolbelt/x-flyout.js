@@ -1,5 +1,5 @@
 import logger from "../logger";
-import { isElementTag } from "../utils";
+import { dispatch, isElementTag } from "../utils";
 
 /**
  * `x-flyout` set of directives creates a flyout menu.
@@ -46,6 +46,12 @@ function handleRoot(el, Alpine, config) {
       if (this.open) {
         this.open = false;
       }
+    },
+
+    "x-effect"() {
+      dispatch(el, "x-flyout:change", {
+        open: this.open,
+      });
     },
   });
 
@@ -111,6 +117,12 @@ function handleTrigger(el, Alpine) {
     "@click"() {
       this.open = !this.open;
     },
+
+    "x-effect"() {
+      dispatch(el, "x-flyout:change", {
+        open: this.open,
+      });
+    },
   });
 }
 
@@ -151,6 +163,12 @@ function handleContent(el, Alpine) {
       if (!el.contains(e.relatedTarget)) {
         this.open = false;
       }
+    },
+
+    "x-effect"() {
+      dispatch(el, "x-flyout:change", {
+        open: this.open,
+      });
     },
   });
 }
