@@ -39,6 +39,22 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 <DirectiveReference directive="x-dialog" required>
   The root element for the dialog.
+
+  <Table>
+
+| Event             | Description                           | `detail`            |
+| ----------------- | ------------------------------------- | ------------------- |
+| `x-dialog:change` | Whether the dialog is open or closed. | `{ open: boolean }` |
+
+  </Table>
+
+  <Table>
+
+| Data Attribute | Values             |
+| -------------- | ------------------ |
+| `[data-state]` | `open` \| `closed` |
+
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -46,6 +62,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   required
 >
   Trigger button that opens or closes the dialog content.
+
+  <Table>
+
+| Event             | Description                           | `detail`            |
+| ----------------- | ------------------------------------- | ------------------- |
+| `x-dialog:change` | Whether the dialog is open or closed. | `{ open: boolean }` |
+
+  </Table>
 
   <Table>
 
@@ -61,6 +85,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   required
 >
   The content that will be shown or hidden.
+
+  <Table>
+
+| Event             | Description                           | `detail`            |
+| ----------------- | ------------------------------------- | ------------------- |
+| `x-dialog:change` | Whether the dialog is open or closed. | `{ open: boolean }` |
+
+  </Table>
 
   <Table>
 
