@@ -91,9 +91,9 @@ describe("x-accordion", () => {
 
         const listener = createCustomEventListener();
 
-        item.addEventListener("change", listener);
-        trigger.addEventListener("change", listener);
-        content.addEventListener("change", listener);
+        item.addEventListener("accordion:change", listener);
+        trigger.addEventListener("accordion:change", listener);
+        content.addEventListener("accordion:change", listener);
 
         fireEvent.click(trigger);
 

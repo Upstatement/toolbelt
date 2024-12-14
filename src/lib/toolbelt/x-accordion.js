@@ -110,7 +110,7 @@ function handleItem(el, Alpine, config) {
     "x-effect"() {
       this.open = this.openItems.has(el);
 
-      dispatch(el, "change", {
+      dispatch(el, "accordion:change", {
         open: this.open,
       });
     },
@@ -213,7 +213,7 @@ function handleTrigger(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "change", {
+      dispatch(el, "accordion:change", {
         open: this.open,
       });
     },
@@ -254,7 +254,7 @@ function handleContent(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "change", {
+      dispatch(el, "accordion:change", {
         open: this.open,
       });
     },
