@@ -40,8 +40,8 @@ describe("x-accordion", () => {
       expect(content).not.toBeVisible();
     });
 
-    describe("opening tabs", () => {
-      test("should open a tab when clicked", async () => {
+    describe("opening items", () => {
+      test("should open and close a item when clicked", async () => {
         const item = screen.getByTestId("item-1");
         const trigger = screen.getByTestId("trigger-1");
         const content = screen.getByTestId("content-1");
@@ -53,7 +53,7 @@ describe("x-accordion", () => {
         });
       });
 
-      test("should be able to open multiple tabs", async () => {
+      test("should be able to open multiple items", async () => {
         const item1 = screen.getByTestId("item-1");
         const trigger1 = screen.getByTestId("trigger-1");
         const content1 = screen.getByTestId("content-1");
@@ -174,7 +174,7 @@ describe("x-accordion", () => {
     });
   });
 
-  describe("(x-accordion.single) single tab only configuration", () => {
+  describe("(x-accordion.single) single item only configuration", () => {
     beforeEach(() => {
       document.body.innerHTML = html`
         <div x-data x-accordion.single>
@@ -191,8 +191,8 @@ describe("x-accordion", () => {
       `;
     });
 
-    describe("opening tabs", () => {
-      test("should only open one tab at a time", async () => {
+    describe("opening items", () => {
+      test("should only open one item at a time", async () => {
         const item1 = screen.getByTestId("item-1");
         const trigger1 = screen.getByTestId("trigger-1");
         const content1 = screen.getByTestId("content-1");
