@@ -1,17 +1,17 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { html, initializeAlpine } from "./utils";
+import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
 
 describe("x-tabs", () => {
   beforeAll(initializeAlpine);
 
   describe("default configuration", () => {
-    let tabs, list, tab1, tab2, panel1, panel2;
+    let root, list, tab1, tab2, panel1, panel2;
 
     beforeEach(() => {
       document.body.innerHTML = html`
-        <div x-tabs data-testid="tabs">
+        <div x-tabs data-testid="root">
           <div x-tabs:list data-testid="list">
             <button x-tabs:tab="tab1" data-testid="tab1"></button>
             <button x-tabs:tab="tab2" data-testid="tab2"></button>
@@ -22,7 +22,7 @@ describe("x-tabs", () => {
         </div>
       `;
 
-      tabs = screen.getByTestId("tabs");
+      root = screen.getByTestId("root");
       list = screen.getByTestId("list");
       tab1 = screen.getByTestId("tab1");
       tab2 = screen.getByTestId("tab2");
@@ -31,7 +31,7 @@ describe("x-tabs", () => {
     });
 
     test("correct initial state", () => {
-      expect(tabs).toBeInTheDocument();
+      expect(root).toBeInTheDocument();
 
       expect(list).toHaveAttribute("role", "tablist");
       expect(list).toHaveAttribute("tabindex", "0");
@@ -74,6 +74,36 @@ describe("x-tabs", () => {
         await waitFor(() => {
           expectTabToBeSelected({ tab: tab1, panel: panel1 }, false);
           expectTabToBeSelected({ tab: tab2, panel: panel2 }, true);
+        });
+      });
+    });
+
+    describe("custom events", () => {
+      test("should indicate tab is open", async () => {
+        const listener = createMockCustomEventListener();
+
+        root.addEventListener("x-tabs:change", listener);
+        list.addEventListener("x-tabs:change", listener);
+
+        tab1.addEventListener("x-tabs:change", listener);
+        panel1.addEventListener("x-tabs:change", listener);
+
+        tab2.addEventListener("x-tabs:change", listener);
+        panel2.addEventListener("x-tabs:change", listener);
+
+        fireEvent.click(tab2);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(6);
+
+          expect(listener).toHaveReturnedWith([root, { tab: "tab2" }]);
+          expect(listener).toHaveReturnedWith([list, { tab: "tab2" }]);
+
+          expect(listener).toHaveReturnedWith([tab1, { open: false }]);
+          expect(listener).toHaveReturnedWith([panel1, { open: false }]);
+
+          expect(listener).toHaveReturnedWith([tab2, { open: true }]);
+          expect(listener).toHaveReturnedWith([panel2, { open: true }]);
         });
       });
     });

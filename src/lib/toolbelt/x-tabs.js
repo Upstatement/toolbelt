@@ -1,5 +1,5 @@
 import logger from "../logger";
-import { isElementTag } from "../utils";
+import { dispatch, isElementTag } from "../utils";
 
 /**
  * `x-tabs` is a set of layered sections of content known
@@ -46,6 +46,12 @@ function handleRoot(el, Alpine, config) {
     "x-id"() {
       return ["tb-tabs-tab", "tb-tabs-panel"];
     },
+
+    "x-effect"() {
+      dispatch(el, "x-tabs:change", {
+        tab: this.activeTab,
+      });
+    },
   });
 }
 
@@ -74,6 +80,12 @@ function handleList(el, Alpine, config) {
     role: "tablist",
 
     tabindex: 0,
+
+    "x-effect"() {
+      dispatch(el, "x-tabs:change", {
+        tab: this.activeTab,
+      });
+    },
   });
 }
 
@@ -242,6 +254,12 @@ function handleTab(el, Alpine, config) {
         }
       }
     },
+
+    "x-effect"() {
+      dispatch(el, "x-tabs:change", {
+        open: this.activeTab === this.value,
+      });
+    },
   });
 }
 
@@ -265,6 +283,7 @@ function handlePanel(el, Alpine, config) {
     "x-data"() {
       return {
         value: config.value,
+        open: this.activeTab === config.value,
       };
     },
 
@@ -275,11 +294,11 @@ function handlePanel(el, Alpine, config) {
     role: "tabpanel",
 
     ":tabindex"() {
-      return this.activeTab === this.value ? "0" : -1;
+      return this.open ? "0" : -1;
     },
 
     ":data-state"() {
-      return this.activeTab === this.value ? "active" : "inactive";
+      return this.open ? "active" : "inactive";
     },
 
     ":aria-labelledby"() {
@@ -287,7 +306,20 @@ function handlePanel(el, Alpine, config) {
     },
 
     "x-show"() {
-      return this.activeTab === this.value;
+      return this.open;
+    },
+
+    "x-effect"() {
+      const shouldOpen = this.activeTab === this.value;
+
+      // Only dispatch if the state has changed
+      if (shouldOpen !== this.open) {
+        dispatch(el, "x-tabs:change", {
+          open: shouldOpen,
+        });
+      }
+
+      this.open = shouldOpen;
     },
   });
 }
