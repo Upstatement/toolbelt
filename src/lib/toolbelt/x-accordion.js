@@ -1,5 +1,5 @@
 import logger from "../logger";
-import { isElementTag } from "../utils";
+import { dispatch, isElementTag } from "../utils";
 
 /**
  * "x-accordion" is a vertically stacked set of interactive headings
@@ -109,6 +109,10 @@ function handleItem(el, Alpine, config) {
 
     "x-effect"() {
       this.open = this.openItems.has(el);
+
+      dispatch(el, "change", {
+        open: this.open,
+      });
     },
 
     ":data-state"() {
@@ -207,6 +211,12 @@ function handleTrigger(el, Alpine) {
         }
       }
     },
+
+    "x-effect"() {
+      dispatch(el, "change", {
+        open: this.open,
+      });
+    },
   });
 }
 
@@ -241,6 +251,12 @@ function handleContent(el, Alpine) {
 
     "x-show"() {
       return this.open;
+    },
+
+    "x-effect"() {
+      dispatch(el, "change", {
+        open: this.open,
+      });
     },
   });
 }

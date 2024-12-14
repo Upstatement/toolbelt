@@ -2,6 +2,7 @@ import Alpine from "alpinejs";
 // import focus from "@alpinejs/focus";
 
 import toolbelt from "../toolbelt";
+import { vi } from "vitest";
 
 /**
  * Convenient utility to provide HTML
@@ -24,4 +25,13 @@ export function initializeAlpine() {
 
   Alpine.plugin(toolbelt);
   Alpine.start();
+}
+
+/**
+ * Create a mock function to test custom events.
+ *
+ * @return {import('vitest').Mock}
+ */
+export function createCustomEventListener() {
+  return vi.fn((e) => [e.target, e.detail]);
 }

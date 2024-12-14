@@ -1,7 +1,7 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { html, initializeAlpine } from "./utils";
+import { createCustomEventListener, html, initializeAlpine } from "./utils";
 
 describe("x-accordion", () => {
   beforeAll(initializeAlpine);
@@ -77,9 +77,40 @@ describe("x-accordion", () => {
           );
         });
       });
+
+      test("should trigger custom events", async () => {
+        const item = screen.getByTestId("item-1");
+        const trigger = screen.getByTestId("trigger-1");
+        const content = screen.getByTestId("content-1");
+
+        const listener = createCustomEventListener();
+
+        item.addEventListener("change", listener);
+        trigger.addEventListener("change", listener);
+        content.addEventListener("change", listener);
+
+        fireEvent.click(trigger);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(3);
+          expect(listener).toHaveReturnedWith([item, { open: true }]);
+          expect(listener).toHaveReturnedWith([trigger, { open: true }]);
+          expect(listener).toHaveReturnedWith([content, { open: true }]);
+        });
+
+        listener.mockClear();
+        fireEvent.click(trigger);
+
+        await waitFor(() => {
+          expect(listener).toHaveBeenCalledTimes(3);
+          expect(listener).toHaveReturnedWith([item, { open: false }]);
+          expect(listener).toHaveReturnedWith([trigger, { open: false }]);
+          expect(listener).toHaveReturnedWith([content, { open: false }]);
+        });
+      });
     });
 
-    describe("keyboard navigation", () => {
+    describe("keybord navigation", () => {
       let trigger1, trigger2;
 
       beforeEach(() => {

@@ -12,3 +12,13 @@ export const SR_ONLY_STYLE =
 export function isElementTag(el, tag) {
   return el.tagName.toLowerCase() === tag;
 }
+
+/**
+ * @param {HTMLElement} el
+ * @param {string} name
+ * @param {object} detail
+ */
+export function dispatch(el, name, detail) {
+  const event = new CustomEvent(name, { detail });
+  el.dispatchEvent(event);
+}
