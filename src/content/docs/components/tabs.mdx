@@ -44,6 +44,15 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | The default tab to be displayed. Otherwise, display the first tab. |
 
   </Table>
+
+  <Table>
+
+| Event           | Description            | `detail`          |
+| --------------- | ---------------------- | ----------------- |
+| `x-tabs:change` | The tab that is opened | `{ tab: string }` |
+
+  </Table>
+
 </DirectiveReference>
 
 <DirectiveReference
@@ -61,6 +70,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | `.vertical` \| `.horizontal` | Orientation of the accordion for keyboard navigation. Defaults to `.horizontal`. |
 
   </Table>
+
+  <Table>
+
+| Event           | Description            | `detail`          |
+| --------------- | ---------------------- | ----------------- |
+| `x-tabs:change` | The tab that is opened | `{ tab: string }` |
+
+  </Table>
 </DirectiveReference>
 
 <DirectiveReference
@@ -74,6 +91,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | Value                  |
 | ---------------------- |
 | The value for this tab |
+
+  </Table>
+
+  <Table>
+
+| Event           | Description                       | `detail`            |
+| --------------- | --------------------------------- | ------------------- |
+| `x-tabs:change` | Whether the tab is open or closed | `{ open: boolean }` |
 
   </Table>
 
@@ -97,6 +122,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 | Value                                                         |
 | ------------------------------------------------------------- |
 | The value for this panel, which should match the correct tab. |
+
+  </Table>
+
+  <Table>
+
+| Event           | Description                         | `detail`            |
+| --------------- | ----------------------------------- | ------------------- |
+| `x-tabs:change` | Whether the panel is open or closed | `{ open: boolean }` |
 
   </Table>
 
