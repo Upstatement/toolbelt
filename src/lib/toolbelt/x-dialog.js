@@ -44,6 +44,10 @@ function handleRoot(el, Alpine) {
       return ["tb-dialog-content", "tb-dialog-title", "tb-dialog-description"];
     },
 
+    ":data-state"() {
+      return this.open ? "open" : "closed";
+    },
+
     "x-effect"() {
       dispatch(el, "x-dialog:change", { open: this.open });
     },

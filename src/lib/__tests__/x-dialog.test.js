@@ -57,7 +57,7 @@ describe("x-dialog", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, true);
+        expectDialogToBeOpen({ root, trigger, content }, true);
       });
     });
 
@@ -65,13 +65,13 @@ describe("x-dialog", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, true);
+        expectDialogToBeOpen({ root, trigger, content }, true);
       });
 
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, false);
+        expectDialogToBeOpen({ root, trigger, content }, false);
       });
     });
 
@@ -79,13 +79,13 @@ describe("x-dialog", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, true);
+        expectDialogToBeOpen({ root, trigger, content }, true);
       });
 
       fireEvent.click(close);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, false);
+        expectDialogToBeOpen({ root, trigger, content }, false);
       });
     });
 
@@ -93,13 +93,13 @@ describe("x-dialog", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, true);
+        expectDialogToBeOpen({ root, trigger, content }, true);
       });
 
       fireEvent.click(overlay);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, false);
+        expectDialogToBeOpen({ root, trigger, content }, false);
       });
     });
 
@@ -107,13 +107,13 @@ describe("x-dialog", () => {
       fireEvent.click(trigger);
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, true);
+        expectDialogToBeOpen({ root, trigger, content }, true);
       });
 
       fireEvent.keyDown(content, { key: "Escape" });
 
       await waitFor(() => {
-        expectDialogToBeOpen({ trigger, content }, false);
+        expectDialogToBeOpen({ root, trigger, content }, false);
       });
     });
 
@@ -163,7 +163,9 @@ describe("x-dialog", () => {
  * @param {boolean} isOpen
  */
 function expectDialogToBeOpen(elements, isOpen) {
-  const { trigger, content } = elements;
+  const { root, trigger, content } = elements;
+
+  expect(root).toHaveAttribute("data-state", isOpen ? "open" : "closed");
 
   expect(trigger).toHaveAttribute("aria-expanded", isOpen ? "true" : "false");
   expect(trigger).toHaveAttribute("data-state", isOpen ? "open" : "closed");
