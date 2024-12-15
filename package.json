@@ -15,7 +15,7 @@
     "build": "astro build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "package:build": "vite build"
+    "package:build": "node scripts/build.js"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
