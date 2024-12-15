@@ -10,7 +10,8 @@ export default defineConfig({
       title: "Toolbelt",
 
       logo: {
-        src: "./src/assets/toolbelt.svg",
+        light: "./src/assets/toolbelt-light.svg",
+        dark: "./src/assets/toolbelt-dark.svg",
         replacesTitle: true,
       },
 
