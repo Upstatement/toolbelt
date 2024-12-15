@@ -1,7 +1,7 @@
 {
   "name": "@upstatement/toolbelt",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha",
   "description": "Alpine.js plugin for common accessibility patterns and utilities",
   "main": "dist/module.js",
   "keywords": [],
