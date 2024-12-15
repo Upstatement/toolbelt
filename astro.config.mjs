@@ -9,6 +9,11 @@ export default defineConfig({
     starlight({
       title: "Toolbelt",
 
+      logo: {
+        src: "./src/assets/toolbelt.svg",
+        replacesTitle: true,
+      },
+
       social: {
         github: "https://github.com/upstatement/toolbelt",
       },
