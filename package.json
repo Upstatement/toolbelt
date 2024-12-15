@@ -4,9 +4,18 @@
   "version": "1.0.0-alpha",
   "description": "Alpine.js plugin for common accessibility patterns and utilities",
   "main": "dist/module.js",
-  "keywords": [],
+  "keywords": [
+    "components",
+    "accessibility",
+    "a11y",
+    "headless",
+    "alpinejs"
+  ],
   "author": "Upstatement <tech@upstatement.com>",
   "license": "MIT",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "dev": "astro dev --port 3000",
     "start": "astro dev --port 3000",
