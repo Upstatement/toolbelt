@@ -4,7 +4,7 @@
 
 **Toolbelt** is a headless and unstyled component library for common accessibility patterns, built on top of [Alpine.js](https://alpinejs.dev/). The library is tech-agnostic. As long as you're producing HTML, Toolbelt is compatible.
 
-Upstatement builds websites for various brands and with various technologies but accessibility _conformance_ is a constant across our work. Toolbelt is meant to bridge the knowledge gap in our web accessibility practice by providing components that adhere to [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/) and [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) patterns out of the box, regardless of the technology stack we use.
+[Upstatement](https://upstatement.com/) builds websites for various brands and with various technologies but accessibility _conformance_ is a constant across our work. Toolbelt is meant to bridge the knowledge gap in our web accessibility practice by providing components that adhere to [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/) and [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) patterns out of the box, regardless of the technology stack we use.
 
 ## Repository Structure
 
