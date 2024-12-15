@@ -49,7 +49,7 @@ function handleRoot(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-dialog:change", { open: this.open });
+      dispatch(el, "dialog:change", { open: this.open });
     },
   });
 }
@@ -89,7 +89,7 @@ function handleTrigger(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-dialog:change", { open: this.open });
+      dispatch(el, "dialog:change", { open: this.open });
     },
   });
 }
@@ -147,7 +147,7 @@ function handleContent(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-dialog:change", { open: this.open });
+      dispatch(el, "dialog:change", { open: this.open });
     },
   });
 }

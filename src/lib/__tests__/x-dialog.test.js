@@ -121,9 +121,9 @@ describe("x-dialog", () => {
       test("should indicate dialog is open", async () => {
         const listener = createMockCustomEventListener();
 
-        root.addEventListener("x-dialog:change", listener);
-        trigger.addEventListener("x-dialog:change", listener);
-        content.addEventListener("x-dialog:change", listener);
+        root.addEventListener("dialog:change", listener);
+        trigger.addEventListener("dialog:change", listener);
+        content.addEventListener("dialog:change", listener);
 
         fireEvent.click(trigger);
 
@@ -141,9 +141,9 @@ describe("x-dialog", () => {
 
         const listener = createMockCustomEventListener();
 
-        root.addEventListener("x-dialog:change", listener);
-        trigger.addEventListener("x-dialog:change", listener);
-        content.addEventListener("x-dialog:change", listener);
+        root.addEventListener("dialog:change", listener);
+        trigger.addEventListener("dialog:change", listener);
+        content.addEventListener("dialog:change", listener);
 
         fireEvent.click(trigger);
 

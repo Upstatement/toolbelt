@@ -94,9 +94,9 @@ describe("x-flyout", () => {
       test("should indicate flyout is open", async () => {
         const listener = createMockCustomEventListener();
 
-        root.addEventListener("x-flyout:change", listener);
-        trigger.addEventListener("x-flyout:change", listener);
-        content.addEventListener("x-flyout:change", listener);
+        root.addEventListener("flyout:change", listener);
+        trigger.addEventListener("flyout:change", listener);
+        content.addEventListener("flyout:change", listener);
 
         fireEvent.click(trigger);
 
@@ -115,9 +115,9 @@ describe("x-flyout", () => {
 
         const listener = createMockCustomEventListener();
 
-        root.addEventListener("x-flyout:change", listener);
-        trigger.addEventListener("x-flyout:change", listener);
-        content.addEventListener("x-flyout:change", listener);
+        root.addEventListener("flyout:change", listener);
+        trigger.addEventListener("flyout:change", listener);
+        content.addEventListener("flyout:change", listener);
 
         fireEvent.click(trigger);
 

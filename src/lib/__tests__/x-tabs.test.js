@@ -82,14 +82,14 @@ describe("x-tabs", () => {
       test("should indicate tab is open", async () => {
         const listener = createMockCustomEventListener();
 
-        root.addEventListener("x-tabs:change", listener);
-        list.addEventListener("x-tabs:change", listener);
+        root.addEventListener("tabs:change", listener);
+        list.addEventListener("tabs:change", listener);
 
-        tab1.addEventListener("x-tabs:change", listener);
-        panel1.addEventListener("x-tabs:change", listener);
+        tab1.addEventListener("tabs:change", listener);
+        panel1.addEventListener("tabs:change", listener);
 
-        tab2.addEventListener("x-tabs:change", listener);
-        panel2.addEventListener("x-tabs:change", listener);
+        tab2.addEventListener("tabs:change", listener);
+        panel2.addEventListener("tabs:change", listener);
 
         fireEvent.click(tab2);
 

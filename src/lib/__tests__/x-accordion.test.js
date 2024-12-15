@@ -93,9 +93,9 @@ describe("x-accordion", () => {
 
         const listener = createMockCustomEventListener();
 
-        item.addEventListener("x-accordion:change", listener);
-        trigger.addEventListener("x-accordion:change", listener);
-        content.addEventListener("x-accordion:change", listener);
+        item.addEventListener("accordion:change", listener);
+        trigger.addEventListener("accordion:change", listener);
+        content.addEventListener("accordion:change", listener);
 
         fireEvent.click(trigger);
 
@@ -117,9 +117,9 @@ describe("x-accordion", () => {
         fireEvent.click(trigger);
         await waitFor(() => {});
 
-        item.addEventListener("x-accordion:change", listener);
-        trigger.addEventListener("x-accordion:change", listener);
-        content.addEventListener("x-accordion:change", listener);
+        item.addEventListener("accordion:change", listener);
+        trigger.addEventListener("accordion:change", listener);
+        content.addEventListener("accordion:change", listener);
 
         fireEvent.click(trigger);
 
@@ -269,13 +269,13 @@ describe("x-accordion", () => {
 
         const listener = createMockCustomEventListener();
 
-        item1.addEventListener("x-accordion:change", listener);
-        trigger1.addEventListener("x-accordion:change", listener);
-        content1.addEventListener("x-accordion:change", listener);
+        item1.addEventListener("accordion:change", listener);
+        trigger1.addEventListener("accordion:change", listener);
+        content1.addEventListener("accordion:change", listener);
 
-        item2.addEventListener("x-accordion:change", listener);
-        trigger2.addEventListener("x-accordion:change", listener);
-        content2.addEventListener("x-accordion:change", listener);
+        item2.addEventListener("accordion:change", listener);
+        trigger2.addEventListener("accordion:change", listener);
+        content2.addEventListener("accordion:change", listener);
 
         fireEvent.click(trigger2);
 

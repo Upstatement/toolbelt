@@ -49,7 +49,7 @@ function handleRoot(el, Alpine, config) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-flyout:change", {
+      dispatch(el, "flyout:change", {
         open: this.open,
       });
     },
@@ -119,7 +119,7 @@ function handleTrigger(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-flyout:change", {
+      dispatch(el, "flyout:change", {
         open: this.open,
       });
     },
@@ -166,7 +166,7 @@ function handleContent(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-flyout:change", {
+      dispatch(el, "flyout:change", {
         open: this.open,
       });
     },

@@ -103,8 +103,8 @@ describe("x-checkbox", () => {
         const indicator = screen.getByTestId("indicator");
         const listener = createMockCustomEventListener();
 
-        root.addEventListener("x-checkbox:change", listener);
-        indicator.addEventListener("x-checkbox:change", listener);
+        root.addEventListener("checkbox:change", listener);
+        indicator.addEventListener("checkbox:change", listener);
 
         fireEvent.click(indicator);
 
@@ -123,8 +123,8 @@ describe("x-checkbox", () => {
 
         const listener = createMockCustomEventListener();
 
-        root.addEventListener("x-checkbox:change", listener);
-        indicator.addEventListener("x-checkbox:change", listener);
+        root.addEventListener("checkbox:change", listener);
+        indicator.addEventListener("checkbox:change", listener);
 
         fireEvent.click(indicator);
 

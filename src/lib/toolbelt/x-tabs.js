@@ -48,7 +48,7 @@ function handleRoot(el, Alpine, config) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-tabs:change", {
+      dispatch(el, "tabs:change", {
         tab: this.activeTab,
       });
     },
@@ -82,7 +82,7 @@ function handleList(el, Alpine, config) {
     tabindex: 0,
 
     "x-effect"() {
-      dispatch(el, "x-tabs:change", {
+      dispatch(el, "tabs:change", {
         tab: this.activeTab,
       });
     },
@@ -256,7 +256,7 @@ function handleTab(el, Alpine, config) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-tabs:change", {
+      dispatch(el, "tabs:change", {
         open: this.activeTab === this.value,
       });
     },
@@ -314,7 +314,7 @@ function handlePanel(el, Alpine, config) {
 
       // Only dispatch if the state has changed
       if (shouldOpen !== this.open) {
-        dispatch(el, "x-tabs:change", {
+        dispatch(el, "tabs:change", {
           open: shouldOpen,
         });
       }

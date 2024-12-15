@@ -45,7 +45,7 @@ function handleRoot(el, Alpine, config) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-checkbox:change", {
+      dispatch(el, "checkbox:change", {
         checked: this.checked,
       });
     },
@@ -108,7 +108,7 @@ function handleIndicator(el, Alpine) {
     },
 
     "x-effect"() {
-      dispatch(el, "x-checkbox:change", {
+      dispatch(el, "checkbox:change", {
         checked: this.checked,
       });
     },
