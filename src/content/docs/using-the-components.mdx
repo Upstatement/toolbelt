@@ -111,14 +111,18 @@ Data attributes are used to track any relevant state of each element. In the cas
 ```html ins='data-state="open"' ins='data-state="closed"'
 <div x-init x-accordion.single.loop>
   <div x-accordion:item.open data-state="open">
-    <button x-accordion:trigger ... data-state="closed">
-      Is it accessible?
-    </button>
-    <div x-accordion:content ... data-state="closed">
+    <button x-accordion:trigger ... data-state="open">Is it accessible?</button>
+    <div x-accordion:content ... data-state="open">
       Yes. It adheres to the WAI-ARIA design pattern.
     </div>
   </div>
-  ...
+
+  <div x-accordion:item data-state="closed">
+    <button x-accordion:trigger ... data-state="closed">Is it unstyled?</button>
+    <div x-accordion:content ... data-state="closed">
+      Yes. It's unstyled by default, giving you freedom over the look and feel.
+    </div>
+  </div>
 </div>
 ```
 
