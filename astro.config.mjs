@@ -27,6 +27,10 @@ export default defineConfig({
               label: "What is Toolbelt?",
               link: "/",
             },
+            {
+              label: "Installation",
+              link: "/installation",
+            },
           ],
         },
         {

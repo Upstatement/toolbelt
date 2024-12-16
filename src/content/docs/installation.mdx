@@ -1,0 +1,85 @@
+---
+title: Installation
+description: Guide to installing Toolbelt in your project.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+<Aside type="caution">
+
+Toolbelt is still in alpha. The API is subject to change.
+
+</Aside>
+
+There are two ways to install Toolbelt. In either case, it might be helpful to read through how [installation works for Alpine core](https://alpinejs.dev/essentials/installation). The following guide skips some details that are already covered in Alpine's documentation.
+
+## From a script tag
+
+The easiest way to install Toolbelt is to include its CDN link. Because Toobelt is an Alpine plugin, you will have to include Alpine as a dependency. In addition, the [Focus](https://alpinejs.dev/plugins/focus) plugin is a required dependency for Toolbelt. **Notice that Toolbelt and Alpine plugins come _before_ Alpine core.**
+
+<Steps>
+
+1. Include the following script tags in your `<head>`:
+
+   ```html
+   <head>
+     <!-- Toolbelt -->
+     <script
+       src="https://cdn.jsdelivr.net/npm/@upstatement/toolbelt@1.0.0-alpha/dist/plugin.cdn.js"
+       defer
+     ></script>
+
+     <!-- Focus plugin (Toolbelt dependency) -->
+     <script
+       src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.14.7/dist/cdn.min.js"
+       defer
+     ></script>
+
+     <!-- Alpine core -->
+     <script
+       src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.7/dist/cdn.min.js"
+       defer
+     ></script>
+   </head>
+   ```
+
+2. You can now use Toolbelt components in your markup.
+
+</Steps>
+
+<Aside title="Hardcoding Versions" type="tip">
+
+The CDN links above hardcode the latest versions of each package. For stability in production, it's recommended to continue this practice.
+
+</Aside>
+
+## As a module
+
+If you prefer bundling Toolbelt and its dependencies in your own Javascript bundle, you can install these packages via from the npm registry.
+
+<Steps>
+
+1. Install the following packages:
+
+   ```bash
+   npm install alpinejs @alpinejs/focus @upstatement/toolbelt
+   ```
+
+2. Import and initialize the packages like so:
+
+   ```js
+   import Alpine from "alpinejs";
+   import focus from "@alpinejs/focus";
+   import toolbelt from "@upstatement/toolbelt";
+
+   window.Alpine = Alpine;
+
+   Alpine.plugin(toolbelt);
+   Alpine.plugin(focus);
+
+   Alpine.start();
+   ```
+
+3. You can now use Toolbelt components in your markup.
+
+</Steps>
