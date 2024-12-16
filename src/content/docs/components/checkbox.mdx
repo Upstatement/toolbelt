@@ -7,6 +7,7 @@ import Toolbelt from "@components/Toolbelt.astro";
 import CheckboxDemo from "@components/CheckboxDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
 import Table from "@components/Table.astro";
+import Anatomy from "@components/Anatomy.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -19,12 +20,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 ## Anatomy
 
-```html
-<div x-checkbox>
-  <button x-checkbox:indicator></button>
-  <label x-checkbox:label></label>
-</div>
-```
+<Anatomy>
+  ```html
+  <div x-init x-checkbox>
+    <button x-checkbox:indicator></button>
+    <label x-checkbox:label></label>
+  </div>
+  ```
+</Anatomy>
 
 ## Directives
 
@@ -44,8 +47,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event               | Description                                   | `detail`               |
-| ------------------- | --------------------------------------------- | ---------------------- |
+| Event             | Description                                   | `detail`               |
+| ----------------- | --------------------------------------------- | ---------------------- |
 | `checkbox:change` | Whether the checkbox is checked or unchecked. | `{ checked: boolean }` |
 
   </Table>
@@ -67,8 +70,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event               | Description                                   | `detail`               |
-| ------------------- | --------------------------------------------- | ---------------------- |
+| Event             | Description                                   | `detail`               |
+| ----------------- | --------------------------------------------- | ---------------------- |
 | `checkbox:change` | Whether the checkbox is checked or unchecked. | `{ checked: boolean }` |
 
   </Table>

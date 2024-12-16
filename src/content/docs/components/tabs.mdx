@@ -7,6 +7,7 @@ import Toolbelt from "@components/Toolbelt.astro";
 import TabsDemo from "@components/TabsDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
 import Table from "@components/Table.astro";
+import Anatomy from "@components/Anatomy.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -19,8 +20,9 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 ## Anatomy
 
+<Anatomy>
 ```html
-<div x-tabs>
+<div x-init x-tabs>
   <div x-tabs:list>
     <button x-tabs:tab></button>
   </div>
@@ -28,6 +30,7 @@ import DirectiveReference from "@components/DirectiveReference.astro";
   <div x-tabs:panel></div>
 </div>
 ```
+</Anatomy>
 
 ## Directives
 
@@ -47,8 +50,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event           | Description            | `detail`          |
-| --------------- | ---------------------- | ----------------- |
+| Event         | Description            | `detail`          |
+| ------------- | ---------------------- | ----------------- |
 | `tabs:change` | The tab that is opened | `{ tab: string }` |
 
   </Table>
@@ -73,8 +76,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event           | Description            | `detail`          |
-| --------------- | ---------------------- | ----------------- |
+| Event         | Description            | `detail`          |
+| ------------- | ---------------------- | ----------------- |
 | `tabs:change` | The tab that is opened | `{ tab: string }` |
 
   </Table>
@@ -96,8 +99,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event           | Description                       | `detail`            |
-| --------------- | --------------------------------- | ------------------- |
+| Event         | Description                       | `detail`            |
+| ------------- | --------------------------------- | ------------------- |
 | `tabs:change` | Whether the tab is open or closed | `{ open: boolean }` |
 
   </Table>
@@ -127,8 +130,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event           | Description                         | `detail`            |
-| --------------- | ----------------------------------- | ------------------- |
+| Event         | Description                         | `detail`            |
+| ------------- | ----------------------------------- | ------------------- |
 | `tabs:change` | Whether the panel is open or closed | `{ open: boolean }` |
 
   </Table>

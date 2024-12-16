@@ -3,6 +3,7 @@ title: Section
 ---
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
+import Anatomy from "@components/Anatomy.astro";
 import Toolbelt from "@components/Toolbelt.astro";
 
 <Toolbelt />
@@ -11,11 +12,13 @@ The `x-section` directive relates a `<section>` to its title for better screen r
 
 ## Usage
 
-```html
-<section x-section>
-  <h2 x-section:title>This is a section title</h2>
-</section>
-```
+<Anatomy>
+  ```html
+  <section x-init x-section>
+    <h2 x-section:title>This is a section title</h2>
+  </section>
+  ```
+</Anatomy>
 
 ## Demo
 

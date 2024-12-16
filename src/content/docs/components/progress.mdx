@@ -7,6 +7,7 @@ import Toolbelt from "@components/Toolbelt.astro";
 import ProgressDemo from "@components/ProgressDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
 import Table from "@components/Table.astro";
+import Anatomy from "@components/Anatomy.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -19,11 +20,13 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 ## Anatomy
 
-```html
-<div x-progress>
-  <div x-progress:indicator></div>
-</div>
-```
+<Anatomy>
+  ```html
+  <div x-init x-progress>
+    <div x-progress:indicator></div>
+  </div>
+  ```
+</Anatomy>
 
 ## Directives
 

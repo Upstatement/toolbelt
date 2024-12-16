@@ -7,6 +7,7 @@ import Toolbelt from "@components/Toolbelt.astro";
 import FlyoutDemo from "@components/FlyoutDemo/Demo.astro";
 import Lede from "@components/Lede.astro";
 import Table from "@components/Table.astro";
+import Anatomy from "@components/Anatomy.astro";
 import DirectiveReference from "@components/DirectiveReference.astro";
 
 <Toolbelt />
@@ -17,12 +18,14 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
 ## Anatomy
 
-```html
-<div x-flyout>
-  <button x-flyout:trigger></button>
-  <div x-flyout:content></div>
-</div>
-```
+<Anatomy>
+  ```html
+  <div x-init x-flyout>
+    <button x-flyout:trigger></button>
+    <div x-flyout:content></div>
+  </div>
+  ```
+</Anatomy>
 
 ## Directives
 
@@ -42,8 +45,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event             | Description                           | `detail`            |
-| ----------------- | ------------------------------------- | ------------------- |
+| Event           | Description                           | `detail`            |
+| --------------- | ------------------------------------- | ------------------- |
 | `flyout:change` | Whether the flyout is open or closed. | `{ open: boolean }` |
 
   </Table>
@@ -65,8 +68,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event             | Description                           | `detail`            |
-| ----------------- | ------------------------------------- | ------------------- |
+| Event           | Description                           | `detail`            |
+| --------------- | ------------------------------------- | ------------------- |
 | `flyout:change` | Whether the flyout is open or closed. | `{ open: boolean }` |
 
   </Table>
@@ -88,8 +91,8 @@ import DirectiveReference from "@components/DirectiveReference.astro";
 
   <Table>
 
-| Event             | Description                           | `detail`            |
-| ----------------- | ------------------------------------- | ------------------- |
+| Event           | Description                           | `detail`            |
+| --------------- | ------------------------------------- | ------------------- |
 | `flyout:change` | Whether the flyout is open or closed. | `{ open: boolean }` |
 
   </Table>
