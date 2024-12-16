@@ -28,12 +28,12 @@ export default defineConfig({
               link: "/",
             },
             {
-              label: "Installation",
-              link: "/installation",
-            },
-            {
               label: "Using the Components",
               link: "/using-the-components",
+            },
+            {
+              label: "Installation",
+              link: "/installation",
             },
           ],
         },
