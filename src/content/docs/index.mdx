@@ -14,7 +14,7 @@ Toolbelt is a **client-side library** that uses Alpine "directives" (more detail
 Consider the following markup for a `<section>` element, which uses Toolbelt's [`x-section` directive](/components/section):
 
 ```html
-<section x-section>
+<section x-init x-section>
   <h2 x-section:title>This is a section title</h2>
 </section>
 ```
@@ -22,7 +22,7 @@ Consider the following markup for a `<section>` element, which uses Toolbelt's [
 On the client-side, Toolbelt will automatically add attributes to each element. Wherever you are generating the markup above, you no longer need to worry about creating unique IDs.
 
 ```html ins='aria-labelledby="tb-section-title-1"' ins='id="tb-section-title-1"'
-<section x-section aria-labelledby="tb-section-title-1">
+<section x-init x-section aria-labelledby="tb-section-title-1">
   <h2 x-section:title id="tb-section-title-1">This is a section title</h2>
 </section>
 ```
@@ -40,7 +40,7 @@ Not all Toolbelt components require each part of the directive. It entirely depe
 Here's an example of an accordion that only allows one item to be open at any time, loops keyboard navigation, and opens the first item by default:
 
 ```html
-<div x-accordion.single.loop>
+<div x-init x-accordion.single.loop>
   <div x-accordion:item.open>
     <button x-accordion:trigger></button>
     <div x-accordion:content></div>
