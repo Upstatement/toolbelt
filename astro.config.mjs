@@ -31,6 +31,10 @@ export default defineConfig({
               label: "Installation",
               link: "/installation",
             },
+            {
+              label: "Using the Components",
+              link: "/using-the-components",
+            },
           ],
         },
         {

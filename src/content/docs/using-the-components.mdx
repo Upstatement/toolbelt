@@ -1,0 +1,149 @@
+---
+title: Using the Components
+description: Guide to understanding and using Toolbelt's components.
+---
+
+import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+
+## Anatomy
+
+Toolbelt components provide their own set of directives. There are modifiers to adjust the behavior of each component. [Custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) are emitted. Data attributes are set on the elements. All this functionality is to allow your Javascript and CSS to work with Toolbelt components. Each component page documents these features.
+
+Let's break down an [`x-accordion` example](/components/accordion/):
+
+<Tabs>
+    <TabItem label="Code">
+
+    ```html
+    <div x-init x-accordion.single.loop>
+      <div x-accordion:item.open>
+        <button x-accordion:trigger>
+          Is it accessible?
+        </button>
+        <div x-accordion:content>
+          Yes. It adheres to the WAI-ARIA design pattern.
+        </div>
+      </div>
+      <div x-accordion:item>
+        <button x-accordion:trigger>
+          Is it unstyled?
+        </button>
+        <div x-accordion:content>
+          Yes. It's unstyled by default, giving you freedom over the look and feel.
+        </div>
+      </div>
+    </div>
+    ```
+
+    </TabItem>
+
+    <TabItem label="Result">
+
+    ```html ins='data-state="open"' ins='id="tb-accordion-trigger-1" aria-controls="tb-accordion-content-1" aria-expanded="false" data-state="open"' ins='id="tb-accordion-content-1" role="region" aria-labelledby="tb-accordion-trigger-1" data-state="open"' ins='data-state="closed"' ins='id="tb-accordion-trigger-2" aria-controls="tb-accordion-content-2" aria-expanded="false" data-state="closed"' ins='id="tb-accordion-content-2" role="region" aria-labelledby="tb-accordion-trigger-2" data-state="closed"'
+    <div x-init x-accordion.single.loop>
+      <div x-accordion:item.open data-state="open">
+        <button x-accordion:trigger id="tb-accordion-trigger-1" aria-controls="tb-accordion-content-1" aria-expanded="false" data-state="open">
+          Is it accessible?
+        </button>
+        <div x-accordion:content id="tb-accordion-content-1" role="region" aria-labelledby="tb-accordion-trigger-1" data-state="open">
+          Yes. It adheres to the WAI-ARIA design pattern.
+        </div>
+      </div>
+      <div x-accordion:item data-state="closed">
+        <button x-accordion:trigger id="tb-accordion-trigger-2" aria-controls="tb-accordion-content-2" aria-expanded="false" data-state="closed">
+          Is it unstyled?
+        </button>
+        <div x-accordion:content id="tb-accordion-content-2" role="region" aria-labelledby="tb-accordion-trigger-2" data-state="closed">
+          Yes. It's unstyled by default, giving you freedom over the look and feel.
+        </div>
+      </div>
+    </div>
+    ```
+
+    </TabItem>
+
+</Tabs>
+
+<Steps>
+1. **Initialize component**: Alpine runs directives only if an `x-init` (or `x-data`) is included.
+
+    ```html mark="x-init"
+    <div x-init x-accordion.single.loop>
+      <div x-accordion:item.open>...</div>
+      ...
+    </div>
+    ```
+
+2. **Include Toolbelt directives**: The accordion component includes a family of directives that depend on each other. There is always top-level root directive, usually followed by one or more children directives depending on the complexity of the component.
+
+   ```html mark="x-accordion" mark="x-accordion:item" mark="x-accordion:trigger" mark="x-accordion:content"
+   <div x-init x-accordion.single.loop>
+     <div x-accordion:item.open>
+       <button x-accordion:trigger>Is it accessible?</button>
+       <div x-accordion:content>
+         Yes. It adheres to the WAI-ARIA design pattern.
+       </div>
+     </div>
+     ...
+   </div>
+   ```
+
+3. **Add modifiers, if needed**: Certain directives' behaviors can be modified. These are the dot notated parameters that follow directives. In this example, this accordion can only open a **single** item at a time, **loops** keyboard navigation, and **opens** the first item by default.
+
+   ```html mark=".single.loop" mark=".open"
+   <div x-init x-accordion.single.loop>
+     <div x-accordion:item.open>
+       <button x-accordion:trigger>Is it accessible?</button>
+       <div x-accordion:content>
+         Yes. It adheres to the WAI-ARIA design pattern.
+       </div>
+     </div>
+     ...
+   </div>
+   ```
+
+</Steps>
+
+## Styling to State
+
+Data attributes are used to track any relevant state of each element. In the case of accordions, each item tracks whether it is open or closed.
+
+```html ins='data-state="open"' ins='data-state="closed"'
+<div x-init x-accordion.single.loop>
+  <div x-accordion:item.open data-state="open">
+    <button x-accordion:trigger ... data-state="closed">
+      Is it accessible?
+    </button>
+    <div x-accordion:content ... data-state="closed">
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </div>
+  </div>
+  ...
+</div>
+```
+
+You can style each element with the data attributes. Here's a simple example:
+
+```css
+button[data-state="open"] {
+  font-weight: bold;
+}
+
+button[data-state="closed"] {
+  font-weight: normal;
+}
+```
+
+## Listening to Events
+
+Custom events are emitted when state changes. To avoid potential conflicts with built-in events, Toolbelt namespaces the custom events based on the components. In the accordion, for example, the `accordion:change` event is emitted whenever an item is opened or closed. The `detail` property of the event should include additional information if appropriate.
+
+```js mark="detail.open" mark="accordion:change"
+document.querySelector("button").addEventListener("accordion:change", (e) => {
+  if (e.detail.open) {
+    // do something when item is opened
+  } else {
+    // do something when item is closed
+  }
+});
+```
