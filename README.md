@@ -40,7 +40,7 @@ Include the following script tags in your `<head>`:
 
 ### As a module
 
-If you prefer bundling Toolbelt and its dependencies in your own Javascript bundle, you can install these packages via from the npm registry.
+If you prefer bundling Toolbelt and its dependencies in your own Javascript bundle, you can install these packages from the npm registry.
 
 1. Install the following packages:
 
