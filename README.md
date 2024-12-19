@@ -6,7 +6,66 @@
 
 [Upstatement](https://upstatement.com/) builds websites for various brands and with various technologies but accessibility _conformance_ is a constant across our work. Toolbelt is meant to bridge the knowledge gap in our web accessibility practice by providing components that adhere to [WCAG](https://www.w3.org/WAI/standards-guidelines/wcag/) and [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/) patterns out of the box, regardless of the technology stack we use.
 
-## Repository Structure
+## Installation
+
+There are two ways to install Toolbelt. In either case, it might be helpful to read through how [installation works for Alpine core](https://alpinejs.dev/essentials/installation). The following guide skips some details that are already covered in Alpine’s documentation.
+
+### From a script tag
+
+The easiest way to install Toolbelt is to include its CDN link. Because Toobelt is an Alpine plugin, you will have to include Alpine as a dependency. In addition, the [Focus](https://alpinejs.dev/plugins/focus) plugin is a required dependency for Toolbelt. Notice that Toolbelt and Alpine plugins come before Alpine core.
+
+Include the following script tags in your `<head>`:
+
+```html
+<head>
+  <!-- Toolbelt -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/@upstatement/toolbelt@1.0.0-alpha/dist/plugin.cdn.js"
+    defer
+  ></script>
+
+  <!-- Focus plugin (Toolbelt dependency) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.14.7/dist/cdn.min.js"
+    defer
+  ></script>
+
+  <!-- Alpine core -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.7/dist/cdn.min.js"
+    defer
+  ></script>
+</head>
+```
+
+### As a module
+
+If you prefer bundling Toolbelt and its dependencies in your own Javascript bundle, you can install these packages via from the npm registry.
+
+1. Install the following packages:
+
+   ```sh
+    npm install alpinejs @alpinejs/focus @upstatement/toolbelt
+   ```
+
+1. Import and initialize the packages like so:
+
+   ```js
+   import Alpine from "alpinejs";
+   import focus from "@alpinejs/focus";
+   import toolbelt from "@upstatement/toolbelt";
+
+   window.Alpine = Alpine;
+
+   Alpine.plugin(toolbelt);
+   Alpine.plugin(focus);
+
+   Alpine.start();
+   ```
+
+## Contributing
+
+### Repository Structure
 
 This repository hosts the [Astro Starlight](https://starlight.astro.build/) documentation site and library files for Toolbelt.
 
@@ -25,7 +84,7 @@ toolbelt
 └── vitest.config.js      # (Toolbelt) Vitest configuration
 ```
 
-## Getting Started
+### Getting Started
 
 1. Install and use specified Node version.
 
@@ -51,7 +110,7 @@ npm run dev
 npm run test:watch
 ```
 
-## Commands
+### Commands
 
 | Command                 | Action                                      |
 | ----------------------- | ------------------------------------------- |
