@@ -7,22 +7,30 @@ import code from "./code.html?raw";
 <Demo name="flyout" features={["Can open flyout on hover"]} html={code}>
   <div class="relative" x-init x-flyout.hoverable>
     <button
-      class="bg-white px-3 py-1 rounded-md cursor-pointer shadow-sm transition-colors hover:bg-gray-50"
+      class="bg-white text-foreground px-3 py-1 rounded-md cursor-pointer shadow-sm transition-colors hover:bg-gray-50"
       x-flyout:trigger
     >
       Open
     </button>
 
     <div
-      class="absolute flex flex-col gap-2 top-full left-1/2 -translate-x-1/2 translate-y-2 bg-white rounded-md shadow-md px-4 py-3 w-[200px] text-sm z-10"
+      class="absolute flex flex-col gap-2 top-full left-1/2 -translate-x-1/2 translate-y-2 bg-white rounded-md shadow-md px-4 py-3 w-[200px] text-sm text-foreground z-10"
       x-flyout:content
       x-cloak
     >
       <p>Flyouts can be used for menus or dropdowns.</p>
 
-      <a class="w-fit pt-2 border-t border-gray-100" href="#anatomy">Anatomy</a>
+      <a
+        class="w-fit text-foreground pt-2 border-t border-gray-100"
+        href="#anatomy"
+      >
+        Anatomy
+      </a>
 
-      <a class="w-fit pt-2 border-t border-gray-100" href="#directives">
+      <a
+        class="w-fit text-foreground pt-2 border-t border-gray-100"
+        href="#directives"
+      >
         Directives
       </a>
     </div>
