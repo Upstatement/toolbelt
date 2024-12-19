@@ -1,7 +1,7 @@
 name: Toolbelt Tests
 
 on:
-  pull_requst:
+  pull_request:
     - main
 
 jobs:
