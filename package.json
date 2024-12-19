@@ -1,7 +1,7 @@
 {
   "name": "@upstatement/toolbelt",
   "type": "module",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0-alpha.1",
   "description": "Alpine.js plugin for common accessibility patterns and utilities",
   "homepage": "https://toolbelt-ui.netlify.app/",
   "main": "dist/module.js",
