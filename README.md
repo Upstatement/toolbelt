@@ -20,7 +20,7 @@ Include the following script tags in your `<head>`:
 <head>
   <!-- Toolbelt -->
   <script
-    src="https://cdn.jsdelivr.net/npm/@upstatement/toolbelt@1.0.0-alpha/dist/plugin.cdn.js"
+    src="https://cdn.jsdelivr.net/npm/@upstatement/toolbelt@1.0.0-alpha.1/dist/plugin.cdn.js"
     defer
   ></script>
 
