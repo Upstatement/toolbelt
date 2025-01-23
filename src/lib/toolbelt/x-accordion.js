@@ -101,6 +101,12 @@ function handleItem(el, Alpine, config) {
       if (config.open) {
         this.openItems.add(el);
       }
+
+      el.toolbelt = {
+        toggle: () => {
+          this.toggleItem(this.__item);
+        },
+      };
     },
 
     "x-id"() {

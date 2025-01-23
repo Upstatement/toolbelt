@@ -194,6 +194,26 @@ describe("x-accordion", () => {
         });
       });
     });
+
+    describe("methods", () => {
+      test("should open and close an item when .toggle is called", async () => {
+        const item = screen.getByTestId("item-1");
+        const trigger = screen.getByTestId("trigger-1");
+        const content = screen.getByTestId("content-1");
+
+        item.toolbelt.toggle();
+
+        await waitFor(() => {
+          expectItemToBeOpen({ item, trigger, content }, true);
+        });
+
+        item.toolbelt.toggle();
+
+        await waitFor(() => {
+          expectItemToBeOpen({ item, trigger, content }, false);
+        });
+      });
+    });
   });
 
   describe("(x-accordion.single) single item only configuration", () => {
