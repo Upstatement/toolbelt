@@ -1,7 +1,12 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
+import {
+  createMockCustomEventListener,
+  html,
+  initializeAlpine,
+  scopes,
+} from "./utils";
 
 describe("x-accordion", () => {
   beforeAll(initializeAlpine);
@@ -85,7 +90,7 @@ describe("x-accordion", () => {
       });
     });
 
-    describe("custom events", () => {
+    describe(scopes.CUSTOM_EVENTS, () => {
       test("should indicate item is open", async () => {
         const item = screen.getByTestId("item-1");
         const trigger = screen.getByTestId("trigger-1");
@@ -132,7 +137,7 @@ describe("x-accordion", () => {
       });
     });
 
-    describe("keyboard navigation", () => {
+    describe(scopes.KEYBOARD_NAVIGATION, () => {
       let trigger1, trigger2;
 
       beforeEach(() => {
@@ -195,7 +200,7 @@ describe("x-accordion", () => {
       });
     });
 
-    describe("javascript methods", () => {
+    describe(scopes.JAVASCRIPT_METHODS, () => {
       test("(item.toolbelt.toggle) should open and close an item", async () => {
         const item = screen.getByTestId("item-1");
         const trigger = screen.getByTestId("trigger-1");
@@ -289,7 +294,7 @@ describe("x-accordion", () => {
       });
     });
 
-    describe("custom events", () => {
+    describe(scopes.CUSTOM_EVENTS, () => {
       test("should trigger separate events for opened and closed items.", async () => {
         const item1 = screen.getByTestId("item-1");
         const trigger1 = screen.getByTestId("trigger-1");
@@ -347,7 +352,7 @@ describe("x-accordion", () => {
       `;
     });
 
-    describe("keyboard navigation", () => {
+    describe(scopes.KEYBOARD_NAVIGATION, () => {
       let trigger1, trigger2;
 
       beforeEach(() => {
@@ -392,7 +397,7 @@ describe("x-accordion", () => {
       `;
     });
 
-    describe("keyboard navigation", () => {
+    describe(scopes.KEYBOARD_NAVIGATION, () => {
       let trigger1, trigger2;
 
       beforeEach(() => {

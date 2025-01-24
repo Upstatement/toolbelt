@@ -1,7 +1,12 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
+import {
+  createMockCustomEventListener,
+  html,
+  initializeAlpine,
+  scopes,
+} from "./utils";
 
 describe("x-tabs", () => {
   beforeAll(initializeAlpine);
@@ -78,7 +83,7 @@ describe("x-tabs", () => {
       });
     });
 
-    describe("custom events", () => {
+    describe(scopes.CUSTOM_EVENTS, () => {
       test("should indicate tab is open", async () => {
         const listener = createMockCustomEventListener();
 
@@ -108,7 +113,7 @@ describe("x-tabs", () => {
       });
     });
 
-    describe("keyboard navigation", () => {
+    describe(scopes.KEYBOARD_NAVIGATION, () => {
       test("pressing right arrow should move focus to the next tab", async () => {
         fireEvent.keyDown(tab1, { key: "ArrowRight" });
 
@@ -179,7 +184,7 @@ describe("x-tabs", () => {
       tab2 = screen.getByTestId("tab2");
     });
 
-    describe("keyboard navigation", () => {
+    describe(scopes.KEYBOARD_NAVIGATION, () => {
       test("pressing right arrow on the last tab should loop", async () => {
         fireEvent.keyDown(tab2, { key: "ArrowRight" });
 
@@ -220,7 +225,7 @@ describe("x-tabs", () => {
       panel2 = screen.getByTestId("panel2");
     });
 
-    describe("keyboard navigation", () => {
+    describe(scopes.KEYBOARD_NAVIGATION, () => {
       test("pressing right arrow should automatically open the next tab", async () => {
         fireEvent.keyDown(tab1, { key: "ArrowRight" });
 
@@ -281,7 +286,7 @@ describe("x-tabs", () => {
       panel2 = screen.getByTestId("panel2");
     });
 
-    describe("keyboard navigation", () => {
+    describe(scopes.KEYBOARD_NAVIGATION, () => {
       test("pressing down arrow should move focus to the next tab", async () => {
         fireEvent.keyDown(tab1, { key: "ArrowDown" });
 
