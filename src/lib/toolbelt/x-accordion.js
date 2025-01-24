@@ -43,8 +43,9 @@ function handleRoot(el, Alpine, config) {
         triggers: [],
         openItems: new Set(),
 
-        toggleItem(el, open = null) {
-          const shouldOpen = open === null ? !this.openItems.has(el) : open;
+        toggleItem(el, open) {
+          const shouldOpen =
+            open === undefined ? !this.openItems.has(el) : open;
 
           if (config.type === "single" && !shouldOpen) {
             this.openItems.delete(el);
@@ -105,7 +106,7 @@ function handleItem(el, Alpine, config) {
       }
 
       el.toolbelt = {
-        toggle: (open = null) => {
+        toggle: (open) => {
           this.toggleItem(this.__item, open);
         },
       };
