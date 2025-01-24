@@ -195,8 +195,8 @@ describe("x-accordion", () => {
       });
     });
 
-    describe("methods", () => {
-      test("should open and close an item when .toggle is called", async () => {
+    describe("javascript methods", () => {
+      test("(item.toolbelt.toggle) should open and close an item", async () => {
         const item = screen.getByTestId("item-1");
         const trigger = screen.getByTestId("trigger-1");
         const content = screen.getByTestId("content-1");
@@ -205,9 +205,25 @@ describe("x-accordion", () => {
 
         await waitFor(() => {
           expectItemToBeOpen({ item, trigger, content }, true);
+          item.toolbelt.toggle();
         });
 
-        item.toolbelt.toggle();
+        await waitFor(() => {
+          expectItemToBeOpen({ item, trigger, content }, false);
+        });
+      });
+
+      test("(item.toolbelt.toggle) should open and close an item when override is given", async () => {
+        const item = screen.getByTestId("item-1");
+        const trigger = screen.getByTestId("trigger-1");
+        const content = screen.getByTestId("content-1");
+
+        item.toolbelt.toggle(true);
+
+        await waitFor(() => {
+          expectItemToBeOpen({ item, trigger, content }, true);
+          item.toolbelt.toggle(false);
+        });
 
         await waitFor(() => {
           expectItemToBeOpen({ item, trigger, content }, false);
