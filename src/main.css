@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --sl-content-width: 60rem;
+  }
+
   [x-cloak] {
     display: none !important;
   }
