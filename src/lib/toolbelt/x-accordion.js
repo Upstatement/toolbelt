@@ -30,7 +30,7 @@ export default function (Alpine) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ type: 'single' | 'multiple', loop: boolean, orientation: 'horizontal' \ 'vertical' }} config
+ * @param {{ type: 'single' | 'multiple', loop: boolean, orientation: 'horizontal' | 'vertical' }} config
  */
 function handleRoot(el, Alpine, config) {
   Alpine.bind(el, {

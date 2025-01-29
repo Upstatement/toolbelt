@@ -58,7 +58,7 @@ function handleRoot(el, Alpine, config) {
 /**
  * @param {HTMLElement} el
  * @param {import('alpinejs').Alpine} Alpine
- * @param {{ loop: boolean, automatic: boolean, orientation: 'horizontal' \ 'vertical' }} config
+ * @param {{ loop: boolean, automatic: boolean, orientation: 'horizontal' | 'vertical' }} config
  */
 function handleList(el, Alpine, config) {
   Alpine.bind(el, {
