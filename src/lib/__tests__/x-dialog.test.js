@@ -156,6 +156,45 @@ describe("x-dialog", () => {
       });
     });
   });
+
+  describe("attribute overrides", () => {
+    let root, trigger, content, overlay, title, description, close;
+
+    beforeEach(async () => {
+      document.body.innerHTML = html`
+        <div x-dialog data-testid="root">
+          <button
+            x-dialog:trigger
+            aria-haspopup="menu"
+            data-testid="trigger"
+          ></button>
+
+          <template x-teleport="body">
+            <div x-dialog:content data-testid="content">
+              <div x-dialog:overlay data-testid="overlay"></div>
+              <h2 x-dialog:title data-testid="title"></h2>
+              <p x-dialog:description data-testid="description"></p>
+              <button x-dialog:close data-testid="close"></button>
+            </div>
+          </template>
+        </div>
+      `;
+
+      await waitFor(() => {
+        root = screen.getByTestId("root");
+        trigger = screen.getByTestId("trigger");
+        content = screen.getByTestId("content");
+        overlay = screen.getByTestId("overlay");
+        title = screen.getByTestId("title");
+        description = screen.getByTestId("description");
+        close = screen.getByTestId("close");
+      });
+    });
+
+    test('should override default "aria-haspopup" attribute on trigger', () => {
+      expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    });
+  });
 });
 
 /**

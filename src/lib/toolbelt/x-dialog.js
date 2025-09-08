@@ -82,7 +82,13 @@ function handleTrigger(el, Alpine) {
       return this.open ? "open" : "closed";
     },
 
-    "aria-haspopup": "dialog",
+    ":aria-haspopup"() {
+      if (el.hasAttribute("aria-haspopup")) {
+        return el.getAttribute("aria-haspopup");
+      }
+
+      return "dialog";
+    },
 
     ":aria-controls"() {
       return this.$id("tb-dialog-content");
