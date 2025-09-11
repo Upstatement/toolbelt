@@ -35,3 +35,9 @@ export function initializeAlpine() {
 export function createMockCustomEventListener() {
   return vi.fn((e) => [e.target, e.detail]);
 }
+
+export const scopes = {
+  CUSTOM_EVENTS: "custom events",
+  KEYBOARD_NAVIGATION: "keyboard navigation",
+  JAVASCRIPT_METHODS: "javascript methods",
+};

@@ -1,7 +1,12 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
+import {
+  createMockCustomEventListener,
+  html,
+  initializeAlpine,
+  scopes,
+} from "./utils";
 
 describe("x-checkbox", () => {
   beforeAll(initializeAlpine);
@@ -97,7 +102,7 @@ describe("x-checkbox", () => {
       });
     });
 
-    describe("custom events", () => {
+    describe(scopes.CUSTOM_EVENTS, () => {
       test("should indicate checkbox is open", async () => {
         const root = screen.getByTestId("root");
         const indicator = screen.getByTestId("indicator");

@@ -1,7 +1,12 @@
 import { expect, describe, beforeAll, beforeEach, test } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/dom";
 
-import { createMockCustomEventListener, html, initializeAlpine } from "./utils";
+import {
+  createMockCustomEventListener,
+  html,
+  initializeAlpine,
+  scopes,
+} from "./utils";
 
 describe("x-flyout", () => {
   beforeAll(initializeAlpine);
@@ -90,7 +95,7 @@ describe("x-flyout", () => {
       });
     });
 
-    describe("custom events", () => {
+    describe(scopes.CUSTOM_EVENTS, () => {
       test("should indicate flyout is open", async () => {
         const listener = createMockCustomEventListener();
 

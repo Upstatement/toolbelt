@@ -43,15 +43,18 @@ function handleRoot(el, Alpine, config) {
         triggers: [],
         openItems: new Set(),
 
-        toggleItem(el) {
-          if (config.type === "single" && this.openItems.has(el)) {
+        toggleItem(el, open) {
+          const shouldOpen =
+            open === undefined ? !this.openItems.has(el) : open;
+
+          if (config.type === "single" && !shouldOpen) {
             this.openItems.delete(el);
-          } else if (config.type === "single" && !this.openItems.has(el)) {
+          } else if (config.type === "single" && shouldOpen) {
             this.openItems.clear();
             this.openItems.add(el);
-          } else if (config.type === "multiple" && this.openItems.has(el)) {
+          } else if (config.type === "multiple" && !shouldOpen) {
             this.openItems.delete(el);
-          } else if (config.type === "multiple" && !this.openItems.has(el)) {
+          } else if (config.type === "multiple" && shouldOpen) {
             this.openItems.add(el);
           }
 
@@ -101,6 +104,12 @@ function handleItem(el, Alpine, config) {
       if (config.open) {
         this.openItems.add(el);
       }
+
+      el.toolbelt = {
+        toggle: (open) => {
+          this.toggleItem(this.__item, open);
+        },
+      };
     },
 
     "x-id"() {
